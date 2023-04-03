@@ -8,32 +8,40 @@
         {
             "id": 1,
             "name": "Test 1",
-            "status": "0"
+            "status": "0",
+            "log": ""
         },
         {
             "id": 2,
             "name": "Test 2",
-            "status": "10"
+            "status": "10",
+            "log": ""
         },
         {
             "id": 3,
             "name": "Test 3",
-            "status": "RUNNING"
+            "status": "RUNNING",
+            "log": ""
         },
         {
             "id": 4,
             "name": "Test 4",
-            "status": "CRASHED"
+            "status": "CRASHED",
+            "log": ""
         },
         {
             "id": 5,
             "name": "Test 5",
-            "status": "5"
+            "status": "5",
+            "log": ""
         },
         {
             "id": 5,
             "name": "Test 5",
-            "status": "5"
+            "status": "5",
+            "log": ""
         }
-    ]
+    ],
+    "test_path": "checker/",
+    "exec_name": "./test"
 }

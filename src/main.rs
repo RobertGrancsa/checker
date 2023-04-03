@@ -1,10 +1,11 @@
+use actions::run_all;
 use crossterm::{
     event::{self, DisableMouseCapture, EnableMouseCapture, Event, KeyCode},
     execute,
     terminal::{disable_raw_mode, enable_raw_mode, EnterAlternateScreen, LeaveAlternateScreen},
 };
 use serde::{Deserialize, Serialize};
-use std::fs;
+use std::{fs, thread};
 use std::time::Duration;
 use std::{error::Error, io};
 use tui::{
@@ -15,6 +16,8 @@ use tui::{
     widgets::{Block, Borders, Cell, List, ListItem, ListState, Row, Table, Tabs},
     Frame, Terminal,
 };
+use log::{info};
+
 
 mod actions;
 
@@ -25,12 +28,21 @@ pub struct Test {
     id: usize,
     name: String,
     status: String,
+    log: String,
 }
+
+// impl Copy for Test {
+// 	fn copy(self) -> Self {
+		
+// 	}
+// }
 
 #[derive(Serialize, Deserialize, Clone)]
 struct Data {
     commands: Vec<String>,
     tests: Vec<Test>,
+    test_path: String,
+    exec_name: String,
 }
 
 pub struct App<'a> {
@@ -40,17 +52,24 @@ pub struct App<'a> {
     pub test_list: Vec<Test>,
     pub test_list_state: ListState,
     pub cmd_list_state: ListState,
+
+	pub valgrind_enabled: bool,
+    pub test_path: String,
+    pub exec_name: String,
 }
 
-impl<'a> App<'a> {
-    fn new() -> App<'a> {
-        let mut app = App {
+impl<'a> App<'static> {
+    fn new() -> App<'static> {
+        let mut app: App<'static> = App {
             titles: vec!["Test", "Menu", "Tab2", "Tab3"],
             actions: Vec::new(),
             index: 0,
             test_list: Vec::new(),
             test_list_state: ListState::default(),
             cmd_list_state: ListState::default(),
+			valgrind_enabled: false,
+            test_path: String::new(),
+            exec_name: String::new(),
         };
         app.read_data();
         app.test_list_state.select(Some(0));
@@ -75,10 +94,18 @@ impl<'a> App<'a> {
         let json: Data = serde_json::from_str::<Data>(&db_content).unwrap();
         self.test_list = json.tests;
         self.actions = json.commands;
+        self.test_path = json.test_path;
+        self.exec_name = json.exec_name;
+
+		for index in 0..self.test_list.len() {
+			info!("Addres in main is {:p}", &self.test_list[index].status);
+		}
     }
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
+	log4rs::init_file("logging_config.yaml", Default::default()).unwrap();
+
     // setup terminal
     enable_raw_mode()?;
     let mut stdout = io::stdout();
@@ -109,8 +136,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
 fn run_app<B: Backend>(
     terminal: &mut Terminal<B>,
-    mut app: App,
-    tick_rate: Duration,
+    mut app: App<'static>,
+    _tick_rate: Duration,
 ) -> io::Result<()> {
     loop {
         terminal.draw(|f| ui(f, &mut app))?;
@@ -137,6 +164,17 @@ fn run_app<B: Backend>(
                             app.test_list_state.select(Some(app.test_list.len() - 1));
                         }
                     }
+                }
+                KeyCode::Enter => {
+                    run_all(&mut app);
+                    info!("Started test");
+                }
+                KeyCode::Char('r') => {
+                    thread::scope(|s| {
+                        s.spawn(|| 	run_all(&mut app));
+                    });
+                    
+                    info!("Started all tests");
                 }
                 _ => {}
             }
@@ -203,7 +241,7 @@ fn ui<B: Backend>(f: &mut Frame<B>, app: &mut App) {
     // f.render_widget(inner, chunks[1]);
 }
 
-fn render_test_list<'a>(app: &App) -> (List<'a>, Table<'a>) {
+fn render_test_list<'a>(app: &App) -> (List<'static>, Table<'static>) {
     let tests: Vec<ListItem> = app
         .test_list
         .iter()
@@ -250,6 +288,7 @@ fn render_test_list<'a>(app: &App) -> (List<'a>, Table<'a>) {
     let test_detail = Table::new(vec![Row::new(vec![
         Cell::from(Span::raw(selected_test.name)),
         Cell::from(Span::raw(selected_test.status)),
+        Cell::from(Span::raw(selected_test.log)),
     ])])
     .header(Row::new(vec![
         Cell::from(Span::styled(
@@ -276,7 +315,7 @@ fn render_test_list<'a>(app: &App) -> (List<'a>, Table<'a>) {
     // f.render_widget(events_list, chunks[1]);
 }
 
-fn render_commands_list<'a>(app: &App) -> (List<'a>, Table<'a>) {
+fn render_commands_list<'a>(app: &App) -> (List<'static>, Table<'static>) {
     let commands: Vec<ListItem> = app
         .actions
         .iter()
