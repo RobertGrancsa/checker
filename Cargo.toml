@@ -6,12 +6,15 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-crossterm = { version = "0.26.1", features = ["serde"] }
-tui = { version = "0.19", default-features = false, features = ["crossterm", "serde"] }
+crossterm = { version = "0.19", features = ["serde"] }
+tui = { version = "0.15", default-features = false, features = ["crossterm", "serde"] }
 serde = {version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-chrono = { version = "0.4", features = ["serde"] }
-rand = { version = "0.7.3", default-features = false, features = ["std"] }
-thiserror = "1.0"
+
 log = "0.4.17"
 log4rs = "1.2.0"
+tui-logger = { git = "https://github.com/gin66/tui-logger", rev = "3a3568e2464dddc2205e071234135998342d7f1d" }
+
+tokio = { version = "1", features = ["full"] }
+eyre = "0.6"
+file_diff = "1.0.0"

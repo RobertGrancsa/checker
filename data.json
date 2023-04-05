@@ -1,47 +1,59 @@
 {
-    "commands": [
-        "Run all tests",
-        "Run all tests without valgrind",
-        "Configure tests"
-    ],
-    "tests": [
-        {
-            "id": 1,
-            "name": "Test 1",
-            "status": "0",
-            "log": ""
-        },
-        {
-            "id": 2,
-            "name": "Test 2",
-            "status": "10",
-            "log": ""
-        },
-        {
-            "id": 3,
-            "name": "Test 3",
-            "status": "RUNNING",
-            "log": ""
-        },
-        {
-            "id": 4,
-            "name": "Test 4",
-            "status": "CRASHED",
-            "log": ""
-        },
-        {
-            "id": 5,
-            "name": "Test 5",
-            "status": "5",
-            "log": ""
-        },
-        {
-            "id": 5,
-            "name": "Test 5",
-            "status": "5",
-            "log": ""
-        }
-    ],
-    "test_path": "checker/",
-    "exec_name": "./test"
+  "commands": [
+    "Run all tests",
+    "Run all tests without valgrind",
+    "Configure tests"
+  ],
+  "tests": [
+    {
+      "id": 1,
+      "name": "Test 1",
+      "status": "10",
+      "log": "Testing\nHello\nTesting\n",
+      "time_normal": 2.002577869,
+      "time_valgrind": 0.0
+    },
+    {
+      "id": 2,
+      "name": "Test 2",
+      "status": "10",
+      "log": "Testing\ncdascsdf\nTesting\n",
+      "time_normal": 2.001598718,
+      "time_valgrind": 0.0
+    },
+    {
+      "id": 3,
+      "name": "Test 3",
+      "status": "CRASHED",
+      "log": "11 (SIGSEGV) (core dumped)",
+      "time_normal": 0.0,
+      "time_valgrind": 0.0
+    },
+    {
+      "id": 4,
+      "name": "Test 4",
+      "status": "0",
+      "log": "Testing\nadasd\nTesting\n",
+      "time_normal": 2.001955759,
+      "time_valgrind": 0.0
+    },
+    {
+      "id": 5,
+      "name": "Test 5",
+      "status": "0",
+      "log": "Testing\nadasd\nTesting\n",
+      "time_normal": 2.001740819,
+      "time_valgrind": 0.0
+    },
+    {
+      "id": 5,
+      "name": "Test 5",
+      "status": "0",
+      "log": "Testing\nasdasd\nTesting\n",
+      "time_normal": 2.001331194,
+      "time_valgrind": 0.0
+    }
+  ],
+  "test_path": "checker/",
+  "exec_name": "./test"
 }
