@@ -7,7 +7,7 @@ use tokio::fs::{self, File};
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
 use tokio::join;
 use tokio::process::Command;
-use tokio::time::Instant;
+use tokio::time::{Instant, timeout};
 
 use super::IoEvent;
 use crate::app::{App, Data};
@@ -29,10 +29,7 @@ impl IoAsyncHandler {
         let result = match io_event {
             IoEvent::Initialize => self.do_initialize().await,
             IoEvent::Sleep(duration) => self.do_sleep(duration).await,
-            IoEvent::RunTest(index) => {
-                if let Ok(app) = self.run_test(index).await {}
-                Ok(())
-            }
+            IoEvent::RunTest(index) => self.run_test(index).await,
             IoEvent::RunAll(size) => self.run_all(size).await,
             IoEvent::SaveData(data) => self.save_data(data).await,
         };
@@ -87,9 +84,7 @@ impl IoAsyncHandler {
 
                 app.test_list[index].status.clear();
                 app.test_list[index].status.push_str("STARTING");
-
                 app.dispatch(IoEvent::RunTest(index)).await;
-                drop(app);
             });
             threads.push(thread);
         }
@@ -99,12 +94,6 @@ impl IoAsyncHandler {
             thread.await.unwrap();
         }
 
-        // awaits
-
-        Ok(())
-    }
-
-    async fn spawn_test(&mut self, index: usize) -> Result<()> {
         Ok(())
     }
 
@@ -152,7 +141,6 @@ impl IoAsyncHandler {
         let run = binding.stdin(Stdio::piped()).stdout(Stdio::piped());
 
         info!("Executing {:?}", run);
-        let start = Instant::now();
         match run.spawn() {
             Ok(mut child) => {
                 info!("{:?}", child);
@@ -174,24 +162,51 @@ impl IoAsyncHandler {
                 }
                 drop(child_stdin);
 
+                let start = Instant::now();
                 let mut log = String::new();
                 let mut res = String::new();
 
                 if let Some(ref mut stdout) = child.stdout {
-                    info!("printing stdout");
-
                     let mut lines = BufReader::new(stdout).lines();
 
-                    while let Some(line) = lines.next_line().await? {
-                        let l: String = format!("{}\n", line);
-                        info!("file_contains {}", l);
-                        log.push_str(&l);
+                    loop {
+                        if let Ok(res) = timeout(Duration::from_millis(500), lines.next_line()).await {
+                            if let Ok(Some(line)) = res {
+                                let l: String = format!("{}\n", line);
+                                info!("file_contains {}", l);
+                                log.push_str(&l);
+                            } else {
+                                info!("Finished reading from stdout");
+                                break;
+                            }
+
+                        } else {
+                            warn!("timeout");
+                            res.push_str("TIMEOUT");
+
+                            let mut app = self.app.lock().await;
+                            let current_test = &mut app.test_list[index];
+                            current_test.status.clear();
+                            current_test.status.push_str(&res);
+                            current_test.log.clear();
+                            current_test.time_normal = start.elapsed().as_secs_f64();
+
+                            child.kill().await?;
+
+                            return Ok(());
+                        }
                     }
+
+                    debug!("got here");
                 }
+
+                debug!("time here is {}", start.elapsed().as_secs_f64());
 
                 if let Ok(out) = child.wait_with_output().await {
                     info!("exit status {:?}", out.status.code());
                     if let None = out.status.code() {
+                        let runtime = start.elapsed().as_secs_f64();
+
                         log.push_str(&out.status.to_string().split_off(8));
                         res.push_str("CRASHED");
 
@@ -202,6 +217,7 @@ impl IoAsyncHandler {
                         current_test.status.push_str(&res);
                         current_test.log.clear();
                         current_test.log.push_str(&log);
+                        current_test.time_normal = runtime;
 
                         app.unwritten_data = true;
                         return Ok(());
@@ -215,7 +231,6 @@ impl IoAsyncHandler {
                 if &log == std::str::from_utf8(&ref_file).unwrap() {
                     res.push_str("10");
                 } else {
-                    debug!("{} vs {}", log, std::str::from_utf8(&ref_file).unwrap());
                     res.push_str("0");
                 }
                 let runtime = start.elapsed().as_secs_f64();
@@ -249,7 +264,7 @@ impl IoAsyncHandler {
             }
         }
 
-        debug!("time={:5}", start.elapsed().as_secs_f64());
+        // debug!("time={:5}", start.elapsed().as_secs_f64());
 
         Ok(())
     }

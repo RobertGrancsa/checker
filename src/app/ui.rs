@@ -90,6 +90,7 @@ fn draw_test_list<'a>(app: &App) -> (List<'a>, Table<'a>, List<'a>) {
                 "RUNNING" => Style::default().fg(Color::Red),
                 "CRASHED" => Style::default().fg(Color::Blue),
                 "STARTING" => Style::default().fg(Color::Blue),
+                "TIMEOUT" => Style::default().fg(Color::Blue),
                 _ => Style::default(),
             };
             // Add a example datetime and apply proper spacing between them
@@ -310,7 +311,7 @@ fn convert_time_to_string(time: f64) -> String {
 
     seconds.push_str(&format!("{:02}:", (time / 60f64).floor()));
     seconds.push_str(&format!("{:02}.", (time % 60f64).floor()));
-    seconds.push_str(&format!("{:05}", (time.fract() * 10000.0).floor()));
+    seconds.push_str(&format!("{:05}", (time.fract() * 100000.0).floor()));
 
     seconds
 }
