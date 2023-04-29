@@ -1,3 +1,4 @@
+use std::fmt::format;
 use std::fs;
 
 use log::{debug, error, info, warn};
@@ -71,8 +72,7 @@ pub struct App {
     pub exec_name: String,
 
     pub current_ref: String,
-    // pub current_diff: TextDiff<'static, 'static, 'static, str>,
-    // pub running_children: Vec<RunningTest>,
+    pub checkstyle: String,
 }
 
 impl App {
@@ -102,6 +102,8 @@ impl App {
             fs::read_to_string(format!("{}ref/{:02}-test.ref", test_path, test_list[0].id))
                 .unwrap();
 
+        let checkstyle = fs::read_to_string(format!("{}checkstyle.txt", test_path)).unwrap();
+
         Self {
             io_tx,
             actions,
@@ -119,8 +121,7 @@ impl App {
             test_path,
             exec_name,
             current_ref,
-            // current_diff,
-            // running_children,
+            checkstyle,
         }
     }
 
@@ -142,7 +143,8 @@ impl App {
                             || test.status == "TIMEOUT"
                             || test.status == "CRASHED"
                             || test.status == "MEMLEAKS"
-                            || test.status == "ERROR" {
+                            || test.status == "ERROR"
+                        {
                             failed.push(test.id);
                         }
                     }
@@ -246,7 +248,14 @@ impl App {
 
                     AppReturn::Continue
                 }
-                Action::CloseHelp => AppReturn::Continue,
+                Action::CloseHelp => {
+                    self.state.update_checkstyle();
+                    if let Some(true) = self.state.get_checkstyle() {
+                        self.dispatch(IoEvent::LoadChecksyle).await;
+                    }
+
+                    AppReturn::Continue
+                }
             }
         } else {
             warn!("No action accociated to {}", key);

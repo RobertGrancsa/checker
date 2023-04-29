@@ -7,7 +7,7 @@ use tui::layout::{Alignment, Constraint, Direction, Layout, Rect};
 use tui::style::{Color, Modifier, Style};
 use tui::text::{Span, Spans};
 use tui::widgets::{
-    Block, BorderType, Borders, Cell, LineGauge, List, ListItem, Paragraph, Row, Table, Tabs,
+    Block, BorderType, Borders, Cell, List, ListItem, Paragraph, Row, Table, Tabs, Clear, Wrap,
 };
 use tui::{symbols, Frame};
 use tui_logger::TuiLoggerWidget;
@@ -27,7 +27,7 @@ where
         .direction(Direction::Vertical)
         .constraints(
             [
-                Constraint::Length(3),
+                Constraint::Length(0),
                 Constraint::Min(10),
                 // Constraint::Length(3),
                 Constraint::Length(12),
@@ -100,6 +100,70 @@ where
     // Logs
     let logs = draw_logs();
     rect.render_widget(logs, chunks[2]);
+
+    if let Some(true) = app.state().get_checkstyle() {
+        let (area, block) = draw_popup_cs(app, size, 90, 90);
+
+        rect.render_widget(Clear, area);
+        rect.render_widget(block, area);
+    }
+}
+
+fn draw_popup_cs<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Paragraph<'a>) {
+    let items: Vec<_> = app.checkstyle
+        .lines()
+        .map(|line| {
+            let style = match line {
+                _ if line.contains("CHECK") => Style::default().fg(Color::Green),
+                _ if line.contains("WARNING") => Style::default().fg(Color::Yellow),
+                _ if line.contains("ERROR") => Style::default().fg(Color::Red),
+                _ => Style::default(),
+            };
+
+            let split: Vec<&'a str> = line.split(':').collect();
+
+            let header = Spans::from(vec![
+                Span::styled(format!("{}:{}:{}:", split[0], split[1], split[2]) , style),
+                Span::styled(split[3], Style::default().fg(Color::Blue)),
+                Span::raw(":"),
+                Span::raw(split[4]),
+            ]);
+
+            // ListItem::new(header)
+            header
+        }).collect();
+
+    let list = Paragraph::new(items)
+        .block(Block::default()
+        .borders(Borders::ALL)
+        .title("Checkstyle"))
+        .wrap(Wrap { trim: true });
+
+    let popup_layout = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints(
+            [
+                Constraint::Percentage((100 - y) / 2),
+                Constraint::Percentage(y),
+                Constraint::Percentage((100 - y) / 2),
+            ]
+            .as_ref(),
+        )
+        .split(size);
+
+        let area = Layout::default()
+            .direction(Direction::Horizontal)
+            .constraints(
+                [
+                    Constraint::Percentage((100 - x) / 2),
+                    Constraint::Percentage(x),
+                    Constraint::Percentage((100 - x) / 2),
+                ]
+                .as_ref(),
+            )
+            .split(popup_layout[1])[1];
+
+    (area, list)
 }
 
 fn draw_test_list<'a>(app: &App) -> (List<'a>, Table<'a>, List<'a>, usize) {
@@ -289,26 +353,26 @@ fn check_size(rect: &Rect) {
     }
 }
 
-fn draw_duration(duration: &Duration) -> LineGauge {
-    let sec = duration.as_secs();
-    let label = format!("{}s", sec);
-    let ratio = sec as f64 / 10.0;
-    LineGauge::default()
-        .block(
-            Block::default()
-                .borders(Borders::ALL)
-                .title("Sleep duration"),
-        )
-        .gauge_style(
-            Style::default()
-                .fg(Color::Cyan)
-                .bg(Color::Black)
-                .add_modifier(Modifier::BOLD),
-        )
-        .line_set(line::THICK)
-        .label(label)
-        .ratio(ratio)
-}
+// fn draw_duration(duration: &Duration) -> LineGauge {
+//     let sec = duration.as_secs();
+//     let label = format!("{}s", sec);
+//     let ratio = sec as f64 / 10.0;
+//     LineGauge::default()
+//         .block(
+//             Block::default()
+//                 .borders(Borders::ALL)
+//                 .title("Sleep duration"),
+//         )
+//         .gauge_style(
+//             Style::default()
+//                 .fg(Color::Cyan)
+//                 .bg(Color::Black)
+//                 .add_modifier(Modifier::BOLD),
+//         )
+//         .line_set(line::THICK)
+//         .label(label)
+//         .ratio(ratio)
+// }
 
 fn draw_help(actions: &Actions) -> Table {
     let key_style = Style::default().fg(Color::LightCyan);

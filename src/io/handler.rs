@@ -33,6 +33,7 @@ impl IoAsyncHandler {
             IoEvent::RunAll(size) => self.run_all(size).await,
             IoEvent::RunFailed(indexes) => self.run_failed(indexes).await,
             IoEvent::SaveData(data) => self.save_data(data).await,
+            IoEvent::LoadChecksyle => self.load_cs().await,
         };
 
         if let Err(Some(output)) = result {
@@ -45,7 +46,6 @@ impl IoAsyncHandler {
 
     /// We use dummy implementation here, just wait 1s
     async fn do_initialize(&mut self) -> Result<(), Option<Error>> {
-        info!("Initialize the application");
         let mut app = self.app.lock().await;
         app.initialized(); // we could update the app state
         info!("Application initialized");
@@ -58,6 +58,28 @@ impl IoAsyncHandler {
         tokio::fs::write(DB_PATH, serde_json::to_string_pretty(&data).unwrap())
             .await
             .unwrap();
+        Ok(())
+    }
+
+    async fn load_cs(&mut self) -> Result<(), Option<Error>> {
+        info!("Running checkstyle");
+
+        let mut app = self.app.lock().await;
+        
+        let mut cs = Command::new(format!("{}/cs/cs.sh", app.test_path));
+        cs.arg(".");
+
+        let output = cs.output().await.unwrap().stdout;
+
+        app.checkstyle.clear();
+        app.checkstyle.push_str(&std::str::from_utf8(&output).unwrap());
+
+        let mut out_file = File::create(format!("{}checkstyle.txt", app.test_path))
+            .await
+            .unwrap();
+
+        out_file.write_all(&output).await.unwrap();
+
         Ok(())
     }
 

@@ -9,4 +9,5 @@ pub enum IoEvent {
     RunAll(usize),
     RunFailed(Vec<usize>),
     SaveData(Data),
+    LoadChecksyle,
 }
