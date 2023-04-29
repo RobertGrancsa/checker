@@ -24,6 +24,8 @@ pub struct Test {
     pub log: String,
     pub time_normal: f64,
     pub time_valgrind: f64,
+    pub timeout: usize,
+    pub test_score: usize,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -32,6 +34,7 @@ pub struct Data {
     tests: Vec<Test>,
     test_path: String,
     exec_name: String,
+    valgrind_enabled: bool,
 }
 
 // pub struct RunningTest {
@@ -60,11 +63,15 @@ pub struct App {
     pub test_list: Vec<Test>,
     pub commands: Vec<String>,
     test_list_state: ListState,
-    cmd_list_state: ListState,
+    windows_list_state: ListState,
+    pub log_list_state: ListState,
 
     pub valgrind_enabled: bool,
     pub test_path: String,
     pub exec_name: String,
+
+    pub current_ref: String,
+    // pub current_diff: TextDiff<'static, 'static, 'static, str>,
     // pub running_children: Vec<RunningTest>,
 }
 
@@ -82,13 +89,18 @@ impl App {
         let commands = json.commands;
         let mut test_list_state = ListState::default();
         test_list_state.select(Some(0));
-        let mut cmd_list_state = ListState::default();
-        cmd_list_state.select(Some(0));
-        let valgrind_enabled = false;
+        let mut windows_list_state = ListState::default();
+        windows_list_state.select(Some(0));
+        let mut log_list_state = ListState::default();
+        log_list_state.select(None);
+        let valgrind_enabled = json.valgrind_enabled;
         let titles = vec!["Test", "Menu", "Tab2", "Tab3"];
         let selected_tab = 0usize;
         let unwritten_data = false;
-        // let running_children: Vec<RunningTest> = Vec::new();
+
+        let current_ref =
+            fs::read_to_string(format!("{}ref/{:02}-test.ref", test_path, test_list[0].id))
+                .unwrap();
 
         Self {
             io_tx,
@@ -101,10 +113,13 @@ impl App {
             test_list,
             commands,
             test_list_state,
-            cmd_list_state,
+            windows_list_state,
+            log_list_state,
             valgrind_enabled,
             test_path,
             exec_name,
+            current_ref,
+            // current_diff,
             // running_children,
         }
     }
@@ -115,15 +130,23 @@ impl App {
             debug!("Run action [{:?}]", action);
             match action {
                 Action::Quit => AppReturn::Exit,
-                Action::Sleep => {
-                    if let Some(duration) = self.state.duration().cloned() {
-                        // Sleep is an I/O action, we dispatch on the IO channel that's run on another thread
-                        self.dispatch(IoEvent::Sleep(duration)).await
-                    }
-                    AppReturn::Continue
-                }
                 Action::Run => {
                     self.dispatch(IoEvent::RunAll(self.test_list.len())).await;
+                    AppReturn::Continue
+                }
+                Action::RunFailed => {
+                    let mut failed = Vec::new();
+                    for test in self.test_list.iter() {
+                        // TODO make this more eficient
+                        if test.status == "0"
+                            || test.status == "TIMEOUT"
+                            || test.status == "CRASHED"
+                            || test.status == "MEMLEAKS"
+                            || test.status == "ERROR" {
+                            failed.push(test.id);
+                        }
+                    }
+                    self.dispatch(IoEvent::RunFailed(failed)).await;
                     AppReturn::Continue
                 }
                 Action::RunCurrent => {
@@ -137,36 +160,93 @@ impl App {
                     AppReturn::Continue
                 }
                 // IncrementDelay and DecrementDelay is handled in the UI thread
-                Action::IncrementDelay => {
-                    self.state.increment_delay();
+                Action::RightList => {
+                    if let Some(index) = self.windows_list_state.selected() {
+                        if index == 1 {
+                            self.windows_list_state.select(Some(0));
+                        } else {
+                            self.windows_list_state.select(Some(1));
+                        }
+                    }
                     AppReturn::Continue
                 }
                 // Note, that we clamp the duration, so we stay >= 0
-                Action::DecrementDelay => {
-                    self.state.decrement_delay();
+                Action::LeftList => {
+                    if let Some(index) = self.windows_list_state.selected() {
+                        if index == 1 {
+                            self.windows_list_state.select(Some(0));
+                        } else {
+                            self.windows_list_state.select(Some(1));
+                        }
+                    }
                     AppReturn::Continue
                 }
                 Action::UpList => {
                     // State based on which tab I am on
-                    if let Some(selected) = self.test_list_state.selected() {
-                        if selected > 0 {
-                            self.test_list_state.select(Some(selected - 1));
-                        } else {
-                            self.test_list_state.select(Some(self.test_list.len() - 1));
+                    if let Some(window_index) = self.windows_list_state.selected() {
+                        match window_index {
+                            0 => {
+                                if let Some(selected) = self.test_list_state.selected() {
+                                    if selected > 0 {
+                                        self.test_list_state.select(Some(selected - 1));
+                                    } else {
+                                        self.test_list_state.select(Some(self.test_list.len() - 1));
+                                    }
+
+                                    self.update_ref();
+                                }
+                            }
+                            1 => {
+                                if let Some(selected) = self.log_list_state.selected() {
+                                    if selected > 0 {
+                                        self.log_list_state.select(Some(selected - 1));
+                                    } else {
+                                        self.log_list_state
+                                            .select(Some(self.current_ref.lines().count() - 1));
+                                    }
+                                }
+                            }
+                            _ => return AppReturn::Continue,
                         }
                     }
+
                     AppReturn::Continue
                 }
                 Action::DownList => {
-                    if let Some(selected) = self.test_list_state.selected() {
-                        if selected >= self.test_list.len() - 1 {
-                            self.test_list_state.select(Some(0));
-                        } else {
-                            self.test_list_state.select(Some(selected + 1));
+                    if let Some(window_index) = self.windows_list_state.selected() {
+                        match window_index {
+                            0 => {
+                                if let Some(selected) = self.test_list_state.selected() {
+                                    if selected >= self.test_list.len() - 1 {
+                                        self.test_list_state.select(Some(0));
+                                    } else {
+                                        self.test_list_state.select(Some(selected + 1));
+                                    }
+
+                                    self.update_ref();
+                                }
+                            }
+                            1 => {
+                                if let Some(selected) = self.log_list_state.selected() {
+                                    if selected >= self.current_ref.lines().count() - 1 {
+                                        self.log_list_state.select(Some(0));
+                                    } else {
+                                        self.log_list_state.select(Some(selected + 1));
+                                    }
+                                }
+                            }
+                            _ => return AppReturn::Continue,
                         }
                     }
+
                     AppReturn::Continue
                 }
+                Action::ActivateValgrind => {
+                    self.valgrind_enabled = !self.valgrind_enabled;
+
+                    AppReturn::Continue
+                }
+                Action::CloseHelp => AppReturn::Continue,
             }
         } else {
             warn!("No action accociated to {}", key);
@@ -178,9 +258,9 @@ impl App {
     pub async fn update_on_tick(&mut self) -> AppReturn {
         // here we just increment a counter
         self.state.incr_tick();
-        if self.unwritten_data && self.state.count_tick().unwrap() % 10 == 0 {
+        if self.unwritten_data && self.state.count_tick().unwrap() % 100 == 0 {
             let data = self.save_data();
-            info!("Writing data");
+            info!("Saving data");
             self.dispatch(IoEvent::SaveData(data)).await;
             self.unwritten_data = false;
         }
@@ -195,6 +275,15 @@ impl App {
             self.is_loading = false;
             error!("Error from dispatch {}", e);
         };
+    }
+
+    pub fn update_ref(&mut self) {
+        self.current_ref = fs::read_to_string(format!(
+            "{}ref/{:02}-test.ref",
+            self.test_path,
+            self.test_list[self.test_list_state.selected().unwrap()].id
+        ))
+        .unwrap();
     }
 
     pub fn actions(&self) -> &Actions {
@@ -212,13 +301,15 @@ impl App {
         // Update contextual actions
         self.actions = vec![
             Action::Quit,
-            Action::Sleep,
             Action::Run,
+            Action::RunFailed,
             Action::RunCurrent,
-            Action::IncrementDelay,
-            Action::DecrementDelay,
+            Action::RightList,
+            Action::LeftList,
             Action::UpList,
             Action::DownList,
+            Action::ActivateValgrind,
+            Action::CloseHelp,
         ]
         .into();
         self.state = AppState::initialized()
@@ -228,8 +319,12 @@ impl App {
         self.is_loading = false;
     }
 
-    pub fn slept(&mut self) {
-        self.state.incr_sleep();
+    pub fn calculate_score(&self) -> usize {
+        let mut score = 0usize;
+        for test in self.test_list.iter() {
+            score += test.status.parse::<usize>().unwrap_or(0);
+        }
+        score
     }
 
     pub fn save_data(&mut self) -> Data {
@@ -238,6 +333,7 @@ impl App {
             tests: self.test_list.to_vec(),
             test_path: self.test_path.clone(),
             exec_name: self.exec_name.clone(),
+            valgrind_enabled: self.valgrind_enabled,
         }
     }
 }

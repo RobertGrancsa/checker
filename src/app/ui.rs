@@ -1,5 +1,6 @@
 use std::time::Duration;
 
+use similar::{ChangeTag, TextDiff};
 use symbols::line;
 use tui::backend::Backend;
 use tui::layout::{Alignment, Constraint, Direction, Layout, Rect};
@@ -12,7 +13,6 @@ use tui::{symbols, Frame};
 use tui_logger::TuiLoggerWidget;
 
 use super::actions::Actions;
-use super::state::AppState;
 use crate::app::App;
 
 pub fn draw<B>(rect: &mut Frame<B>, app: &mut App)
@@ -37,7 +37,7 @@ where
         .split(size);
 
     // Tabs
-    let tabs = draw_tabs(&app);
+    let tabs = draw_tabs(app);
     rect.render_widget(tabs, chunks[0]);
 
     // Body & Help
@@ -51,34 +51,58 @@ where
 
     let test_layout = Layout::default()
         .direction(Direction::Horizontal)
-        .constraints([Constraint::Percentage(40), Constraint::Percentage(60)].as_ref())
+        .constraints([Constraint::Length(24), Constraint::Min(20)].as_ref())
         .split(body_chunks[0]);
 
-    let (test_list, test_info, test_log) = draw_test_list(app);
-    rect.render_stateful_widget(test_list, test_layout[0], &mut app.test_list_state);
+    let (test_list, test_info, test_log, first_diff) = draw_test_list(app);
+
+    let test_and_score_layout = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints([Constraint::Min(10), Constraint::Length(3)].as_ref())
+        .split(test_layout[0]);
+
+    rect.render_stateful_widget(
+        test_list,
+        test_and_score_layout[0],
+        &mut app.test_list_state,
+    );
+
+    let score = draw_final_score(app);
+    rect.render_widget(score, test_and_score_layout[1]);
 
     let info_layout = Layout::default()
         .direction(Direction::Vertical)
-        .constraints([Constraint::Length(4), Constraint::Percentage(80)].as_ref())
+        .constraints([Constraint::Length(4), Constraint::Min(20)].as_ref())
         .split(test_layout[1]);
     rect.render_widget(test_info, info_layout[0]);
-    rect.render_widget(test_log, info_layout[1]);
+
+    if let Some(index) = app.windows_list_state.selected() {
+        if index == 1 {
+            if app.log_list_state.selected().is_none() {
+                app.log_list_state.select(Some(first_diff));
+            }
+            rect.render_stateful_widget(test_log, info_layout[1], &mut app.log_list_state);
+        } else {
+            app.log_list_state.select(None);
+            rect.render_widget(test_log, info_layout[1]);
+        }
+    }
 
     let help = draw_help(app.actions());
     rect.render_widget(help, body_chunks[1]);
 
     // Duration LineGauge
-    if let Some(duration) = app.state().duration() {
-        let duration_block = draw_duration(duration);
-        rect.render_widget(duration_block, chunks[2]);
-    }
+    // if let Some(duration) = app.state().duration() {
+    //     let duration_block = draw_duration(duration);
+    //     rect.render_widget(duration_block, chunks[2]);
+    // }
 
     // Logs
     let logs = draw_logs();
     rect.render_widget(logs, chunks[2]);
 }
 
-fn draw_test_list<'a>(app: &App) -> (List<'a>, Table<'a>, List<'a>) {
+fn draw_test_list<'a>(app: &App) -> (List<'a>, Table<'a>, List<'a>, usize) {
     let tests: Vec<ListItem> = app
         .test_list
         .iter()
@@ -86,12 +110,13 @@ fn draw_test_list<'a>(app: &App) -> (List<'a>, Table<'a>, List<'a>) {
             // Colorcode the level depending on its type
             let style = match test.status.as_str() {
                 "0" => Style::default().fg(Color::Gray),
-                "10" => Style::default().fg(Color::Green),
-                "RUNNING" => Style::default().fg(Color::Red),
+                "RUNNING" => Style::default().fg(Color::Green),
+                "ERROR" => Style::default().fg(Color::Red),
                 "CRASHED" => Style::default().fg(Color::Blue),
                 "STARTING" => Style::default().fg(Color::Blue),
                 "TIMEOUT" => Style::default().fg(Color::Blue),
-                _ => Style::default(),
+                "MEMLEAKS" => Style::default().fg(Color::Blue),
+                _ => Style::default().fg(Color::Green),
             };
             // Add a example datetime and apply proper spacing between them
             let header = Spans::from(vec![
@@ -103,6 +128,8 @@ fn draw_test_list<'a>(app: &App) -> (List<'a>, Table<'a>, List<'a>) {
             ListItem::new(header)
         })
         .collect();
+    
+    let style = Style::default().fg(if app.valgrind_enabled {Color::Red} else {Color::Gray});
 
     let test_list = List::new(tests)
         .highlight_style(
@@ -111,7 +138,8 @@ fn draw_test_list<'a>(app: &App) -> (List<'a>, Table<'a>, List<'a>) {
                 .fg(Color::Black)
                 .add_modifier(Modifier::BOLD),
         )
-        .block(Block::default().borders(Borders::ALL).title("Tests"));
+        .block(Block::default().borders(Borders::ALL)
+            .border_style(style).title("Tests"));
 
     let selected_test = app
         .test_list
@@ -126,7 +154,11 @@ fn draw_test_list<'a>(app: &App) -> (List<'a>, Table<'a>, List<'a>) {
     let test_detail = Table::new(vec![Row::new(vec![
         Cell::from(Span::raw(selected_test.name)),
         Cell::from(Span::raw(selected_test.status)),
-        Cell::from(Span::raw(convert_time_to_string(selected_test.time_normal))),
+        Cell::from(Span::raw(convert_time_to_string(if app.valgrind_enabled {
+            selected_test.time_valgrind
+        } else {
+            selected_test.time_normal
+        }))),
     ])])
     .header(Row::new(vec![
         Cell::from(Span::styled(
@@ -138,7 +170,11 @@ fn draw_test_list<'a>(app: &App) -> (List<'a>, Table<'a>, List<'a>) {
             Style::default().add_modifier(Modifier::BOLD),
         )),
         Cell::from(Span::styled(
-            "Time",
+            if app.valgrind_enabled {
+                "Time Valgrind"
+            } else {
+                "Time"
+            },
             Style::default().add_modifier(Modifier::BOLD),
         )),
     ]))
@@ -149,10 +185,33 @@ fn draw_test_list<'a>(app: &App) -> (List<'a>, Table<'a>, List<'a>) {
     ])
     .block(Block::default().borders(Borders::ALL).title("Details"));
 
-    let log_items: Vec<ListItem> = selected_test
-        .log
-        .lines()
-        .map(|line| ListItem::new(Span::raw(line.to_string())))
+    // TODO: Don't read this file on every tick
+    // let ref_file = fs::read_to_string(format!("{}ref/{}-test.ref", app.test_path, selected_test.id)).unwrap();
+
+    let diff = TextDiff::from_lines(&app.current_ref, &selected_test.log);
+
+    let mut index = 0;
+    let mut first_diff: usize = usize::MAX;
+    let log_items: Vec<ListItem> = diff
+        .iter_all_changes()
+        .map(|line| {
+            let (sign, style) = match line.tag() {
+                ChangeTag::Delete => ("-", Style::default().fg(Color::Red)),
+                ChangeTag::Insert => ("+", Style::default().fg(Color::Yellow)),
+                ChangeTag::Equal => (" ", Style::default().fg(Color::Gray)),
+            };
+
+            if line.tag() != ChangeTag::Equal && first_diff > index {
+                first_diff = index;
+            }
+
+            index += 1;
+
+            match line.missing_newline() {
+                true => ListItem::new(Span::styled(format!("{}{}", sign, line), style)),
+                false => ListItem::new(Span::styled(format!("{}{}⏎", sign, line), style)),
+            }
+        })
         .collect();
 
     let test_log = List::new(log_items)
@@ -162,9 +221,37 @@ fn draw_test_list<'a>(app: &App) -> (List<'a>, Table<'a>, List<'a>) {
                 .fg(Color::Black)
                 .add_modifier(Modifier::BOLD),
         )
+        .highlight_symbol(">> ")
         .block(Block::default().borders(Borders::ALL).title("Test log"));
 
-    (test_list, test_detail, test_log)
+    if first_diff == usize::MAX {
+        first_diff = 0;
+    }
+
+    (test_list, test_detail, test_log, first_diff)
+}
+
+fn draw_final_score<'a>(app: &App) -> Paragraph<'a> {
+    let score = app.calculate_score();
+
+    let style = match score {
+        0 => Style::default().fg(Color::Red),
+        100 => Style::default().fg(Color::Green),
+        _ => Style::default(),
+    };
+
+    Paragraph::new(vec![Spans::from(Span::styled(
+        format!("{}/100", score),
+        style,
+    ))])
+    .alignment(Alignment::Right)
+    .block(
+        Block::default()
+            .title("Final score")
+            .borders(Borders::ALL)
+            .style(Style::default().fg(Color::White))
+            .border_type(BorderType::Plain),
+    )
 }
 
 fn draw_tabs<'a>(app: &App) -> Tabs<'a> {
@@ -200,40 +287,6 @@ fn check_size(rect: &Rect) {
     if rect.height < 28 {
         panic!("Require height >= 28, (got {})", rect.height);
     }
-}
-
-fn draw_body<'a>(loading: bool, state: &AppState) -> Paragraph<'a> {
-    let initialized_text = if state.is_initialized() {
-        "Initialized"
-    } else {
-        "Not Initialized !"
-    };
-    let loading_text = if loading { "Loading..." } else { "" };
-    let sleep_text = if let Some(sleeps) = state.count_sleep() {
-        format!("Sleep count: {}", sleeps)
-    } else {
-        String::default()
-    };
-    let tick_text = if let Some(ticks) = state.count_tick() {
-        format!("Tick count: {}", ticks)
-    } else {
-        String::default()
-    };
-    Paragraph::new(vec![
-        Spans::from(Span::raw(initialized_text)),
-        Spans::from(Span::raw(loading_text)),
-        Spans::from(Span::raw(sleep_text)),
-        Spans::from(Span::raw(tick_text)),
-    ])
-    .style(Style::default().fg(Color::LightCyan))
-    .alignment(Alignment::Left)
-    .block(
-        Block::default()
-            // .title("Body")
-            .borders(Borders::ALL)
-            .style(Style::default().fg(Color::White))
-            .border_type(BorderType::Plain),
-    )
 }
 
 fn draw_duration(duration: &Duration) -> LineGauge {

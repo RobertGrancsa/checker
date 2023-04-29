@@ -16,8 +16,8 @@ async fn main() -> Result<()> {
     let app_ui = Arc::clone(&app);
 
     // Configure log
-    tui_logger::init_logger(LevelFilter::Debug).unwrap();
-    tui_logger::set_default_level(log::LevelFilter::Debug);
+    tui_logger::init_logger(LevelFilter::Info).unwrap();
+    tui_logger::set_default_level(log::LevelFilter::Info);
     // let rt = Builder::new_multi_thread().worker_threads(16).build().unwrap();
     // Handle IO in a specifc thread
 

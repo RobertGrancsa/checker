@@ -6,54 +6,87 @@
   ],
   "tests": [
     {
-      "id": 1,
+      "id": 0,
       "name": "Test 1",
-      "status": "10",
+      "status": "6",
       "log": "Testing\nHello\nTesting\n",
-      "time_normal": 2.002577869,
-      "time_valgrind": 0.0
+      "time_normal": 0.000397187,
+      "time_valgrind": 0.464976079,
+      "timeout": 2000,
+      "test_score": 6
+    },
+    {
+      "id": 1,
+      "name": "Test 2",
+      "status": "9",
+      "log": "Testing\ncdascsdf\nTesting\n",
+      "time_normal": 0.000384197,
+      "time_valgrind": 0.474486383,
+      "timeout": 2000,
+      "test_score": 9
     },
     {
       "id": 2,
-      "name": "Test 2",
-      "status": "10",
-      "log": "Testing\ncdascsdf\nTesting\n",
-      "time_normal": 2.001598718,
-      "time_valgrind": 0.0
+      "name": "Test 3",
+      "status": "CRASHED",
+      "log": "11 (SIGSEGV)",
+      "time_normal": 0.001740713,
+      "time_valgrind": 0.451739553,
+      "timeout": 2000,
+      "test_score": 5
     },
     {
       "id": 3,
-      "name": "Test 3",
-      "status": "CRASHED",
-      "log": "11 (SIGSEGV) (core dumped)",
-      "time_normal": 0.0,
-      "time_valgrind": 0.0
-    },
-    {
-      "id": 4,
       "name": "Test 4",
       "status": "0",
       "log": "Testing\nadasd\nTesting\n",
-      "time_normal": 2.001955759,
-      "time_valgrind": 0.0
+      "time_normal": 0.000556492,
+      "time_valgrind": 0.480861682,
+      "timeout": 2000,
+      "test_score": 5
     },
     {
-      "id": 5,
+      "id": 4,
       "name": "Test 5",
       "status": "0",
       "log": "Testing\nadasd\nTesting\n",
-      "time_normal": 2.001740819,
-      "time_valgrind": 0.0
+      "time_normal": 0.000582333,
+      "time_valgrind": 0.458835512,
+      "timeout": 2000,
+      "test_score": 5
     },
     {
       "id": 5,
-      "name": "Test 5",
+      "name": "Test 6",
+      "status": "TIMEOUT",
+      "log": "",
+      "time_normal": 1.199556599,
+      "time_valgrind": 1.194072296,
+      "timeout": 1000,
+      "test_score": 5
+    },
+    {
+      "id": 6,
+      "name": "Test 7",
       "status": "0",
-      "log": "Testing\nasdasd\nTesting\n",
-      "time_normal": 2.001331194,
-      "time_valgrind": 0.0
+      "log": "Testing\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\naround the world\nloop\nTesting\n",
+      "time_normal": 0.000590574,
+      "time_valgrind": 0.531077598,
+      "timeout": 2000,
+      "test_score": 5
+    },
+    {
+      "id": 7,
+      "name": "Test 8",
+      "status": "MEMLEAKS",
+      "log": "Testing\nmalloc\nTesting\nCheck output folder for valgrind errors",
+      "time_normal": 0.000421281,
+      "time_valgrind": 0.463240095,
+      "timeout": 2000,
+      "test_score": 5
     }
   ],
   "test_path": "checker/",
-  "exec_name": "./test"
+  "exec_name": "./test",
+  "valgrind_enabled": false
 }

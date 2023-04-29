@@ -15,8 +15,22 @@ int main(void)
     if (strcmp(ceva, "dasdasd") == 0)
         *a = 5;
 
-    sleep(2);
+    if (strcmp(ceva, "asdasd") == 0)
+        sleep(2);
+
+    if (strcmp(ceva, "loop") == 0) {
+        for (size_t i = 0; i < 50; i++) {
+            printf("around the world\n");
+        }
+    }
+
+    if (strcmp(ceva, "malloc") == 0) {
+        
+        char *alt = malloc(10000);
+    }
+    
     
     printf("%s\n", ceva);
     printf("Testing\n");
+    free(ceva);
 }

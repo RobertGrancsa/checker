@@ -17,4 +17,4 @@ tui-logger = { git = "https://github.com/gin66/tui-logger", rev = "3a3568e2464dd
 
 tokio = { version = "1", features = ["full"] }
 eyre = "0.6"
-file_diff = "1.0.0"
+similar = "2.2.1"

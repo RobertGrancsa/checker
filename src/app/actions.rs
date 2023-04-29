@@ -8,27 +8,31 @@ use crate::inputs::key::Key;
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub enum Action {
     Quit,
-    Sleep,
     Run,
+    RunFailed,
     RunCurrent,
-    IncrementDelay,
-    DecrementDelay,
+    RightList,
+    LeftList,
     UpList,
     DownList,
+    ActivateValgrind,
+    CloseHelp,
 }
 
 impl Action {
     /// All available actions
     pub fn iterator() -> Iter<'static, Action> {
-        static ACTIONS: [Action; 8] = [
+        static ACTIONS: [Action; 10] = [
             Action::Quit,
-            Action::Sleep,
             Action::Run,
+            Action::RunFailed,
             Action::RunCurrent,
-            Action::IncrementDelay,
-            Action::DecrementDelay,
+            Action::RightList,
+            Action::LeftList,
             Action::UpList,
             Action::DownList,
+            Action::ActivateValgrind,
+            Action::CloseHelp,
         ];
         ACTIONS.iter()
     }
@@ -37,13 +41,15 @@ impl Action {
     pub fn keys(&self) -> &[Key] {
         match self {
             Action::Quit => &[Key::Ctrl('c'), Key::Char('q')],
-            Action::Sleep => &[Key::Char('s')],
             Action::Run => &[Key::Char('r')],
+            Action::RunFailed => &[Key::Char('f')],
             Action::RunCurrent => &[Key::Enter],
-            Action::IncrementDelay => &[Key::Char('+')],
-            Action::DecrementDelay => &[Key::Char('-')],
+            Action::RightList => &[Key::Right],
+            Action::LeftList => &[Key::Left],
             Action::UpList => &[Key::Up],
             Action::DownList => &[Key::Down],
+            Action::ActivateValgrind => &[Key::Char('v')],
+            Action::CloseHelp => &[Key::Char('h')],
         }
     }
 }
@@ -53,13 +59,15 @@ impl Display for Action {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let str = match self {
             Action::Quit => "Quit",
-            Action::Sleep => "Sleep",
             Action::Run => "Run all tests",
+            Action::RunFailed => "Run failed tests",
             Action::RunCurrent => "Run current test",
-            Action::IncrementDelay => "Increment delay",
-            Action::DecrementDelay => "Decrement delay",
+            Action::RightList => "Switch window to the right",
+            Action::LeftList => "Switch window to the left",
             Action::UpList => "Go up the list",
             Action::DownList => "Go down the list",
+            Action::ActivateValgrind => "Turn On/Off valgrind",
+            Action::CloseHelp => "Close help panel",
         };
         write!(f, "{}", str)
     }
