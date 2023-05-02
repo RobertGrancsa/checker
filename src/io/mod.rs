@@ -5,9 +5,9 @@ pub mod handler;
 #[derive(Debug, Clone)]
 pub enum IoEvent {
     Initialize, // Launch to initialize the application
-    RunTest(usize),
+    RunTest(usize, usize),
     RunAll(usize),
-    RunFailed(Vec<usize>),
+    RunFailed(Vec<(usize, usize)>),
     SaveData(Data),
     LoadChecksyle,
     UpdateRef,

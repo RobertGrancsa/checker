@@ -21,13 +21,7 @@ where
     // Vertical layout
     let chunks = Layout::default()
         .direction(Direction::Vertical)
-        .constraints(
-            [
-                Constraint::Min(10),
-                Constraint::Length(10),
-            ]
-            .as_ref(),
-        )
+        .constraints([Constraint::Min(10), Constraint::Length(10)].as_ref())
         .split(size);
 
     // Body & Help
@@ -157,8 +151,7 @@ fn draw_popup_cs<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Paragra
 }
 
 fn draw_test_list<'a>(app: &mut App) -> (List<'a>, Table<'a>, List<'a>, usize) {
-    let tests: Vec<ListItem> = app
-        .test_list
+    let mut tests: Vec<ListItem> = app.test_list[0]
         .iter()
         .map(|test| {
             // Colorcode the level depending on its type
@@ -175,7 +168,32 @@ fn draw_test_list<'a>(app: &mut App) -> (List<'a>, Table<'a>, List<'a>, usize) {
             // Add a example datetime and apply proper spacing between them
             let header = Spans::from(vec![
                 Span::raw(test.name.to_string()),
-                Span::raw(" ".repeat(4)),
+                Span::raw(" ".repeat(10 - test.name.len())),
+                Span::styled(test.status.to_string(), style),
+            ]);
+
+            ListItem::new(header)
+        })
+        .collect();
+
+    let mut tests_2: Vec<ListItem> = app.test_list[1]
+        .iter()
+        .map(|test| {
+            // Colorcode the level depending on its type
+            let style = match test.status.as_str() {
+                "0" => Style::default().fg(Color::Gray),
+                "RUNNING" => Style::default().fg(Color::Green),
+                "ERROR" => Style::default().fg(Color::Red),
+                "CRASHED" => Style::default().fg(Color::Blue),
+                "STARTING" => Style::default().fg(Color::Blue),
+                "TIMEOUT" => Style::default().fg(Color::Blue),
+                "MEMLEAKS" => Style::default().fg(Color::Blue),
+                _ => Style::default().fg(Color::Green),
+            };
+            // Add a example datetime and apply proper spacing between them
+            let header = Spans::from(vec![
+                Span::raw(test.name.to_string()),
+                Span::raw(" ".repeat(10 - test.name.len())),
                 Span::styled(test.status.to_string(), style),
             ]);
 
@@ -188,6 +206,8 @@ fn draw_test_list<'a>(app: &mut App) -> (List<'a>, Table<'a>, List<'a>, usize) {
     } else {
         Color::Gray
     });
+
+    tests.append(&mut tests_2);
 
     let test_list = List::new(tests)
         .highlight_style(
@@ -203,13 +223,14 @@ fn draw_test_list<'a>(app: &mut App) -> (List<'a>, Table<'a>, List<'a>, usize) {
                 .title("Tests"),
         );
 
-    let selected_test = app
-        .test_list
-        .get(
-            app.test_list_state
-                .selected()
-                .expect("there is always a selected test"),
-        )
+    let index = app.test_list_state.selected().unwrap();
+    let (test_index, exec_index) = (
+        index % app.test_list[0].len(),
+        index / app.test_list[0].len(),
+    );
+
+    let selected_test = app.test_list[exec_index]
+        .get(test_index)
         .expect("exists")
         .clone();
 

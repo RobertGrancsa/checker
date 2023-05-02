@@ -3,7 +3,7 @@ CC=gcc
 CFLAGS=-Wall -Wextra -Wshadow -Wpedantic -std=c99 -O3
 
 # define targets
-TARGETS=kNN
+TARGETS=kNN mk
 
 #define dependencies
 DEPS=k-d.h matrix.h utils.h
@@ -12,6 +12,9 @@ DEPS=k-d.h matrix.h utils.h
 OBJ=k-d.o main.o matrix.o utils.o
 
 build: $(TARGETS)
+
+mk:
+	$(CC) $(CFLAGS) test.c -o $@
 
 kNN: $(OBJ)
 	$(CC) $(CFLAGS) *.o -o $@

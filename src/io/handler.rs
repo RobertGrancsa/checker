@@ -29,7 +29,7 @@ impl IoAsyncHandler {
     pub async fn handle_io_event(&mut self, io_event: IoEvent) {
         let result = match io_event {
             IoEvent::Initialize => self.do_initialize().await,
-            IoEvent::RunTest(index) => self.run_test(index).await,
+            IoEvent::RunTest(index, exec) => self.run_test(index, exec).await,
             IoEvent::RunAll(size) => self.run_all(size).await,
             IoEvent::RunFailed(indexes) => self.run_failed(indexes).await,
             IoEvent::SaveData(data) => self.save_data(data).await,
@@ -56,33 +56,35 @@ impl IoAsyncHandler {
     async fn update_ref(&mut self) -> Result<(), Option<Error>> {
         let mut app = self.app.lock().await;
 
+        let index = app.test_list_state.selected().unwrap();
+        let (test_index, exec_index) = (
+            index % app.test_list[0].len(),
+            index / app.test_list[0].len(),
+        );
+
         app.current_ref = fs::read_to_string(format!(
             "{}ref/{:02}-{}.ref",
-            app.test_path,
-            app.test_list[app.test_list_state.selected().unwrap()].id,
-            app.exec_name
+            app.test_path, app.test_list[exec_index][test_index].id, app.exec_name[exec_index]
         ))
         .await
         .unwrap();
 
-        app.diff = TextDiff::from_lines(
-            &app.current_ref,
-            &app.test_list[app.test_list_state.selected().unwrap()].log,
-        )
-        .iter_all_changes()
-        .map(|item| {
-            let sign = match item.tag() {
-                ChangeTag::Delete => "-",
-                ChangeTag::Insert => "+",
-                ChangeTag::Equal => " ",
-            };
+        app.diff =
+            TextDiff::from_lines(&app.current_ref, &app.test_list[exec_index][test_index].log)
+                .iter_all_changes()
+                .map(|item| {
+                    let sign = match item.tag() {
+                        ChangeTag::Delete => "-",
+                        ChangeTag::Insert => "+",
+                        ChangeTag::Equal => " ",
+                    };
 
-            match item.missing_newline() {
-                true => (sign, format!("{}", item)),
-                false => (sign, format!("{}⏎", item)),
-            }
-        })
-        .collect();
+                    match item.missing_newline() {
+                        true => (sign, format!("{}", item)),
+                        false => (sign, format!("{}⏎", item)),
+                    }
+                })
+                .collect();
 
         Ok(())
     }
@@ -151,9 +153,16 @@ impl IoAsyncHandler {
                 debug!("Waiting on mutex");
                 let mut app = copy.lock().await;
 
-                app.test_list[index].status.clear();
-                app.test_list[index].status.push_str("STARTING");
-                app.dispatch(IoEvent::RunTest(index)).await;
+                let (test_index, exec_index) = (
+                    index % app.test_list[0].len(),
+                    index / app.test_list[0].len(),
+                );
+
+                app.test_list[exec_index][test_index].status.clear();
+                app.test_list[exec_index][test_index]
+                    .status
+                    .push_str("STARTING");
+                app.dispatch(IoEvent::RunTest(test_index, exec_index)).await;
             });
 
             threads.push(thread);
@@ -166,7 +175,7 @@ impl IoAsyncHandler {
         Ok(())
     }
 
-    async fn run_failed(&self, indexes: Vec<usize>) -> Result<(), Option<Error>> {
+    async fn run_failed(&self, indexes: Vec<(usize, usize)>) -> Result<(), Option<Error>> {
         let mut threads = Vec::new();
 
         if let Err(e) = self.run_make().await {
@@ -180,9 +189,13 @@ impl IoAsyncHandler {
                 debug!("Waiting on mutex");
                 let mut app = copy.lock().await;
 
-                app.test_list[index].status.clear();
-                app.test_list[index].status.push_str("STARTING");
-                app.dispatch(IoEvent::RunTest(index)).await;
+                let (test_index, exec_index) = index;
+
+                app.test_list[exec_index][test_index].status.clear();
+                app.test_list[exec_index][test_index]
+                    .status
+                    .push_str("STARTING");
+                app.dispatch(IoEvent::RunTest(test_index, exec_index)).await;
             });
 
             threads.push(thread);
@@ -202,10 +215,10 @@ impl IoAsyncHandler {
      *
      * Oh god, this is a mess but it is working
      */
-    async fn run_test(&self, index: usize) -> Result<(), Option<Error>> {
+    async fn run_test(&self, index: usize, exec: usize) -> Result<(), Option<Error>> {
         let mut app = self.app.lock().await;
 
-        let app_name = String::from(&app.exec_name);
+        let app_name = String::from(&app.exec_name[exec]);
 
         let mut out_file = File::create(format!(
             "{}output/{:02}-{}.out",
@@ -229,7 +242,7 @@ impl IoAsyncHandler {
                     format!("{}input/{:02}-{}.ref", app.test_path, index, app_name)
                 );
 
-                let current_test = &mut app.test_list[index];
+                let current_test = &mut app.test_list[exec][index];
                 current_test.status.clear();
                 current_test.status.push_str("ERROR");
                 return Err(Some(a));
@@ -253,7 +266,7 @@ impl IoAsyncHandler {
             binding = Command::new(format!("./{}", app_name));
         }
 
-        let current_test = &mut app.test_list[index];
+        let current_test = &mut app.test_list[exec][index];
         current_test.status.clear();
         current_test.status.push_str("RUNNING");
         let timelimit = current_test.timeout;
@@ -303,7 +316,7 @@ impl IoAsyncHandler {
                             res.push_str("TIMEOUT");
 
                             let mut app = self.app.lock().await;
-                            let current_test = &mut app.test_list[index];
+                            let current_test = &mut app.test_list[exec][index];
                             current_test.status.clear();
                             current_test.status.push_str(&res);
                             current_test.log.clear();
@@ -334,7 +347,7 @@ impl IoAsyncHandler {
                         res.push_str("CRASHED");
 
                         let mut app = self.app.lock().await;
-                        let current_test = &mut app.test_list[index];
+                        let current_test = &mut app.test_list[exec][index];
 
                         current_test.status.clear();
                         current_test.status.push_str(&res);
@@ -356,7 +369,7 @@ impl IoAsyncHandler {
                         res.push_str("MEMLEAKS");
 
                         let mut app = self.app.lock().await;
-                        let current_test = &mut app.test_list[index];
+                        let current_test = &mut app.test_list[exec][index];
 
                         current_test.status.clear();
                         current_test.status.push_str(&res);
@@ -389,7 +402,7 @@ impl IoAsyncHandler {
                 out_file.write_all(log.as_bytes()).await.unwrap();
 
                 let mut app = self.app.lock().await;
-                let current_test = &mut app.test_list[index];
+                let current_test = &mut app.test_list[exec][index];
 
                 if valgrind {
                     current_test.time_valgrind = runtime;
@@ -410,7 +423,7 @@ impl IoAsyncHandler {
             }
             Err(error) => {
                 let mut app = self.app.lock().await;
-                let current_test = &mut app.test_list[index];
+                let current_test = &mut app.test_list[exec][index];
 
                 current_test.status.clear();
                 current_test.status.push_str("ERROR");

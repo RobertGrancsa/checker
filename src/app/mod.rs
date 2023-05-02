@@ -26,23 +26,18 @@ pub struct Test {
     pub log: String,
     pub time_normal: f64,
     pub time_valgrind: f64,
-    pub timeout: usize,
+    pub timeout: u64,
     pub test_score: usize,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Data {
     commands: Vec<String>,
-    tests: Vec<Test>,
+    tests: Vec<Vec<Test>>,
     test_path: String,
-    exec_name: String,
+    exec_name: Vec<String>,
     valgrind_enabled: bool,
 }
-
-// pub struct RunningTest {
-// 	process: Result<Child>,
-// 	index: usize,
-// }
 
 #[derive(Debug, PartialEq, Eq)]
 pub enum AppReturn {
@@ -60,9 +55,10 @@ pub struct App {
     is_loading: bool,
     pub unwritten_data: bool,
     state: AppState,
+    test_num: usize,
     pub titles: Vec<&'static str>,
     pub selected_tab: usize,
-    pub test_list: Vec<Test>,
+    pub test_list: Vec<Vec<Test>>,
     pub commands: Vec<String>,
     pub test_list_state: ListState,
     windows_list_state: ListState,
@@ -70,7 +66,7 @@ pub struct App {
 
     pub valgrind_enabled: bool,
     pub test_path: String,
-    pub exec_name: String,
+    pub exec_name: Vec<String>,
 
     pub current_ref: String,
     pub checkstyle: String,
@@ -99,16 +95,17 @@ impl App {
         let titles = vec!["Test", "Menu", "Tab2", "Tab3"];
         let selected_tab = 0usize;
         let unwritten_data = false;
+        let test_num = test_list[0].len() + test_list[1].len();
 
         let current_ref = fs::read_to_string(format!(
             "{}ref/{:02}-{}.ref",
-            test_path, test_list[0].id, exec_name
+            test_path, test_list[0][0].id, exec_name[0]
         ))
         .unwrap();
 
         let checkstyle = fs::read_to_string(format!("{}checkstyle.txt", test_path)).unwrap();
 
-        let diff = TextDiff::from_lines(&current_ref, &test_list[0].log)
+        let diff = TextDiff::from_lines(&current_ref, &test_list[0][0].log)
             .iter_all_changes()
             .map(|item| {
                 let sign = match item.tag() {
@@ -130,6 +127,7 @@ impl App {
             is_loading,
             unwritten_data,
             state,
+            test_num,
             titles,
             selected_tab,
             test_list,
@@ -153,33 +151,44 @@ impl App {
             match action {
                 Action::Quit => AppReturn::Exit,
                 Action::Run => {
-                    self.dispatch(IoEvent::RunAll(self.test_list.len())).await;
+                    self.dispatch(IoEvent::RunAll(self.test_num)).await;
                     self.dispatch(IoEvent::UpdateRef).await;
                     AppReturn::Continue
                 }
                 Action::RunFailed => {
                     let mut failed = Vec::new();
-                    for test in self.test_list.iter() {
-                        // TODO make this more eficient
-                        if test.status == "0"
-                            || test.status == "TIMEOUT"
-                            || test.status == "CRASHED"
-                            || test.status == "MEMLEAKS"
-                            || test.status == "ERROR"
-                        {
-                            failed.push(test.id);
+                    for (index, execs) in self.test_list.iter().enumerate() {
+                        for test in execs {
+                            // TODO make this more eficient
+                            if test.status == "0"
+                                || test.status == "TIMEOUT"
+                                || test.status == "CRASHED"
+                                || test.status == "MEMLEAKS"
+                                || test.status == "ERROR"
+                            {
+                                failed.push((test.id, index));
+                            }
                         }
                     }
+
                     self.dispatch(IoEvent::RunFailed(failed)).await;
                     self.dispatch(IoEvent::UpdateRef).await;
                     AppReturn::Continue
                 }
                 Action::RunCurrent => {
                     if let Some(index) = self.test_list_state.selected() {
-                        self.test_list[index].status.clear();
-                        self.test_list[index].status.push_str("RUNNING");
+                        let (test_index, exec_index) = (
+                            index % self.test_list[0].len(),
+                            index / self.test_list[0].len(),
+                        );
 
-                        self.dispatch(IoEvent::RunTest(index)).await;
+                        self.test_list[exec_index][test_index].status.clear();
+                        self.test_list[exec_index][test_index]
+                            .status
+                            .push_str("RUNNING");
+
+                        self.dispatch(IoEvent::RunTest(test_index, exec_index))
+                            .await;
                         self.dispatch(IoEvent::UpdateRef).await;
                     } else {
                         warn!("No test selected");
@@ -217,7 +226,7 @@ impl App {
                                     if selected > 0 {
                                         self.test_list_state.select(Some(selected - 1));
                                     } else {
-                                        self.test_list_state.select(Some(self.test_list.len() - 1));
+                                        self.test_list_state.select(Some(self.test_num - 1));
                                     }
 
                                     self.dispatch(IoEvent::UpdateRef).await;
@@ -245,7 +254,7 @@ impl App {
                         match window_index {
                             0 => {
                                 if let Some(selected) = self.test_list_state.selected() {
-                                    if selected >= self.test_list.len() - 1 {
+                                    if selected >= self.test_num - 1 {
                                         self.test_list_state.select(Some(0));
                                     } else {
                                         self.test_list_state.select(Some(selected + 1));
@@ -349,8 +358,10 @@ impl App {
 
     pub fn calculate_score(&self) -> usize {
         let mut score = 0usize;
-        for test in self.test_list.iter() {
-            score += test.status.parse::<usize>().unwrap_or(0);
+        for execs in self.test_list.iter() {
+            for test in execs {
+                score += test.status.parse::<usize>().unwrap_or(0);
+            }
         }
 
         if self.checkstyle.lines().count() == 0 {
