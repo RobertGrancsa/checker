@@ -155,6 +155,7 @@ impl App {
                     if let Some(index) = self.test_list_state.selected() {
                         self.test_list[index].status.clear();
                         self.test_list[index].status.push_str("RUNNING");
+
                         self.dispatch(IoEvent::RunTest(index)).await;
                     } else {
                         warn!("No test selected");
@@ -200,11 +201,12 @@ impl App {
                             }
                             1 => {
                                 if let Some(selected) = self.log_list_state.selected() {
+                                    let size = self.state().get_diffsize().unwrap_or(0);
+
                                     if selected > 0 {
                                         self.log_list_state.select(Some(selected - 1));
                                     } else {
-                                        self.log_list_state
-                                            .select(Some(self.current_ref.lines().count() - 1));
+                                        self.log_list_state.select(Some(size - 1));
                                     }
                                 }
                             }
@@ -230,7 +232,9 @@ impl App {
                             }
                             1 => {
                                 if let Some(selected) = self.log_list_state.selected() {
-                                    if selected >= self.current_ref.lines().count() - 1 {
+                                    let size = self.state().get_diffsize().unwrap_or(0);
+
+                                    if selected >= size - 1 {
                                         self.log_list_state.select(Some(0));
                                     } else {
                                         self.log_list_state.select(Some(selected + 1));

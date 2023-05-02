@@ -26,7 +26,7 @@ int main(void)
 
     if (strcmp(ceva, "malloc") == 0) {
         
-        char *alt = malloc(10000);
+        char *alt = malloc(10000); 
     }
     
     

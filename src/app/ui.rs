@@ -1,15 +1,12 @@
-use std::time::Duration;
-
 use similar::{ChangeTag, TextDiff};
-use symbols::line;
 use tui::backend::Backend;
 use tui::layout::{Alignment, Constraint, Direction, Layout, Rect};
 use tui::style::{Color, Modifier, Style};
 use tui::text::{Span, Spans};
 use tui::widgets::{
-    Block, BorderType, Borders, Cell, List, ListItem, Paragraph, Row, Table, Tabs, Clear, Wrap,
+    Block, BorderType, Borders, Cell, Clear, List, ListItem, Paragraph, Row, Table, Tabs, Wrap,
 };
-use tui::{symbols, Frame};
+use tui::Frame;
 use tui_logger::TuiLoggerWidget;
 
 use super::actions::Actions;
@@ -27,7 +24,6 @@ where
         .direction(Direction::Vertical)
         .constraints(
             [
-                Constraint::Length(0),
                 Constraint::Min(10),
                 // Constraint::Length(3),
                 Constraint::Length(12),
@@ -36,15 +32,11 @@ where
         )
         .split(size);
 
-    // Tabs
-    let tabs = draw_tabs(app);
-    rect.render_widget(tabs, chunks[0]);
-
     // Body & Help
     let body_chunks = Layout::default()
         .direction(Direction::Horizontal)
         .constraints([Constraint::Min(10), Constraint::Length(32)].as_ref())
-        .split(chunks[1]);
+        .split(chunks[0]);
 
     // let body = draw_body(app.is_loading(), app.state());
     // rect.render_widget(body, body_chunks[0]);
@@ -99,7 +91,7 @@ where
 
     // Logs
     let logs = draw_logs();
-    rect.render_widget(logs, chunks[2]);
+    rect.render_widget(logs, chunks[1]);
 
     if let Some(true) = app.state().get_checkstyle() {
         let (area, block) = draw_popup_cs(app, size, 90, 90);
@@ -110,7 +102,8 @@ where
 }
 
 fn draw_popup_cs<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Paragraph<'a>) {
-    let items: Vec<_> = app.checkstyle
+    let items: Vec<_> = app
+        .checkstyle
         .lines()
         .map(|line| {
             let style = match line {
@@ -123,7 +116,7 @@ fn draw_popup_cs<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Paragra
             let split: Vec<&'a str> = line.split(':').collect();
 
             let header = Spans::from(vec![
-                Span::styled(format!("{}:{}:{}:", split[0], split[1], split[2]) , style),
+                Span::styled(format!("{}:{}:{}:", split[0], split[1], split[2]), style),
                 Span::styled(split[3], Style::default().fg(Color::Blue)),
                 Span::raw(":"),
                 Span::raw(split[4]),
@@ -131,12 +124,11 @@ fn draw_popup_cs<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Paragra
 
             // ListItem::new(header)
             header
-        }).collect();
+        })
+        .collect();
 
     let list = Paragraph::new(items)
-        .block(Block::default()
-        .borders(Borders::ALL)
-        .title("Checkstyle"))
+        .block(Block::default().borders(Borders::ALL).title("Checkstyle"))
         .wrap(Wrap { trim: true });
 
     let popup_layout = Layout::default()
@@ -151,22 +143,22 @@ fn draw_popup_cs<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Paragra
         )
         .split(size);
 
-        let area = Layout::default()
-            .direction(Direction::Horizontal)
-            .constraints(
-                [
-                    Constraint::Percentage((100 - x) / 2),
-                    Constraint::Percentage(x),
-                    Constraint::Percentage((100 - x) / 2),
-                ]
-                .as_ref(),
-            )
-            .split(popup_layout[1])[1];
+    let area = Layout::default()
+        .direction(Direction::Horizontal)
+        .constraints(
+            [
+                Constraint::Percentage((100 - x) / 2),
+                Constraint::Percentage(x),
+                Constraint::Percentage((100 - x) / 2),
+            ]
+            .as_ref(),
+        )
+        .split(popup_layout[1])[1];
 
     (area, list)
 }
 
-fn draw_test_list<'a>(app: &App) -> (List<'a>, Table<'a>, List<'a>, usize) {
+fn draw_test_list<'a>(app: &mut App) -> (List<'a>, Table<'a>, List<'a>, usize) {
     let tests: Vec<ListItem> = app
         .test_list
         .iter()
@@ -192,8 +184,12 @@ fn draw_test_list<'a>(app: &App) -> (List<'a>, Table<'a>, List<'a>, usize) {
             ListItem::new(header)
         })
         .collect();
-    
-    let style = Style::default().fg(if app.valgrind_enabled {Color::Red} else {Color::Gray});
+
+    let style = Style::default().fg(if app.valgrind_enabled {
+        Color::Red
+    } else {
+        Color::Gray
+    });
 
     let test_list = List::new(tests)
         .highlight_style(
@@ -202,8 +198,12 @@ fn draw_test_list<'a>(app: &App) -> (List<'a>, Table<'a>, List<'a>, usize) {
                 .fg(Color::Black)
                 .add_modifier(Modifier::BOLD),
         )
-        .block(Block::default().borders(Borders::ALL)
-            .border_style(style).title("Tests"));
+        .block(
+            Block::default()
+                .borders(Borders::ALL)
+                .border_style(style)
+                .title("Tests"),
+        );
 
     let selected_test = app
         .test_list
@@ -277,6 +277,7 @@ fn draw_test_list<'a>(app: &App) -> (List<'a>, Table<'a>, List<'a>, usize) {
             }
         })
         .collect();
+    app.state.set_diffsize(index);
 
     let test_log = List::new(log_items)
         .highlight_style(

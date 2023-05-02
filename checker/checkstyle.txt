@@ -1,12 +1,3 @@
-./src-c/file.c:2: CHECK:LINE_SPACING: Please don't use multiple blank lines
-./src-c/file.c:3: ERROR:FUNCTION_WITHOUT_ARGS: Bad function definition - int main() should probably be int main(void)
-./src-c/file.c:3: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
-./src-c/file.c:4: ERROR:TRAILING_WHITESPACE: trailing whitespace
-./src-c/file.c:4: WARNING:LEADING_SPACE: please, no spaces at the start of a line
-./src-c/file.c:4: CHECK:BRACES: Blank lines aren't necessary after an open brace '{'
-./src-c/file.c:5: WARNING:MISSING_EOF_NEWLINE: adding a line without newline at end of file
-./src-c/file.c:5: CHECK:BRACES: Blank lines aren't necessary before a close brace '}'
-./src-c/file.h:3: WARNING:MISSING_EOF_NEWLINE: adding a line without newline at end of file
 ./test.c:8: WARNING:LEADING_SPACE: please, no spaces at the start of a line
 ./test.c:9: WARNING:LEADING_SPACE: please, no spaces at the start of a line
 ./test.c:10: WARNING:LEADING_SPACE: please, no spaces at the start of a line
@@ -33,6 +24,7 @@
 ./test.c:28: ERROR:CODE_INDENT: code indent should use tabs where possible
 ./test.c:28: WARNING:LEADING_SPACE: please, no spaces at the start of a line
 ./test.c:28: CHECK:BRACES: Blank lines aren't necessary after an open brace '{'
+./test.c:29: ERROR:TRAILING_WHITESPACE: trailing whitespace
 ./test.c:29: ERROR:CODE_INDENT: code indent should use tabs where possible
 ./test.c:29: WARNING:LEADING_SPACE: please, no spaces at the start of a line
 ./test.c:30: WARNING:LEADING_SPACE: please, no spaces at the start of a line
@@ -45,4 +37,3 @@
 ./test.c:34: WARNING:LEADING_SPACE: please, no spaces at the start of a line
 ./test.c:35: WARNING:LEADING_SPACE: please, no spaces at the start of a line
 ./test.c:36: WARNING:MISSING_EOF_NEWLINE: adding a line without newline at end of file
-./file.h:3: WARNING:MISSING_EOF_NEWLINE: adding a line without newline at end of file

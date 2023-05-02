@@ -6,9 +6,9 @@ use std::{process::Stdio, sync::Arc};
 use log::{debug, error, info, warn};
 use tokio::fs::{self, File};
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
-use tokio::join;
 use tokio::process::Command;
 use tokio::time::{timeout, Instant};
+use tokio::join;
 
 use super::IoEvent;
 use crate::app::{App, Data};
@@ -50,6 +50,8 @@ impl IoAsyncHandler {
         app.initialized(); // we could update the app state
         info!("Application initialized");
 
+        self.run_make().await.unwrap();
+
         Ok(())
     }
 
@@ -65,14 +67,15 @@ impl IoAsyncHandler {
         info!("Running checkstyle");
 
         let mut app = self.app.lock().await;
-        
+
         let mut cs = Command::new(format!("{}/cs/cs.sh", app.test_path));
         cs.arg(".");
 
         let output = cs.output().await.unwrap().stdout;
 
         app.checkstyle.clear();
-        app.checkstyle.push_str(&std::str::from_utf8(&output).unwrap());
+        app.checkstyle
+            .push_str(&std::str::from_utf8(&output).unwrap());
 
         let mut out_file = File::create(format!("{}checkstyle.txt", app.test_path))
             .await
@@ -83,9 +86,7 @@ impl IoAsyncHandler {
         Ok(())
     }
 
-    async fn run_all(&mut self, size: usize) -> Result<(), Option<Error>> {
-        let mut threads = Vec::new();
-
+    async fn run_make(&self) -> Result<(), Option<Error>> {
         info!("Running makefile");
         let mut make = Command::new("make");
         let make_run = make.arg("build");
@@ -98,7 +99,18 @@ impl IoAsyncHandler {
                     std::str::from_utf8(&res.stderr).unwrap(),
                 )));
             }
+            info!("\n{}", String::from_utf8(res.stdout).unwrap());
         }
+
+        Ok(())
+    }
+
+    async fn run_all(&mut self, size: usize) -> Result<(), Option<Error>> {
+        let mut threads = Vec::new();
+
+        if let Err(e) = self.run_make().await {
+            return Err(e);
+        };
 
         for index in 0..size {
             let copy = Arc::clone(&self.app);
@@ -122,8 +134,12 @@ impl IoAsyncHandler {
         Ok(())
     }
 
-    async fn run_failed(&mut self, indexes: Vec<usize>) -> Result<(), Option<Error>> {
+    async fn run_failed(&self, indexes: Vec<usize>) -> Result<(), Option<Error>> {
         let mut threads = Vec::new();
+
+        if let Err(e) = self.run_make().await {
+            return Err(e);
+        };
 
         for index in indexes {
             let copy = Arc::clone(&self.app);
@@ -154,7 +170,7 @@ impl IoAsyncHandler {
      *
      * Oh god, this is a mess but it is working
      */
-    async fn run_test(&mut self, index: usize) -> Result<(), Option<Error>> {
+    async fn run_test(&self, index: usize) -> Result<(), Option<Error>> {
         let mut app = self.app.lock().await;
 
         let mut out_file = File::create(format!("{}output/{:02}-test.out", app.test_path, index))

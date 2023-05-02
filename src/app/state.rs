@@ -7,6 +7,7 @@ pub enum AppState {
         duration: Duration,
         counter_tick: u64,
         checkstyle: bool,
+        diff_size: usize,
     },
 }
 
@@ -15,10 +16,12 @@ impl AppState {
         let duration = Duration::from_secs(1);
         let counter_tick = 0;
         let checkstyle = false;
+        let diff_size = 0;
         Self::Initialized {
             duration,
             counter_tick,
             checkstyle,
+            diff_size,
         }
     }
 
@@ -49,6 +52,20 @@ impl AppState {
     pub fn get_checkstyle(&self) -> Option<bool> {
         if let Self::Initialized { checkstyle, .. } = self {
             Some(*checkstyle)
+        } else {
+            None
+        }
+    }
+
+    pub fn set_diffsize(&mut self, size: usize) {
+        if let Self::Initialized { diff_size, .. } = self {
+            *diff_size = size;
+        }
+    }
+
+    pub fn get_diffsize(&self) -> Option<usize> {
+        if let Self::Initialized { diff_size, .. } = self {
+            Some(*diff_size)
         } else {
             None
         }
