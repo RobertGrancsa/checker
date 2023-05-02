@@ -7,6 +7,8 @@ use eyre::Result;
 use inputs::events::Events;
 use inputs::InputEvent;
 use io::IoEvent;
+use log::{debug, info};
+use tokio::time::Instant;
 use tui::backend::CrosstermBackend;
 use tui::Terminal;
 
@@ -45,7 +47,14 @@ pub async fn start_ui(app: &Arc<tokio::sync::Mutex<App>>) -> Result<()> {
         let mut app = app.lock().await;
 
         // Render
+        let start = Instant::now();
         terminal.draw(|rect| ui::draw(rect, &mut app))?;
+        let end = Instant::now();
+
+        debug!(
+            "Took {}ms to render last frame",
+            end.duration_since(start).as_millis()
+        );
 
         // Handle inputs
         let result = match events.next().await {

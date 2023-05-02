@@ -1,8 +1,8 @@
-use std::fmt::format;
 use std::fs;
 
 use log::{debug, error, info, warn};
 use serde::{Deserialize, Serialize};
+use similar::{ChangeTag, TextDiff};
 use tui::widgets::ListState;
 
 use self::actions::Actions;
@@ -16,6 +16,7 @@ pub mod state;
 pub mod ui;
 
 const DB_PATH: &str = "./data.json";
+const CHECKSTYLE_SCORE: usize = 5;
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Test {
@@ -63,7 +64,7 @@ pub struct App {
     pub selected_tab: usize,
     pub test_list: Vec<Test>,
     pub commands: Vec<String>,
-    test_list_state: ListState,
+    pub test_list_state: ListState,
     windows_list_state: ListState,
     pub log_list_state: ListState,
 
@@ -73,6 +74,7 @@ pub struct App {
 
     pub current_ref: String,
     pub checkstyle: String,
+    pub diff: Vec<(&'static str, String)>,
 }
 
 impl App {
@@ -98,11 +100,29 @@ impl App {
         let selected_tab = 0usize;
         let unwritten_data = false;
 
-        let current_ref =
-            fs::read_to_string(format!("{}ref/{:02}-test.ref", test_path, test_list[0].id))
-                .unwrap();
+        let current_ref = fs::read_to_string(format!(
+            "{}ref/{:02}-{}.ref",
+            test_path, test_list[0].id, exec_name
+        ))
+        .unwrap();
 
         let checkstyle = fs::read_to_string(format!("{}checkstyle.txt", test_path)).unwrap();
+
+        let diff = TextDiff::from_lines(&current_ref, &test_list[0].log)
+            .iter_all_changes()
+            .map(|item| {
+                let sign = match item.tag() {
+                    ChangeTag::Delete => "-",
+                    ChangeTag::Insert => "+",
+                    ChangeTag::Equal => " ",
+                };
+
+                match item.missing_newline() {
+                    true => (sign, format!("{}", item)),
+                    false => (sign, format!("{}⏎", item)),
+                }
+            })
+            .collect();
 
         Self {
             io_tx,
@@ -122,6 +142,7 @@ impl App {
             exec_name,
             current_ref,
             checkstyle,
+            diff,
         }
     }
 
@@ -133,6 +154,7 @@ impl App {
                 Action::Quit => AppReturn::Exit,
                 Action::Run => {
                     self.dispatch(IoEvent::RunAll(self.test_list.len())).await;
+                    self.dispatch(IoEvent::UpdateRef).await;
                     AppReturn::Continue
                 }
                 Action::RunFailed => {
@@ -149,6 +171,7 @@ impl App {
                         }
                     }
                     self.dispatch(IoEvent::RunFailed(failed)).await;
+                    self.dispatch(IoEvent::UpdateRef).await;
                     AppReturn::Continue
                 }
                 Action::RunCurrent => {
@@ -157,6 +180,7 @@ impl App {
                         self.test_list[index].status.push_str("RUNNING");
 
                         self.dispatch(IoEvent::RunTest(index)).await;
+                        self.dispatch(IoEvent::UpdateRef).await;
                     } else {
                         warn!("No test selected");
                     }
@@ -196,7 +220,7 @@ impl App {
                                         self.test_list_state.select(Some(self.test_list.len() - 1));
                                     }
 
-                                    self.update_ref();
+                                    self.dispatch(IoEvent::UpdateRef).await;
                                 }
                             }
                             1 => {
@@ -227,7 +251,7 @@ impl App {
                                         self.test_list_state.select(Some(selected + 1));
                                     }
 
-                                    self.update_ref();
+                                    self.dispatch(IoEvent::UpdateRef).await;
                                 }
                             }
                             1 => {
@@ -290,15 +314,6 @@ impl App {
         };
     }
 
-    pub fn update_ref(&mut self) {
-        self.current_ref = fs::read_to_string(format!(
-            "{}ref/{:02}-test.ref",
-            self.test_path,
-            self.test_list[self.test_list_state.selected().unwrap()].id
-        ))
-        .unwrap();
-    }
-
     pub fn actions(&self) -> &Actions {
         &self.actions
     }
@@ -337,6 +352,11 @@ impl App {
         for test in self.test_list.iter() {
             score += test.status.parse::<usize>().unwrap_or(0);
         }
+
+        if self.checkstyle.lines().count() == 0 {
+            score += CHECKSTYLE_SCORE;
+        }
+
         score
     }
 

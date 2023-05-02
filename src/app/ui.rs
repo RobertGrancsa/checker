@@ -1,10 +1,9 @@
-use similar::{ChangeTag, TextDiff};
 use tui::backend::Backend;
 use tui::layout::{Alignment, Constraint, Direction, Layout, Rect};
 use tui::style::{Color, Modifier, Style};
 use tui::text::{Span, Spans};
 use tui::widgets::{
-    Block, BorderType, Borders, Cell, Clear, List, ListItem, Paragraph, Row, Table, Tabs, Wrap,
+    Block, BorderType, Borders, Cell, Clear, List, ListItem, Paragraph, Row, Table, Wrap,
 };
 use tui::Frame;
 use tui_logger::TuiLoggerWidget;
@@ -25,8 +24,7 @@ where
         .constraints(
             [
                 Constraint::Min(10),
-                // Constraint::Length(3),
-                Constraint::Length(12),
+                Constraint::Length(10),
             ]
             .as_ref(),
         )
@@ -75,8 +73,8 @@ where
             }
             rect.render_stateful_widget(test_log, info_layout[1], &mut app.log_list_state);
         } else {
-            app.log_list_state.select(None);
             rect.render_widget(test_log, info_layout[1]);
+            app.log_list_state.select(None);
         }
     }
 
@@ -249,32 +247,31 @@ fn draw_test_list<'a>(app: &mut App) -> (List<'a>, Table<'a>, List<'a>, usize) {
     ])
     .block(Block::default().borders(Borders::ALL).title("Details"));
 
-    // TODO: Don't read this file on every tick
-    // let ref_file = fs::read_to_string(format!("{}ref/{}-test.ref", app.test_path, selected_test.id)).unwrap();
-
-    let diff = TextDiff::from_lines(&app.current_ref, &selected_test.log);
+    // let diff = TextDiff::from_lines(&app.current_ref, &selected_test.log);
 
     let mut index = 0;
     let mut first_diff: usize = usize::MAX;
-    let log_items: Vec<ListItem> = diff
-        .iter_all_changes()
-        .map(|line| {
-            let (sign, style) = match line.tag() {
-                ChangeTag::Delete => ("-", Style::default().fg(Color::Red)),
-                ChangeTag::Insert => ("+", Style::default().fg(Color::Yellow)),
-                ChangeTag::Equal => (" ", Style::default().fg(Color::Gray)),
+    let log_items: Vec<ListItem> = app
+        .diff
+        .iter()
+        .map(|(sign, line)| {
+            let style = match *sign {
+                "-" => Style::default().fg(Color::Red),
+                "+" => Style::default().fg(Color::Yellow),
+                " " => Style::default().fg(Color::Gray),
+                _ => Style::default(),
             };
 
-            if line.tag() != ChangeTag::Equal && first_diff > index {
+            if *sign != " " && first_diff > index {
                 first_diff = index;
             }
 
             index += 1;
 
-            match line.missing_newline() {
-                true => ListItem::new(Span::styled(format!("{}{}", sign, line), style)),
-                false => ListItem::new(Span::styled(format!("{}{}⏎", sign, line), style)),
-            }
+            ListItem::new(Spans::from(vec![
+                Span::styled(sign.to_string(), style),
+                Span::styled(line.to_string(), style),
+            ]))
         })
         .collect();
     app.state.set_diffsize(index);
@@ -319,38 +316,38 @@ fn draw_final_score<'a>(app: &App) -> Paragraph<'a> {
     )
 }
 
-fn draw_tabs<'a>(app: &App) -> Tabs<'a> {
-    let titles = app
-        .titles
-        .iter()
-        .map(|t| {
-            let (first, rest) = t.split_at(1);
-            Spans::from(vec![
-                Span::styled(
-                    first,
-                    Style::default()
-                        .fg(Color::Yellow)
-                        .add_modifier(Modifier::UNDERLINED),
-                ),
-                Span::styled(rest, Style::default().fg(Color::Green)),
-            ])
-        })
-        .collect();
+// fn draw_tabs<'a>(app: &App) -> Tabs<'a> {
+//     let titles = app
+//         .titles
+//         .iter()
+//         .map(|t| {
+//             let (first, rest) = t.split_at(1);
+//             Spans::from(vec![
+//                 Span::styled(
+//                     first,
+//                     Style::default()
+//                         .fg(Color::Yellow)
+//                         .add_modifier(Modifier::UNDERLINED),
+//                 ),
+//                 Span::styled(rest, Style::default().fg(Color::Green)),
+//             ])
+//         })
+//         .collect();
 
-    Tabs::new(titles)
-        .select(app.selected_tab)
-        .block(Block::default().title("Menu").borders(Borders::ALL))
-        .style(Style::default().fg(Color::Cyan))
-        .highlight_style(Style::default().add_modifier(Modifier::BOLD))
-        .divider(Span::raw("|"))
-}
+//     Tabs::new(titles)
+//         .select(app.selected_tab)
+//         .block(Block::default().title("Menu").borders(Borders::ALL))
+//         .style(Style::default().fg(Color::Cyan))
+//         .highlight_style(Style::default().add_modifier(Modifier::BOLD))
+//         .divider(Span::raw("|"))
+// }
 
 fn check_size(rect: &Rect) {
     if rect.width < 52 {
         panic!("Require width >= 52, (got {})", rect.width);
     }
-    if rect.height < 28 {
-        panic!("Require height >= 28, (got {})", rect.height);
+    if rect.height < 24 {
+        panic!("Require height >= 24, (got {})", rect.height);
     }
 }
 

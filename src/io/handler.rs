@@ -4,11 +4,11 @@ use std::{process::Stdio, sync::Arc};
 
 // use eyre::{Result, ErrReport};
 use log::{debug, error, info, warn};
+use similar::{ChangeTag, TextDiff};
 use tokio::fs::{self, File};
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
 use tokio::process::Command;
 use tokio::time::{timeout, Instant};
-use tokio::join;
 
 use super::IoEvent;
 use crate::app::{App, Data};
@@ -34,14 +34,12 @@ impl IoAsyncHandler {
             IoEvent::RunFailed(indexes) => self.run_failed(indexes).await,
             IoEvent::SaveData(data) => self.save_data(data).await,
             IoEvent::LoadChecksyle => self.load_cs().await,
+            IoEvent::UpdateRef => self.update_ref().await,
         };
 
         if let Err(Some(output)) = result {
             error!("Oops, something wrong happen: \n{}", output.to_string());
         }
-
-        let mut app = self.app.lock().await;
-        app.loaded();
     }
 
     /// We use dummy implementation here, just wait 1s
@@ -51,6 +49,40 @@ impl IoAsyncHandler {
         info!("Application initialized");
 
         self.run_make().await.unwrap();
+
+        Ok(())
+    }
+
+    async fn update_ref(&mut self) -> Result<(), Option<Error>> {
+        let mut app = self.app.lock().await;
+
+        app.current_ref = fs::read_to_string(format!(
+            "{}ref/{:02}-{}.ref",
+            app.test_path,
+            app.test_list[app.test_list_state.selected().unwrap()].id,
+            app.exec_name
+        ))
+        .await
+        .unwrap();
+
+        app.diff = TextDiff::from_lines(
+            &app.current_ref,
+            &app.test_list[app.test_list_state.selected().unwrap()].log,
+        )
+        .iter_all_changes()
+        .map(|item| {
+            let sign = match item.tag() {
+                ChangeTag::Delete => "-",
+                ChangeTag::Insert => "+",
+                ChangeTag::Equal => " ",
+            };
+
+            match item.missing_newline() {
+                true => (sign, format!("{}", item)),
+                false => (sign, format!("{}⏎", item)),
+            }
+        })
+        .collect();
 
         Ok(())
     }
@@ -173,34 +205,28 @@ impl IoAsyncHandler {
     async fn run_test(&self, index: usize) -> Result<(), Option<Error>> {
         let mut app = self.app.lock().await;
 
-        let mut out_file = File::create(format!("{}output/{:02}-test.out", app.test_path, index))
-            .await
-            .unwrap();
+        let app_name = String::from(&app.exec_name);
+
+        let mut out_file = File::create(format!(
+            "{}output/{:02}-{}.out",
+            app.test_path, index, app_name
+        ))
+        .await
+        .unwrap();
 
         let valgrind = app.valgrind_enabled;
 
-        let in_prom = fs::read(format!("{}input/{:02}-test.in", app.test_path, index));
-        let ref_prom = fs::read(format!("{}ref/{:02}-test.ref", app.test_path, index));
+        let ref_prom = fs::read(format!(
+            "{}ref/{:02}-{}.ref",
+            app.test_path, index, app_name
+        ));
 
-        let (in_file, ref_file) = join!(in_prom, ref_prom);
-
-        let (in_file, ref_file) = match (in_file, ref_file) {
-            (Ok(f1), Ok(f2)) => (f1, f2),
-            (Err(a), _) => {
+        let ref_file = match ref_prom.await {
+            Ok(f1) => f1,
+            Err(a) => {
                 error!(
                     "Cannot find {}",
-                    format!("{}ref/{:02}-test.ref", app.test_path, index)
-                );
-
-                let current_test = &mut app.test_list[index];
-                current_test.status.clear();
-                current_test.status.push_str("ERROR");
-                return Err(Some(a));
-            }
-            (_, Err(a)) => {
-                error!(
-                    "Cannot find {}",
-                    format!("{}in/{:02}-test.in", app.test_path, index)
+                    format!("{}input/{:02}-{}.ref", app.test_path, index, app_name)
                 );
 
                 let current_test = &mut app.test_list[index];
@@ -213,17 +239,18 @@ impl IoAsyncHandler {
         let mut binding: Command;
         if valgrind {
             binding = Command::new("valgrind");
-            binding.arg(format!(
-                "--log-file={}output/{:02}-test.valgrind",
-                app.test_path, index
-            ));
-            binding.arg("--leak-check=full");
-            binding.arg("--track-origins=yes");
-            binding.arg("--show-leak-kinds=all");
-            binding.arg("--error-exitcode=69");
-            binding.arg(app.exec_name.clone());
+            binding
+                .arg(format!(
+                    "--log-file={}output/{:02}-{}.valgrind",
+                    app.test_path, index, app_name
+                ))
+                .arg("--leak-check=full")
+                .arg("--track-origins=yes")
+                .arg("--show-leak-kinds=all")
+                .arg("--error-exitcode=69")
+                .arg(format!("./{}", app_name));
         } else {
-            binding = Command::new(app.exec_name.clone());
+            binding = Command::new(format!("./{}", app_name));
         }
 
         let current_test = &mut app.test_list[index];
@@ -235,34 +262,25 @@ impl IoAsyncHandler {
             "Running test number {} with status {}",
             index, current_test.status
         );
+        let in_file = std::fs::File::open(format!(
+            "{}input/{:02}-{}.in",
+            app.test_path, index, app_name
+        ))
+        .unwrap();
         drop(app);
 
-        let run = binding.stdin(Stdio::piped()).stdout(Stdio::piped());
+        let run = binding.stdin(in_file).stdout(Stdio::piped());
 
         debug!("Executing {:?}", run);
         match run.spawn() {
             Ok(mut child) => {
                 debug!("{:?}", child);
 
-                let child_stdin = child.stdin.as_mut().unwrap();
-                let mut lines = in_file.lines();
-
-                while let Some(mut line) = lines.next_line().await.unwrap() {
-                    line.push('\n');
-                    match child_stdin.write(line.as_bytes()).await {
-                        Ok(_) => {
-                            debug!("wrote {}", line);
-                        }
-                        Err(error) => {
-                            warn!("{:?}", error);
-                        }
-                    }
-                }
-                drop(child_stdin);
-
                 let mut log = String::new();
                 let mut res = String::new();
                 let start = Instant::now();
+
+                debug!("Finished input, waiting for stdout");
 
                 if let Some(ref mut stdout) = child.stdout {
                     let mut lines = BufReader::new(stdout).lines();
@@ -301,6 +319,8 @@ impl IoAsyncHandler {
                             return Ok(());
                         }
                     }
+                } else {
+                    warn!("I think it crashed");
                 }
 
                 debug!("time here is {}", start.elapsed().as_secs_f64());

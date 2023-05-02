@@ -1,0 +1,15 @@
+==377861== Memcheck, a memory error detector
+==377861== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==377861== Using Valgrind-3.20.0 and LibVEX; rerun with -h for copyright info
+==377861== Command: ./kNN
+==377861== Parent PID: 375595
+==377861== 
+==377861== 
+==377861== HEAP SUMMARY:
+==377861==     in use at exit: 0 bytes in 0 blocks
+==377861==   total heap usage: 888 allocs, 888 frees, 24,240 bytes allocated
+==377861== 
+==377861== All heap blocks were freed -- no leaks are possible
+==377861== 
+==377861== For lists of detected and suppressed errors, rerun with: -s
+==377861== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

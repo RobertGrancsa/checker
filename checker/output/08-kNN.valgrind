@@ -1,0 +1,15 @@
+==378000== Memcheck, a memory error detector
+==378000== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==378000== Using Valgrind-3.20.0 and LibVEX; rerun with -h for copyright info
+==378000== Command: ./kNN
+==378000== Parent PID: 375595
+==378000== 
+==378000== 
+==378000== HEAP SUMMARY:
+==378000==     in use at exit: 0 bytes in 0 blocks
+==378000==   total heap usage: 939,714 allocs, 939,714 frees, 11,930,464 bytes allocated
+==378000== 
+==378000== All heap blocks were freed -- no leaks are possible
+==378000== 
+==378000== For lists of detected and suppressed errors, rerun with: -s
+==378000== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
