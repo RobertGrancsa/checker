@@ -4,16 +4,16 @@
 typedef struct kd_node_t kd_node_t;
 
 struct kd_node_t {
-    int *data;
-    kd_node_t *left, *right;
+	int *data;
+	kd_node_t *left, *right;
 };
 
 typedef struct kd_tree_t kd_tree_t;
 
 struct kd_tree_t {
-    kd_node_t *root;
-    int n, k;
-    int (*dist_fun)(int *, int *, int);
+	kd_node_t *root;
+	int n, k;
+	int (*dist_fun)(int *, int *, int);
 };
 
 void load(kd_tree_t *kd, char *file_name);

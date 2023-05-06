@@ -299,17 +299,37 @@ impl IoAsyncHandler {
                     let mut lines = BufReader::new(stdout).lines();
 
                     loop {
-                        if let Ok(res) =
-                            timeout(Duration::from_millis(timelimit as u64), lines.next_line())
-                                .await
+                        if let Ok(res_line) =
+                            timeout(Duration::from_millis(timelimit), lines.next_line()).await
                         {
-                            if let Ok(Some(line)) = res {
+                            if let Ok(Some(line)) = res_line {
                                 let l: String = format!("{}\n", line);
                                 debug!("file_contains {}", l);
                                 log.push_str(&l);
                             } else {
                                 debug!("Finished reading from stdout");
                                 break;
+                            }
+
+                            if start.elapsed().as_millis() > timelimit as u128 {
+                                warn!("timeout");
+                                res.push_str("TIMEOUT");
+
+                                let mut app = self.app.lock().await;
+                                let current_test = &mut app.test_list[exec][index];
+                                current_test.status.clear();
+                                current_test.status.push_str(&res);
+                                current_test.log.clear();
+
+                                if valgrind {
+                                    current_test.time_valgrind = start.elapsed().as_secs_f64();
+                                } else {
+                                    current_test.time_normal = start.elapsed().as_secs_f64();
+                                }
+
+                                child.kill().await.unwrap();
+
+                                return Ok(());
                             }
                         } else {
                             warn!("timeout");

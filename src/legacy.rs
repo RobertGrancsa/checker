@@ -1,11 +1,11 @@
 use std::fs::{self, File};
-use std::io::{BufReader, BufRead, Write};
+use std::io::{BufRead, BufReader, Write};
 use std::process::{Command, Stdio};
 use std::time::Instant;
 
 use checker::app::{App, Test};
 
-pub fn run_tests(app: App) {
+pub fn run_tests(mut app: App) {
     let mut score: usize = 0;
 
     println!("Running makefile");
@@ -15,7 +15,9 @@ pub fn run_tests(app: App) {
 
     if let Some(code) = res.status.code() {
         if code != 0 {
-            println!("Makefile error, stopping");
+            println!("Makefile error or makefile not found, stopping");
+            println!("{}", String::from_utf8(res.stdout).unwrap());
+            println!("{}", String::from_utf8(res.stderr).unwrap());
             return;
         }
         println!("{}", String::from_utf8(res.stdout).unwrap());
@@ -35,7 +37,41 @@ pub fn run_tests(app: App) {
         }
     }
 
-    println!("Final score: {score}/100");
+    println!("Running checkstyle");
+
+    let mut cs = Command::new(format!("{}/cs/cs.sh", app.test_path));
+    cs.arg(".");
+
+    let output = cs.output().unwrap().stdout;
+
+    app.checkstyle.clear();
+    app.checkstyle
+        .push_str(&std::str::from_utf8(&output).unwrap());
+
+    let mut out_file = File::create(format!("{}checkstyle.txt", app.test_path)).unwrap();
+
+    out_file.write_all(&output).unwrap();
+
+    if app.checkstyle.len() == 0 {
+        println!("No coding style errors found");
+        score += 5;
+    } else {
+        println!("{}", app.checkstyle);
+        println!(
+            "Check {}chekstyle.txt for all the {} errors\n",
+            app.test_path,
+            app.checkstyle.lines().count()
+        );
+    }
+
+    println!("Running make clean");
+    let mut make = Command::new("make");
+    make.arg("clean");
+    let mut child = make.spawn().unwrap();
+
+    child.wait().unwrap();
+
+    println!("Final score: {score}/100\n");
 }
 
 fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Result<usize, ()> {
@@ -55,7 +91,8 @@ fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Resu
     let mut out_file =
         File::create(format!("{}output/{:02}-{}.out", path, index, app_name)).unwrap();
 
-    let ref_file = if let Ok(file) = fs::read(format!("{}ref/{:02}-{}.ref", path, index, app_name)) {
+    let ref_file = if let Ok(file) = fs::read(format!("{}ref/{:02}-{}.ref", path, index, app_name))
+    {
         file
     } else {
         return Err(());
@@ -76,7 +113,7 @@ fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Resu
 
         if let Some(ref mut stdout) = child.stdout {
             let mut lines = BufReader::new(stdout).lines();
-            
+
             loop {
                 let res = lines.next();
                 if let Some(Ok(line)) = res {
@@ -85,9 +122,16 @@ fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Resu
                 } else {
                     break;
                 }
-                
+
                 if start.elapsed().as_millis() > test.timeout as u128 {
-                    return Err(());
+                    println!("\t\tTime: {:.5}", start.elapsed().as_secs_f64());
+                    println!(
+                        "Test {index:02}{}TIMEOUT: 0/{}",
+                        ".".repeat(26),
+                        test.test_score
+                    );
+
+                    return Ok(0);
                 }
             }
         } else {
@@ -97,12 +141,20 @@ fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Resu
         if let Ok(out) = child.wait_with_output() {
             if out.status.code().is_none() {
                 println!("\t\tTime: {:.5}", start.elapsed().as_secs_f64());
-                println!("Test {index:02}{}CRASHED: 0/{}", ".".repeat(26), test.test_score);
+                println!(
+                    "Test {index:02}{}CRASHED: 0/{}",
+                    ".".repeat(26),
+                    test.test_score
+                );
 
                 return Ok(0);
             } else if let Some(69) = out.status.code() {
                 println!("\t\tTime: {:.5}", start.elapsed().as_secs_f64());
-                println!("Test {index:02}{}MEMLEAKS: 0/{}", ".".repeat(25), test.test_score);
+                println!(
+                    "Test {index:02}{}MEMLEAKS: 0/{}",
+                    ".".repeat(25),
+                    test.test_score
+                );
 
                 return Ok(0);
             }
@@ -113,9 +165,18 @@ fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Resu
         println!("\t\tTime: {:.5}", start.elapsed().as_secs_f64());
 
         if log_file == std::str::from_utf8(&ref_file).unwrap() {
-            println!("Test {index:02}{}PASSED: {}/{}", ".".repeat(27), test.test_score, test.test_score);
+            println!(
+                "Test {index:02}{}PASSED: {}/{}",
+                ".".repeat(27),
+                test.test_score,
+                test.test_score
+            );
         } else {
-            println!("Test {index:02}{}FAILED: 0/{}", ".".repeat(27), test.test_score);
+            println!(
+                "Test {index:02}{}FAILED: 0/{}",
+                ".".repeat(27),
+                test.test_score
+            );
         }
 
         out_file.write_all(log_file.as_bytes()).unwrap();
