@@ -34,7 +34,7 @@ impl IoAsyncHandler {
             IoEvent::RunFailed(indexes) => self.run_failed(indexes).await,
             IoEvent::SaveData(data) => self.save_data(data).await,
             IoEvent::LoadChecksyle => self.load_cs().await,
-            IoEvent::UpdateRef => self.update_ref().await,
+            IoEvent::Make => self.run_make().await,
         };
 
         self.update_ref().await.unwrap();

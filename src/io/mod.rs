@@ -10,5 +10,5 @@ pub enum IoEvent {
     RunFailed(Vec<(usize, usize)>),
     SaveData(Data),
     LoadChecksyle,
-    UpdateRef,
+    Make,
 }

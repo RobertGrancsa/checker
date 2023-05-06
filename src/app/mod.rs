@@ -174,6 +174,7 @@ impl App {
                     AppReturn::Continue
                 }
                 Action::RunCurrent => {
+                    self.dispatch(IoEvent::Make).await;
                     if let Some(index) = self.test_list_state.selected() {
                         let (test_index, exec_index) = (
                             index % self.test_list[0].len(),
@@ -225,7 +226,7 @@ impl App {
                                         self.test_list_state.select(Some(self.test_num - 1));
                                     }
 
-                                    self.dispatch(IoEvent::UpdateRef).await;
+                                    self.dispatch(IoEvent::Make).await;
                                 }
                             }
                             1 => {
@@ -256,7 +257,7 @@ impl App {
                                         self.test_list_state.select(Some(selected + 1));
                                     }
 
-                                    self.dispatch(IoEvent::UpdateRef).await;
+                                    self.dispatch(IoEvent::Make).await;
                                 }
                             }
                             1 => {

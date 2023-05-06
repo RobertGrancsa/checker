@@ -11,7 +11,7 @@
         "name": "kNN 1",
         "status": "4",
         "log": "-3 2 \n-3 2 \n3 -1 \n10 -7 \n-5 7 \n3 -1 \n10 -7 \n",
-        "time_normal": 0.000399353,
+        "time_normal": 0.001102872,
         "time_valgrind": 1.239639348,
         "timeout": 30000,
         "test_score": 4

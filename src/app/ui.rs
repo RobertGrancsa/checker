@@ -75,12 +75,6 @@ where
     let help = draw_help(app.actions());
     rect.render_widget(help, body_chunks[1]);
 
-    // Duration LineGauge
-    // if let Some(duration) = app.state().duration() {
-    //     let duration_block = draw_duration(duration);
-    //     rect.render_widget(duration_block, chunks[2]);
-    // }
-
     // Logs
     let logs = draw_logs();
     rect.render_widget(logs, chunks[1]);
@@ -343,32 +337,6 @@ fn draw_final_score<'a>(app: &App) -> Paragraph<'a> {
     )
 }
 
-// fn draw_tabs<'a>(app: &App) -> Tabs<'a> {
-//     let titles = app
-//         .titles
-//         .iter()
-//         .map(|t| {
-//             let (first, rest) = t.split_at(1);
-//             Spans::from(vec![
-//                 Span::styled(
-//                     first,
-//                     Style::default()
-//                         .fg(Color::Yellow)
-//                         .add_modifier(Modifier::UNDERLINED),
-//                 ),
-//                 Span::styled(rest, Style::default().fg(Color::Green)),
-//             ])
-//         })
-//         .collect();
-
-//     Tabs::new(titles)
-//         .select(app.selected_tab)
-//         .block(Block::default().title("Menu").borders(Borders::ALL))
-//         .style(Style::default().fg(Color::Cyan))
-//         .highlight_style(Style::default().add_modifier(Modifier::BOLD))
-//         .divider(Span::raw("|"))
-// }
-
 fn check_size(rect: &Rect) {
     if rect.width < 52 {
         panic!("Require width >= 52, (got {})", rect.width);
@@ -377,27 +345,6 @@ fn check_size(rect: &Rect) {
         panic!("Require height >= 24, (got {})", rect.height);
     }
 }
-
-// fn draw_duration(duration: &Duration) -> LineGauge {
-//     let sec = duration.as_secs();
-//     let label = format!("{}s", sec);
-//     let ratio = sec as f64 / 10.0;
-//     LineGauge::default()
-//         .block(
-//             Block::default()
-//                 .borders(Borders::ALL)
-//                 .title("Sleep duration"),
-//         )
-//         .gauge_style(
-//             Style::default()
-//                 .fg(Color::Cyan)
-//                 .bg(Color::Black)
-//                 .add_modifier(Modifier::BOLD),
-//         )
-//         .line_set(line::THICK)
-//         .label(label)
-//         .ratio(ratio)
-// }
 
 fn draw_help(actions: &Actions) -> Table {
     let key_style = Style::default().fg(Color::LightCyan);
