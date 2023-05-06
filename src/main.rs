@@ -1,10 +1,10 @@
 use std::env;
 use std::sync::Arc;
 
-use checker::app::App;
-use checker::io::handler::IoAsyncHandler;
-use checker::io::IoEvent;
-use checker::start_ui;
+use checker_tema_3_sd::app::App;
+use checker_tema_3_sd::io::handler::IoAsyncHandler;
+use checker_tema_3_sd::io::IoEvent;
+use checker_tema_3_sd::start_ui;
 use eyre::Result;
 use log::{info, LevelFilter};
 

@@ -3,7 +3,7 @@ use std::io::{BufRead, BufReader, Write};
 use std::process::{Command, Stdio};
 use std::time::Instant;
 
-use checker::app::{App, Test};
+use checker_tema_3_sd::app::{App, Test};
 
 pub fn run_tests(mut app: App) {
     let mut score: usize = 0;
