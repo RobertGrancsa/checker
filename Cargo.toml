@@ -16,7 +16,9 @@ exclude = [
     "*.h",
     "Makefile",
     "data/*",
-    "checker/*"
+    "checker/*",
+    "*.sh",
+    "*.zip",
 ]
 
 

@@ -1,3 +1,6 @@
 /target
 new_core*
 *.o
+*.zip
+kNN
+mk

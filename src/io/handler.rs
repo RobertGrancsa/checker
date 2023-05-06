@@ -37,6 +37,8 @@ impl IoAsyncHandler {
             IoEvent::UpdateRef => self.update_ref().await,
         };
 
+        self.update_ref().await.unwrap();
+
         if let Err(Some(output)) = result {
             error!("Oops, something wrong happen: \n{}", output.to_string());
         }
@@ -53,7 +55,7 @@ impl IoAsyncHandler {
         Ok(())
     }
 
-    async fn update_ref(&mut self) -> Result<(), Option<Error>> {
+    async fn update_ref(&self) -> Result<(), Option<Error>> {
         let mut app = self.app.lock().await;
 
         let index = app.test_list_state.selected().unwrap();

@@ -152,7 +152,6 @@ impl App {
                 Action::Quit => AppReturn::Exit,
                 Action::Run => {
                     self.dispatch(IoEvent::RunAll(self.test_num)).await;
-                    self.dispatch(IoEvent::UpdateRef).await;
                     AppReturn::Continue
                 }
                 Action::RunFailed => {
@@ -172,7 +171,6 @@ impl App {
                     }
 
                     self.dispatch(IoEvent::RunFailed(failed)).await;
-                    self.dispatch(IoEvent::UpdateRef).await;
                     AppReturn::Continue
                 }
                 Action::RunCurrent => {
@@ -189,7 +187,6 @@ impl App {
 
                         self.dispatch(IoEvent::RunTest(test_index, exec_index))
                             .await;
-                        self.dispatch(IoEvent::UpdateRef).await;
                     } else {
                         warn!("No test selected");
                     }
@@ -206,7 +203,6 @@ impl App {
                     }
                     AppReturn::Continue
                 }
-                // Note, that we clamp the duration, so we stay >= 0
                 Action::LeftList => {
                     if let Some(index) = self.windows_list_state.selected() {
                         if index == 1 {

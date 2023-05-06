@@ -1,5 +1,4 @@
-use std::env;
-use std::sync::Arc;
+use std::{env, sync::Arc, thread::available_parallelism};
 
 use checker_tema_3_sd::app::App;
 use checker_tema_3_sd::io::handler::IoAsyncHandler;
@@ -14,7 +13,7 @@ mod legacy;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let (sync_io_tx, mut sync_io_rx) = tokio::sync::mpsc::channel::<IoEvent>(100);
+    let (sync_io_tx, sync_io_rx) = tokio::sync::mpsc::channel::<IoEvent>(100);
 
     let args: Vec<String> = env::args().collect();
 
@@ -32,18 +31,31 @@ async fn main() -> Result<()> {
     // We need to share the App between thread
     let app = Arc::new(tokio::sync::Mutex::new(App::new(sync_io_tx.clone())));
     let app_ui = Arc::clone(&app);
+    let receive = Arc::new(tokio::sync::Mutex::new(sync_io_rx));
 
     // Configure log
     tui_logger::init_logger(LevelFilter::Info).unwrap();
     tui_logger::set_default_level(log::LevelFilter::Info);
 
     // Handle IO in a specifc thread
-    tokio::spawn(async move {
-        let mut handler = IoAsyncHandler::new(app);
-        while let Some(io_event) = sync_io_rx.recv().await {
-            handler.handle_io_event(io_event).await;
-        }
-    });
+
+    let threads = available_parallelism().unwrap().get();
+
+    for _ in 0..threads {
+        let app_clone = Arc::clone(&app);
+        let receive_clone = Arc::clone(&receive);
+
+        tokio::spawn(async move {
+            let mut handler = IoAsyncHandler::new(app_clone);
+            loop {
+                let mut copy = receive_clone.lock().await;
+                if let Some(io_event) = copy.recv().await {
+                    drop(copy);
+                    handler.handle_io_event(io_event).await;
+                }
+            }
+        });
+    }
 
     start_ui(&app_ui).await?;
 
