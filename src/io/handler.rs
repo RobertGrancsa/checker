@@ -109,7 +109,7 @@ impl IoAsyncHandler {
 
         app.checkstyle.clear();
         app.checkstyle
-            .push_str(&std::str::from_utf8(&output).unwrap());
+            .push_str(std::str::from_utf8(&output).unwrap());
 
         let mut out_file = File::create(format!("{}checkstyle.txt", app.test_path))
             .await
@@ -142,9 +142,7 @@ impl IoAsyncHandler {
     async fn run_all(&mut self, size: usize) -> Result<(), Option<Error>> {
         let mut threads = Vec::new();
 
-        if let Err(e) = self.run_make().await {
-            return Err(e);
-        };
+        self.run_make().await?;
 
         for index in 0..size {
             let copy = Arc::clone(&self.app);
@@ -178,9 +176,7 @@ impl IoAsyncHandler {
     async fn run_failed(&self, indexes: Vec<(usize, usize)>) -> Result<(), Option<Error>> {
         let mut threads = Vec::new();
 
-        if let Err(e) = self.run_make().await {
-            return Err(e);
-        };
+        self.run_make().await?;
 
         for index in indexes {
             let copy = Arc::clone(&self.app);
@@ -409,13 +405,13 @@ impl IoAsyncHandler {
                     error!("Oops");
                 }
 
-                let correct: bool;
-                if log == std::str::from_utf8(&ref_file).unwrap() {
-                    correct = true;
+                let correct: bool = if log == std::str::from_utf8(&ref_file).unwrap() {
+                    true
                 } else {
                     res.push('0');
-                    correct = false;
-                }
+                    false
+                };
+
                 let runtime = start.elapsed().as_secs_f64();
                 debug!("time={:5}", runtime);
 

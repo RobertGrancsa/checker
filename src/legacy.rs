@@ -30,7 +30,7 @@ pub fn run_tests(mut app: App) {
         println!("==== {app_name} ====");
 
         for (index, test) in test_list.iter().enumerate() {
-            match run_test(&test, index, &app_name, &app.test_path) {
+            match run_test(test, index, app_name, &app.test_path) {
                 Ok(amount) => score += amount,
                 Err(err) => println!("Error {:?}", err),
             };
@@ -46,13 +46,13 @@ pub fn run_tests(mut app: App) {
 
     app.checkstyle.clear();
     app.checkstyle
-        .push_str(&std::str::from_utf8(&output).unwrap());
+        .push_str(std::str::from_utf8(&output).unwrap());
 
     let mut out_file = File::create(format!("{}checkstyle.txt", app.test_path)).unwrap();
 
     out_file.write_all(&output).unwrap();
 
-    if app.checkstyle.len() == 0 {
+    if app.checkstyle.is_empty() {
         println!("No coding style errors found");
         score += 5;
     } else {
