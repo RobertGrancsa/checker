@@ -65,6 +65,7 @@ int main() {
     scanf("%s", buff);
     int **a = NULL, n, k;
     load(&a, &n, &k, buff);
+    mergesort(a, k, 0, n);
 
     while(1) {
         scanf("%s", buff);

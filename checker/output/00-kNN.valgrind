@@ -1,15 +1,15 @@
-==380927== Memcheck, a memory error detector
-==380927== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==380927== Using Valgrind-3.20.0 and LibVEX; rerun with -h for copyright info
-==380927== Command: ./kNN
-==380927== Parent PID: 380572
-==380927== 
-==380927== 
-==380927== HEAP SUMMARY:
-==380927==     in use at exit: 0 bytes in 0 blocks
-==380927==   total heap usage: 47 allocs, 47 frees, 13,248 bytes allocated
-==380927== 
-==380927== All heap blocks were freed -- no leaks are possible
-==380927== 
-==380927== For lists of detected and suppressed errors, rerun with: -s
-==380927== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==252325== Memcheck, a memory error detector
+==252325== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==252325== Using Valgrind-3.20.0 and LibVEX; rerun with -h for copyright info
+==252325== Command: ./kNN
+==252325== Parent PID: 252145
+==252325== 
+==252325== 
+==252325== HEAP SUMMARY:
+==252325==     in use at exit: 0 bytes in 0 blocks
+==252325==   total heap usage: 50 allocs, 50 frees, 13,272 bytes allocated
+==252325== 
+==252325== All heap blocks were freed -- no leaks are possible
+==252325== 
+==252325== For lists of detected and suppressed errors, rerun with: -s
+==252325== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

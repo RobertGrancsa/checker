@@ -1,12 +1,12 @@
 LOAD data/file0.txt
-NN 10 4 
-RS -10 -9 -10 9 
-NN -10 -2 
-RS 9 9 -3 3 
-NN 9 7 
-RS 1 8 1 4 
-NN 5 8 
-RS -8 0 -7 1 
-NN 5 10 
-RS -7 -6 9 10 
+NN 0 9 
+RS 9 10 3 6 
+NN 1 -6 
+RS 6 6 3 6 
+NN 10 -10 
+RS 6 9 -1 5 
+NN -9 -1 
+RS 1 4 -8 7 
+NN -7 -1 
+RS 5 6 -4 -3 
 EXIT

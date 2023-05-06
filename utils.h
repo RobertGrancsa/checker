@@ -2,7 +2,6 @@
 #define UTILS_H_
 
 #include <errno.h>
-
 #define DIE(assertion, call_description)				\
 	do {								\
 		if (assertion) {					\
@@ -16,5 +15,6 @@
 void swap(int **a, int **b);
 int min(int a, int b);
 int sqr(int x);
+void mergesort(int **a, int k, int left, int right);
 
 #endif

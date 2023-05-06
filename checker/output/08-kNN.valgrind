@@ -1,15 +1,123 @@
-==378000== Memcheck, a memory error detector
-==378000== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==378000== Using Valgrind-3.20.0 and LibVEX; rerun with -h for copyright info
-==378000== Command: ./kNN
-==378000== Parent PID: 375595
-==378000== 
-==378000== 
-==378000== HEAP SUMMARY:
-==378000==     in use at exit: 0 bytes in 0 blocks
-==378000==   total heap usage: 939,714 allocs, 939,714 frees, 11,930,464 bytes allocated
-==378000== 
-==378000== All heap blocks were freed -- no leaks are possible
-==378000== 
-==378000== For lists of detected and suppressed errors, rerun with: -s
-==378000== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==252431== Memcheck, a memory error detector
+==252431== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==252431== Using Valgrind-3.20.0 and LibVEX; rerun with -h for copyright info
+==252431== Command: ./kNN
+==252431== Parent PID: 252145
+==252431== 
+==252431== 
+==252431== Process terminating with default action of signal 2 (SIGINT)
+==252431==    at 0x4983BC2: write (write.c:26)
+==252431==    by 0x490881C: _IO_file_write@@GLIBC_2.2.5 (fileops.c:1180)
+==252431==    by 0x4907BA3: new_do_write (fileops.c:448)
+==252431==    by 0x4909858: _IO_do_write@@GLIBC_2.2.5 (fileops.c:425)
+==252431==    by 0x4909D6E: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:778)
+==252431==    by 0x48DB941: __printf_buffer_flush_to_file (printf_buffer_to_file.c:74)
+==252431==    by 0x48DB634: __printf_buffer_do_flush (printf_buffer_flush.c:53)
+==252431==    by 0x48DB634: __printf_buffer_flush (Xprintf_buffer_flush.c:65)
+==252431==    by 0x48DBADC: __printf_buffer_write (Xprintf_buffer_write.c:33)
+==252431==    by 0x48E4BD1: __printf_buffer (vfprintf-process-arg.c:240)
+==252431==    by 0x48E5A01: __vfprintf_internal (vfprintf-internal.c:1459)
+==252431==    by 0x48DB13E: printf (printf.c:33)
+==252431==    by 0x109F31: nearest_neighbour (in /home/robert/Desktop/Rust/checker/kNN)
+==252431== 
+==252431== HEAP SUMMARY:
+==252431==     in use at exit: 3,608,236 bytes in 200,005 blocks
+==252431==   total heap usage: 431,455 allocs, 231,450 frees, 6,907,824 bytes allocated
+==252431== 
+==252431== 8 bytes in 1 blocks are still reachable in loss record 1 of 13
+==252431==    at 0x4846CC3: realloc (vg_replace_malloc.c:1451)
+==252431==    by 0x109C07: nearest_neighbour_helper (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x109AF3: nearest_neighbour_helper (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x109AF3: nearest_neighbour_helper (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x109AF3: nearest_neighbour_helper (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x109B7A: nearest_neighbour_helper (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x109B7A: nearest_neighbour_helper (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x109B7A: nearest_neighbour_helper (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x109AF3: nearest_neighbour_helper (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x109AF3: nearest_neighbour_helper (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x109B7A: nearest_neighbour_helper (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x109B7A: nearest_neighbour_helper (in /home/robert/Desktop/Rust/checker/kNN)
+==252431== 
+==252431== 12 bytes in 1 blocks are still reachable in loss record 2 of 13
+==252431==    at 0x4841888: malloc (vg_replace_malloc.c:393)
+==252431==    by 0x10989F: load (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x1091E1: main (in /home/robert/Desktop/Rust/checker/kNN)
+==252431== 
+==252431== 12 bytes in 1 blocks are still reachable in loss record 3 of 13
+==252431==    at 0x4841888: malloc (vg_replace_malloc.c:393)
+==252431==    by 0x109948: load (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x1091E1: main (in /home/robert/Desktop/Rust/checker/kNN)
+==252431== 
+==252431== 12 bytes in 1 blocks are still reachable in loss record 4 of 13
+==252431==    at 0x4841888: malloc (vg_replace_malloc.c:393)
+==252431==    by 0x10928F: main (in /home/robert/Desktop/Rust/checker/kNN)
+==252431== 
+==252431== 24 bytes in 1 blocks are still reachable in loss record 5 of 13
+==252431==    at 0x4846A73: calloc (vg_replace_malloc.c:1340)
+==252431==    by 0x10919C: main (in /home/robert/Desktop/Rust/checker/kNN)
+==252431== 
+==252431== 24 bytes in 1 blocks are still reachable in loss record 6 of 13
+==252431==    at 0x4846A73: calloc (vg_replace_malloc.c:1340)
+==252431==    by 0x109894: load (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x1091E1: main (in /home/robert/Desktop/Rust/checker/kNN)
+==252431== 
+==252431== 24 bytes in 1 blocks are still reachable in loss record 7 of 13
+==252431==    at 0x4846A73: calloc (vg_replace_malloc.c:1340)
+==252431==    by 0x10993D: load (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x1091E1: main (in /home/robert/Desktop/Rust/checker/kNN)
+==252431== 
+==252431== 4,096 bytes in 1 blocks are still reachable in loss record 8 of 13
+==252431==    at 0x4841888: malloc (vg_replace_malloc.c:393)
+==252431==    by 0x48FBC10: _IO_file_doallocate (filedoalloc.c:101)
+==252431==    by 0x490AD1F: _IO_doallocbuf (genops.c:347)
+==252431==    by 0x490AD1F: _IO_doallocbuf (genops.c:342)
+==252431==    by 0x4909A9C: _IO_file_underflow@@GLIBC_2.2.5 (fileops.c:485)
+==252431==    by 0x490ADD5: _IO_default_uflow (genops.c:362)
+==252431==    by 0x48E638F: __vfscanf_internal (vfscanf-internal.c:628)
+==252431==    by 0x48DACD1: __isoc99_scanf (isoc99_scanf.c:30)
+==252431==    by 0x1091C5: main (in /home/robert/Desktop/Rust/checker/kNN)
+==252431== 
+==252431== 4,096 bytes in 1 blocks are still reachable in loss record 9 of 13
+==252431==    at 0x4841888: malloc (vg_replace_malloc.c:393)
+==252431==    by 0x48FBC10: _IO_file_doallocate (filedoalloc.c:101)
+==252431==    by 0x490AD1F: _IO_doallocbuf (genops.c:347)
+==252431==    by 0x490AD1F: _IO_doallocbuf (genops.c:342)
+==252431==    by 0x4909D87: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:744)
+==252431==    by 0x4908EBD: _IO_new_file_xsputn (fileops.c:1243)
+==252431==    by 0x4908EBD: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1196)
+==252431==    by 0x48DB998: __printf_buffer_flush_to_file (printf_buffer_to_file.c:59)
+==252431==    by 0x48DBA53: __printf_buffer_to_file_done (printf_buffer_to_file.c:120)
+==252431==    by 0x48E5A09: __vfprintf_internal (vfprintf-internal.c:1460)
+==252431==    by 0x48DB13E: printf (printf.c:33)
+==252431==    by 0x109F31: nearest_neighbour (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x1092D5: main (in /home/robert/Desktop/Rust/checker/kNN)
+==252431== 
+==252431== 598,428 bytes in 49,869 blocks are still reachable in loss record 10 of 13
+==252431==    at 0x4841888: malloc (vg_replace_malloc.c:393)
+==252431==    by 0x109A2E: load (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x1091E1: main (in /home/robert/Desktop/Rust/checker/kNN)
+==252431== 
+==252431== 601,548 bytes in 50,129 blocks are still reachable in loss record 11 of 13
+==252431==    at 0x4841888: malloc (vg_replace_malloc.c:393)
+==252431==    by 0x1099DC: load (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x1091E1: main (in /home/robert/Desktop/Rust/checker/kNN)
+==252431== 
+==252431== 1,196,856 bytes in 49,869 blocks are still reachable in loss record 12 of 13
+==252431==    at 0x4846A73: calloc (vg_replace_malloc.c:1340)
+==252431==    by 0x109A23: load (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x1091E1: main (in /home/robert/Desktop/Rust/checker/kNN)
+==252431== 
+==252431== 1,203,096 bytes in 50,129 blocks are still reachable in loss record 13 of 13
+==252431==    at 0x4846A73: calloc (vg_replace_malloc.c:1340)
+==252431==    by 0x1099D1: load (in /home/robert/Desktop/Rust/checker/kNN)
+==252431==    by 0x1091E1: main (in /home/robert/Desktop/Rust/checker/kNN)
+==252431== 
+==252431== LEAK SUMMARY:
+==252431==    definitely lost: 0 bytes in 0 blocks
+==252431==    indirectly lost: 0 bytes in 0 blocks
+==252431==      possibly lost: 0 bytes in 0 blocks
+==252431==    still reachable: 3,608,236 bytes in 200,005 blocks
+==252431==         suppressed: 0 bytes in 0 blocks
+==252431== 
+==252431== For lists of detected and suppressed errors, rerun with: -s
+==252431== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

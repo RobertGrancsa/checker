@@ -16,7 +16,7 @@ pub enum Action {
     UpList,
     DownList,
     ActivateValgrind,
-    CloseHelp,
+    RunCheckstyle,
 }
 
 impl Action {
@@ -32,7 +32,7 @@ impl Action {
             Action::UpList,
             Action::DownList,
             Action::ActivateValgrind,
-            Action::CloseHelp,
+            Action::RunCheckstyle,
         ];
         ACTIONS.iter()
     }
@@ -49,7 +49,7 @@ impl Action {
             Action::UpList => &[Key::Up],
             Action::DownList => &[Key::Down],
             Action::ActivateValgrind => &[Key::Char('v')],
-            Action::CloseHelp => &[Key::Char('h')],
+            Action::RunCheckstyle => &[Key::Char('c')],
         }
     }
 }
@@ -67,7 +67,7 @@ impl Display for Action {
             Action::UpList => "Go up the list",
             Action::DownList => "Go down the list",
             Action::ActivateValgrind => "Turn On/Off valgrind",
-            Action::CloseHelp => "Close help panel",
+            Action::RunCheckstyle => "Run checkstyle",
         };
         write!(f, "{}", str)
     }

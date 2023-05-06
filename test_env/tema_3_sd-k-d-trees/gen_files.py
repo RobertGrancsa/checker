@@ -1,7 +1,7 @@
 from random import randint
 
 # 10 tests
-ns = [5, 10, 20, 30, 50, 100, 1000, 10000, 100000, 1000000] # the number of points
+ns = [5, 10, 20, 30, 50, 100, 1000, 10000, 100000, 400000] # the number of points
 ks = [2, 2, 2, 2, 2, 3, 3, 3, 3, 3] # the size of each point
 qs = [2 * x for x in ns] # number of queries
 intervals = [[-10, 10], [-100, 100], [-100, 100], [-100, 100], [-100, 100], [-10000, 10000], [-10000, 10000], [-10000, 10000], [-10000, 10000], [-10000, 10000]] # intervals for points
@@ -51,5 +51,3 @@ for test in range(10):
 
     f.write("EXIT\n")
     f.close()
-
-# generate refs

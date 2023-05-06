@@ -92,6 +92,7 @@ void nearest_neighbour(kd_tree_t *kd, int *point) {
 
     int **neighbours = NULL, distance = INF, cnt = 0;
     nearest_neighbour_helper(kd, kd->root, point, &neighbours, &cnt, &distance, 0);
+    mergesort(neighbours, kd->k, 0, cnt);
     for (int i = 0; i < cnt; ++i) {
         for (int j = 0; j < kd->k; ++j)
             printf("%d ", neighbours[i][j]);
@@ -133,13 +134,12 @@ void range_search(kd_tree_t *kd, int *left, int *right) {
         return;
 
     range_search_helper(kd, kd->root, left, right, &ans, &cnt, 0);
-
+    mergesort(ans, kd->k, 0, cnt);
     for (int i = 0; i < cnt; ++i) {
         for (int j = 0; j < kd->k; ++j)
             printf("%d ", ans[i][j]);
         printf("\n");
     }
-    
     free(ans);
 }
 

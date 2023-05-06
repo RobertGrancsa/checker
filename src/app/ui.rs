@@ -268,34 +268,43 @@ fn draw_test_list<'a>(app: &mut App) -> (List<'a>, Table<'a>, List<'a>, usize) {
     ])
     .block(Block::default().borders(Borders::ALL).title("Details"));
 
-    // let diff = TextDiff::from_lines(&app.current_ref, &selected_test.log);
-
-    let mut index = 0;
+    let mut index = app.diff.len();
     let mut first_diff: usize = usize::MAX;
-    let log_items: Vec<ListItem> = app
-        .diff
-        .iter()
-        .map(|(sign, line)| {
-            let style = match *sign {
-                "-" => Style::default().fg(Color::Red),
-                "+" => Style::default().fg(Color::Yellow),
-                " " => Style::default().fg(Color::Gray),
-                _ => Style::default(),
-            };
+    let mut log_items: Vec<ListItem> = Vec::new();
 
-            if *sign != " " && first_diff > index {
-                first_diff = index;
-            }
+    for (i, (sign, line)) in app.diff.iter().enumerate() {
+        if i == 10000 {
+            index = i;
+            break;
+        }
 
-            index += 1;
+        let style = match *sign {
+            "-" => Style::default().fg(Color::Red),
+            "+" => Style::default().fg(Color::Yellow),
+            " " => Style::default().fg(Color::Gray),
+            _ => Style::default(),
+        };
 
-            ListItem::new(Spans::from(vec![
-                Span::styled(sign.to_string(), style),
-                Span::styled(line.to_string(), style),
-            ]))
-        })
-        .collect();
+        if *sign != " " && first_diff > i {
+            first_diff = i;
+        }
+
+        let item = ListItem::new(Spans::from(vec![
+            Span::styled(sign.to_string(), style),
+            Span::styled(line.to_string(), style),
+        ]));
+
+        log_items.push(item);
+    }
+
     app.state.set_diffsize(index);
+
+    if log_items.len() < app.diff.len() {
+        log_items.push(ListItem::new(Spans::from(vec![Span::raw(
+            "Showing only the first 10000 lines",
+        )])));
+        app.state.set_diffsize(index + 1);
+    }
 
     let test_log = List::new(log_items)
         .highlight_style(

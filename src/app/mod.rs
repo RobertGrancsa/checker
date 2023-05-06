@@ -285,7 +285,7 @@ impl App {
 
                     AppReturn::Continue
                 }
-                Action::CloseHelp => {
+                Action::RunCheckstyle => {
                     self.state.update_checkstyle();
                     if let Some(true) = self.state.get_checkstyle() {
                         self.dispatch(IoEvent::LoadChecksyle).await;
@@ -346,7 +346,7 @@ impl App {
             Action::UpList,
             Action::DownList,
             Action::ActivateValgrind,
-            Action::CloseHelp,
+            Action::RunCheckstyle,
         ]
         .into();
         self.state = AppState::initialized()

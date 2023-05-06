@@ -15,5 +15,7 @@
 
 void swap(int **a, int **b);
 int min(int a, int b);
+int cmp(int *p1, int *p2, int k);
+void mergesort(int **a, int k, int left, int right);
 
 #endif
