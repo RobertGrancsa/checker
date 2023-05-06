@@ -10,6 +10,12 @@ homepage = "https://github.com/RobertGrancsa/checker"
 repository = "https://github.com/RobertGrancsa/checker"
 keywords = ["cli", "checker", "tui"]
 categories = ["command-line-utilities"]
+exclude = [
+    "test_env/*",
+    "*.c",
+    "*.h",
+    "Makefile",
+]
 
 
 [dependencies]
