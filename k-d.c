@@ -3,7 +3,7 @@
 #include <string.h>
 #include "k-d.h"
 #include "matrix.h"
-#include "utils.h"
+#include "utils-kd.h"
 
 #define INF 1e9
 

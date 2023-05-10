@@ -1,6 +1,6 @@
 # compiler setup
 CC=gcc
-CFLAGS=-Wall -Wextra -Wshadow -Wpedantic -std=c99 -O3
+CFLAGS=-Wall -Wextra -Wshadow -Wpedantic -std=c99 -O3 -g
 
 # define targets
 TARGETS=kNN mk
@@ -9,15 +9,15 @@ TARGETS=kNN mk
 DEPS=k-d.h matrix.h utils.h
 
 #define object-files
-OBJ=k-d.o main.o matrix.o utils.o
+OBJ=k-d.o main_kd.o matrix.o utils.o trie.o main.o
 
 build: $(TARGETS)
 
-mk:
-	$(CC) $(CFLAGS) test.c -o $@
+mk: $(OBJ)
+	$(CC) $(CFLAGS) main.o trie.o -o $@
 
 kNN: $(OBJ)
-	$(CC) $(CFLAGS) *.o -o $@
+	$(CC) $(CFLAGS) main_kd.o utils.o matrix.o k-d.o -o $@
 
 %.o: %.c $(DEPS)
 	$(CC) $(CFLAGS) -c -o $@ $<

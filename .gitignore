@@ -4,3 +4,4 @@ new_core*
 *.zip
 kNN
 mk
+data_copy.json

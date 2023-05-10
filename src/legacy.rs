@@ -54,7 +54,7 @@ pub fn run_tests(mut app: App) {
 
     if app.checkstyle.is_empty() {
         println!("No coding style errors found");
-        score += 5;
+        score += 10;
     } else {
         println!("{}", app.checkstyle);
         println!(
@@ -71,7 +71,7 @@ pub fn run_tests(mut app: App) {
 
     child.wait().unwrap();
 
-    println!("Final score: {score}/100\n");
+    println!("Final score: {score}/110\n");
 }
 
 fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Result<usize, ()> {

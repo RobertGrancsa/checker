@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "utils.h"
+#include "utils-kd.h"
 
 void swap(int **a, int **b) {
 	int *aux = *a;

@@ -9,114 +9,204 @@
       {
         "id": 0,
         "name": "kNN 1",
-        "status": "4",
+        "status": "0",
         "log": "",
-        "time_normal": 0.001102872,
-        "time_valgrind": 1.239639348,
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
         "timeout": 30000,
-        "test_score": 4
+        "test_score": 5
       },
       {
         "id": 1,
         "name": "kNN 2",
-        "status": "4",
+        "status": "0",
         "log": "",
-        "time_normal": 0.000352979,
-        "time_valgrind": 1.262597593,
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
         "timeout": 30000,
-        "test_score": 4
+        "test_score": 5
       },
       {
         "id": 2,
         "name": "kNN 3",
-        "status": "4",
+        "status": "0",
         "log": "",
-        "time_normal": 0.000299132,
-        "time_valgrind": 1.149289035,
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
         "timeout": 30000,
-        "test_score": 4
+        "test_score": 5
       },
       {
         "id": 3,
         "name": "kNN 4",
-        "status": "4",
+        "status": "0",
         "log": "",
-        "time_normal": 0.00035689,
-        "time_valgrind": 1.215785805,
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
         "timeout": 30000,
-        "test_score": 4
+        "test_score": 5
       },
       {
         "id": 4,
         "name": "kNN 5",
-        "status": "4",
+        "status": "0",
         "log": "",
-        "time_normal": 0.000418561,
-        "time_valgrind": 1.261746644,
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
         "timeout": 30000,
-        "test_score": 4
+        "test_score": 5
       },
       {
         "id": 5,
         "name": "kNN 6",
-        "status": "4",
+        "status": "0",
         "log": "",
-        "time_normal": 0.000608041,
-        "time_valgrind": 1.135333855,
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
         "timeout": 30000,
-        "test_score": 4
+        "test_score": 5
       },
       {
         "id": 6,
         "name": "kNN 7",
-        "status": "4",
+        "status": "0",
         "log": "",
-        "time_normal": 0.003370064,
-        "time_valgrind": 1.196755867,
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
         "timeout": 30000,
-        "test_score": 4
+        "test_score": 5
       },
       {
         "id": 7,
         "name": "kNN 8",
-        "status": "4",
+        "status": "0",
         "log": "",
-        "time_normal": 0.028478243,
-        "time_valgrind": 2.11841124,
-        "timeout": 30000,
-        "test_score": 4
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 100000,
+        "test_score": 5
       },
       {
         "id": 8,
         "name": "kNN 9",
-        "status": "4",
+        "status": "0",
         "log": "",
-        "time_normal": 0.293329501,
-        "time_valgrind": 12.271952106,
-        "timeout": 30000,
-        "test_score": 4
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 300000,
+        "test_score": 5
       },
       {
         "id": 9,
         "name": "kNN 10",
-        "status": "TIMEOUT",
+        "status": "0",
         "log": "",
-        "time_normal": 0.19555111,
-        "time_valgrind": 0.194112364,
-        "timeout": 30,
-        "test_score": 4
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 500000,
+        "test_score": 5
       }
     ],
     [
       {
         "id": 0,
         "name": "MK 1",
-        "status": "8",
+        "status": "0",
         "log": "",
-        "time_normal": 0.000395304,
-        "time_valgrind": 1.039970944,
-        "timeout": 3000,
-        "test_score": 8
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 5
+      },
+      {
+        "id": 1,
+        "name": "MK 2",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 5
+      },
+      {
+        "id": 2,
+        "name": "MK 3",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 5
+      },
+      {
+        "id": 3,
+        "name": "MK 4",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 5
+      },
+      {
+        "id": 4,
+        "name": "MK 5",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 5
+      },
+      {
+        "id": 5,
+        "name": "MK 6",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 40000,
+        "test_score": 5
+      },
+      {
+        "id": 6,
+        "name": "MK 7",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 40000,
+        "test_score": 5
+      },
+      {
+        "id": 7,
+        "name": "MK 8",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 45000,
+        "test_score": 5
+      },
+      {
+        "id": 8,
+        "name": "MK 9",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 60000,
+        "test_score": 5
+      },
+      {
+        "id": 9,
+        "name": "MK 10",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 120000,
+        "test_score": 5
       }
     ]
   ],

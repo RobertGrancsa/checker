@@ -12,7 +12,7 @@ for test in range(10):
     k = ks[test]
     interval = intervals[test]
 
-    name = "data/file" + str(test) + ".txt"
+    name = "data/kNN" + str(test) + ".txt"
     f = open(name, "w")
     f.write(str(n) + " " + str(k) + "\n")
     for i in range(n):
@@ -30,7 +30,7 @@ for test in range(10):
     k = ks[test]
     interval = intervals[test]
 
-    data_set_name = "data/file" + str(test) + ".txt"
+    data_set_name = "data/kNN" + str(test) + ".txt"
     name = f"in/{test:02d}-kNN.in"
     f = open(name, "w")
     f.write("LOAD " + data_set_name + "\n")

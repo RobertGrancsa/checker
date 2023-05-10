@@ -11,4 +11,5 @@ pub enum IoEvent {
     SaveData(Data),
     LoadChecksyle,
     Make,
+    UpdateRef,
 }

@@ -35,6 +35,7 @@ impl IoAsyncHandler {
             IoEvent::SaveData(data) => self.save_data(data).await,
             IoEvent::LoadChecksyle => self.load_cs().await,
             IoEvent::Make => self.run_make().await,
+            IoEvent::UpdateRef => self.update_ref().await,
         };
 
         self.update_ref().await.unwrap();
@@ -48,7 +49,7 @@ impl IoAsyncHandler {
     async fn do_initialize(&mut self) -> Result<(), Option<Error>> {
         let mut app = self.app.lock().await;
         app.initialized(); // we could update the app state
-        info!("Application initialized");
+                           // info!("Application initialized");
 
         self.run_make().await.unwrap();
 

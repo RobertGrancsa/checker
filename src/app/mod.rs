@@ -16,7 +16,7 @@ pub mod state;
 pub mod ui;
 
 const DB_PATH: &str = "./data.json";
-const CHECKSTYLE_SCORE: usize = 5;
+const CHECKSTYLE_SCORE: usize = 10;
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Test {
@@ -225,8 +225,7 @@ impl App {
                                     } else {
                                         self.test_list_state.select(Some(self.test_num - 1));
                                     }
-
-                                    self.dispatch(IoEvent::Make).await;
+                                    self.dispatch(IoEvent::UpdateRef).await;
                                 }
                             }
                             1 => {
@@ -257,7 +256,7 @@ impl App {
                                         self.test_list_state.select(Some(selected + 1));
                                     }
 
-                                    self.dispatch(IoEvent::Make).await;
+                                    self.dispatch(IoEvent::UpdateRef).await;
                                 }
                             }
                             1 => {

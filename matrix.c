@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "matrix.h"
-#include "utils.h"
+#include "utils-kd.h"
 
 int **alloc(int lines, int columns) {
 	int **a = (int **)malloc(lines * sizeof(int *));
