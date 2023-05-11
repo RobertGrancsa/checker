@@ -13,8 +13,10 @@ OBJ=k-d.o main_kd.o matrix.o utils.o trie.o main.o
 
 build: $(TARGETS)
 
-mk: $(OBJ)
-	$(CC) $(CFLAGS) main.o trie.o -o $@
+# mk: $(OBJ)
+# 	$(CC) $(CFLAGS) main.o trie.o -o $@
+mk:
+	g++ main.cpp -o $@ -Ofast
 
 kNN: $(OBJ)
 	$(CC) $(CFLAGS) main_kd.o utils.o matrix.o k-d.o -o $@

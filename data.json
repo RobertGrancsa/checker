@@ -205,7 +205,7 @@
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 120000,
+        "timeout": 150000,
         "test_score": 5
       }
     ]

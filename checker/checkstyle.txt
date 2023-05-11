@@ -1,0 +1,801 @@
+./main.c:10: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:11: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:14: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./main.c:15: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:16: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:18: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:19: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:20: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:21: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:23: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:24: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:24: WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (4, 6)
+./main.c:24: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "trie->children[i]"
+./main.c:25: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:27: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:28: ERROR:CODE_INDENT: code indent should use tabs where possible
+./main.c:28: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:29: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:31: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:34: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./main.c:35: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:35: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "!trie"
+./main.c:36: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:37: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:39: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:41: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:42: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:44: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:45: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:47: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:47: WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (4, 6)
+./main.c:48: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:49: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:50: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:52: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:52: WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (4, 6)
+./main.c:53: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:53: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "current.trie->children[i]"
+./main.c:54: ERROR:CODE_INDENT: code indent should use tabs where possible
+./main.c:54: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:56: ERROR:CODE_INDENT: code indent should use tabs where possible
+./main.c:56: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:57: ERROR:CODE_INDENT: code indent should use tabs where possible
+./main.c:57: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:58: ERROR:CODE_INDENT: code indent should use tabs where possible
+./main.c:58: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:59: ERROR:CODE_INDENT: code indent should use tabs where possible
+./main.c:59: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:60: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:61: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:63: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:66: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./main.c:67: ERROR:CODE_INDENT: code indent should use tabs where possible
+./main.c:67: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:68: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:69: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:71: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:72: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:72: WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (4, 6)
+./main.c:73: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:74: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:75: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:77: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:78: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:78: WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (4, 6)
+./main.c:78: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "trie->children[i]"
+./main.c:79: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:81: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:82: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:85: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./main.c:86: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:87: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:89: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:90: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:91: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:92: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:95: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./main.c:96: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:97: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:99: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:100: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:101: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:102: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:105: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./main.c:106: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:107: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:108: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:109: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:111: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:113: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:114: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:115: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:116: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:119: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./main.c:120: ERROR:CODE_INDENT: code indent should use tabs where possible
+./main.c:120: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:122: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:123: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:125: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:126: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:126: WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (4, 6)
+./main.c:127: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:128: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:129: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:131: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:132: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:134: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:136: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:137: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:137: WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (4, 6)
+./main.c:137: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "trie->children[i]"
+./main.c:138: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:139: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:140: ERROR:CODE_INDENT: code indent should use tabs where possible
+./main.c:140: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:141: ERROR:CODE_INDENT: code indent should use tabs where possible
+./main.c:141: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:142: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:144: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:147: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./main.c:148: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:149: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:151: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:152: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:155: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./main.c:156: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:157: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:157: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "!file"
+./main.c:159: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:161: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:162: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:164: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:167: ERROR:FUNCTION_WITHOUT_ARGS: Bad function definition - int main() should probably be int main(void)
+./main.c:167: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./main.c:168: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:169: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:171: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:172: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:173: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:173: WARNING:NAKED_SSCANF: unchecked sscanf return value
+./main.c:175: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:175: WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (4, 6)
+./main.c:175: CHECK:BRACES: braces {} should be used on all arms of this statement
+./main.c:176: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:177: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:177: WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (4, 6)
+./main.c:178: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:179: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:179: WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (4, 6)
+./main.c:180: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:181: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:181: WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (4, 6)
+./main.c:182: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:183: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:183: WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (4, 6)
+./main.c:184: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:184: CHECK:BRACES: braces {} should be used on all arms of this statement
+./main.c:185: ERROR:CODE_INDENT: code indent should use tabs where possible
+./main.c:185: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:186: ERROR:CODE_INDENT: code indent should use tabs where possible
+./main.c:186: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:187: ERROR:CODE_INDENT: code indent should use tabs where possible
+./main.c:187: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:188: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:189: ERROR:CODE_INDENT: code indent should use tabs where possible
+./main.c:189: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:190: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:191: ERROR:CODE_INDENT: code indent should use tabs where possible
+./main.c:191: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:192: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:193: ERROR:CODE_INDENT: code indent should use tabs where possible
+./main.c:193: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:194: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:194: WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (4, 6)
+./main.c:195: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:196: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./main.c:198: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./k-d.h:16: WARNING:FUNCTION_ARGUMENTS: function definition argument 'int *' should also have an identifier name
+./k-d.h:16: WARNING:FUNCTION_ARGUMENTS: function definition argument 'int *' should also have an identifier name
+./k-d.h:16: WARNING:FUNCTION_ARGUMENTS: function definition argument 'int' should also have an identifier name
+./k-d.c:10: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./k-d.c:17: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./k-d.c:31: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./k-d.c:32: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "!kd->root"
+./k-d.c:38: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./k-d.c:44: WARNING:BRACES: braces {} are not necessary for single statement blocks
+./k-d.c:57: CHECK:LONG_LINE: line length of 146 exceeds 80 columns
+./k-d.c:57: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./k-d.c:59: WARNING:BRACES: braces {} are not necessary for single statement blocks
+./k-d.c:60: CHECK:LONG_LINE: line length of 114 exceeds 80 columns
+./k-d.c:63: CHECK:LONG_LINE: line length of 120 exceeds 80 columns
+./k-d.c:63: WARNING:BRACES: braces {} are not necessary for single statement blocks
+./k-d.c:64: CHECK:LONG_LINE: line length of 115 exceeds 80 columns
+./k-d.c:67: WARNING:BRACES: braces {} are not necessary for single statement blocks
+./k-d.c:68: CHECK:LONG_LINE: line length of 115 exceeds 80 columns
+./k-d.c:71: CHECK:LONG_LINE: line length of 119 exceeds 80 columns
+./k-d.c:71: WARNING:BRACES: braces {} are not necessary for single statement blocks
+./k-d.c:72: CHECK:LONG_LINE: line length of 114 exceeds 80 columns
+./k-d.c:89: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./k-d.c:94: CHECK:LONG_LINE: line length of 83 exceeds 80 columns
+./k-d.c:105: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./k-d.c:113: CHECK:LONG_LINE: line length of 122 exceeds 80 columns
+./k-d.c:113: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./k-d.c:122: CHECK:LONG_LINE: line length of 88 exceeds 80 columns
+./k-d.c:122: WARNING:BRACES: braces {} are not necessary for single statement blocks
+./k-d.c:123: CHECK:LONG_LINE: line length of 86 exceeds 80 columns
+./k-d.c:126: CHECK:LONG_LINE: line length of 91 exceeds 80 columns
+./k-d.c:126: WARNING:BRACES: braces {} are not necessary for single statement blocks
+./k-d.c:127: CHECK:LONG_LINE: line length of 87 exceeds 80 columns
+./k-d.c:131: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./k-d.c:146: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./k-d.c:157: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./k-d.c:162: WARNING:MISSING_EOF_NEWLINE: adding a line without newline at end of file
+./main_kd.c:8: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./main_kd.c:16: ERROR:FUNCTION_WITHOUT_ARGS: Bad function definition - int main() should probably be int main(void)
+./main_kd.c:16: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./main_kd.c:27: ERROR:SPACING: space required before the open parenthesis '('
+./trie.c:7: ERROR:FUNCTION_WITHOUT_ARGS: Bad function definition - trie_t *create_trie() should probably be trie_t *create_trie(void)
+./trie.c:7: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./trie.c:8: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:9: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:9: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "!trie"
+./trie.c:11: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:12: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:12: CHECK:MULTIPLE_ASSIGNMENTS: multiple assignments should be avoided
+./trie.c:13: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:15: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:18: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./trie.c:19: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:20: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:21: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:22: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:23: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:25: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:25: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "!trie->children[*key - 'X']"
+./trie.c:26: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:27: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:28: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:30: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:33: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./trie.c:34: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:35: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:36: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:37: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:38: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:40: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:40: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "!trie->children[*key - 'X']"
+./trie.c:41: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:43: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:45: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:46: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:47: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:48: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:49: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:52: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./trie.c:53: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:54: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:56: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:56: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "!trie->children[*key - 'X']"
+./trie.c:57: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:59: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:62: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./trie.c:63: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:64: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:64: WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (4, 6)
+./trie.c:64: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "trie->children[i]"
+./trie.c:65: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:67: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.h:10: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.h:11: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.h:12: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.h:15: ERROR:FUNCTION_WITHOUT_ARGS: Bad function definition - trie_t *create_trie() should probably be trie_t *create_trie(void)
+./utils-kd.h:20: WARNING:MISSING_EOF_NEWLINE: adding a line without newline at end of file
+./utils.h:6: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./utils.h:7: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./utils.h:7: WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (4, 6)
+./utils.h:8: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./utils.h:9: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./utils.h:10: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./utils.h:11: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./utils.h:12: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./matrix.c:6: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./matrix.c:14: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./matrix.c:21: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:9: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:10: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:11: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:12: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:12: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:14: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:17: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:18: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:19: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:19: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:20: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:23: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:24: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:25: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:26: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:26: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:28: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:29: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:29: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:30: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:30: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:33: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:34: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:35: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:35: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:36: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:36: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:38: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:41: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:42: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:43: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:43: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:44: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:44: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:47: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:48: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:49: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:51: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:52: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:53: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:53: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:53: WARNING:BRACES: braces {} are not necessary for single statement blocks
+./test_env/tema_3_sd-k-d-trees/brute/main.c:54: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:54: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:55: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:55: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:56: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:58: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:61: ERROR:FUNCTION_WITHOUT_ARGS: Bad function definition - int main() should probably be int main(void)
+./test_env/tema_3_sd-k-d-trees/brute/main.c:61: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:62: CHECK:BRACES: Blank lines aren't necessary after an open brace '{'
+./test_env/tema_3_sd-k-d-trees/brute/main.c:63: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:64: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:65: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:66: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:67: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:68: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:70: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:70: ERROR:SPACING: space required before the open parenthesis '('
+./test_env/tema_3_sd-k-d-trees/brute/main.c:71: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:71: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:72: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:72: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:73: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:73: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:74: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:74: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:75: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:75: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:76: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:76: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:78: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:78: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:79: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:79: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:81: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:81: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:82: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:82: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:83: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:83: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:84: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:84: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:86: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:86: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:87: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:87: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:89: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:89: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:90: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:90: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:92: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:92: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:93: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:93: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:94: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:94: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:96: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:96: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:97: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:97: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:98: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:98: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:99: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/main.c:99: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:100: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/main.c:101: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:6: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:7: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:8: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:9: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:9: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:11: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:14: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:15: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:16: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:16: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:18: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:21: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:22: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:23: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:24: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:24: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:25: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:25: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:27: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:27: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:28: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:28: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/matrix.c:29: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:4: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:5: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:6: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:7: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:10: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:11: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:14: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:15: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:16: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:16: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:17: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:17: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:18: ERROR:TRAILING_WHITESPACE: trailing whitespace
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:18: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:18: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:19: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:22: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:23: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:24: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:24: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:26: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:27: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:28: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:30: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:31: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:32: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:33: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:33: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:34: ERROR:TRAILING_WHITESPACE: trailing whitespace
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:34: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:34: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:35: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:35: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:36: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:36: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:37: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:39: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:40: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:40: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:42: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:43: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:43: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:45: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:46: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:46: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/brute/utils.c:48: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:8: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:9: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:10: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:11: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:11: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:13: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:16: ERROR:FUNCTION_WITHOUT_ARGS: Bad function definition - int main() should probably be int main(void)
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:16: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:17: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:18: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:20: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:21: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:22: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:23: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:25: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:27: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:27: ERROR:SPACING: space required before the open parenthesis '('
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:28: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:28: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:29: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:29: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:30: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:30: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:31: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:31: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:32: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:32: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:33: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:33: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:35: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:35: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:36: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:36: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:38: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:38: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:39: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:39: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:40: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:40: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:41: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:41: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:43: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:43: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:44: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:44: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:46: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:46: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:47: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:47: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:49: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:49: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:50: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:50: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:51: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:51: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:53: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:53: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:54: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:54: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:55: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:55: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:56: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:56: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:57: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:57: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:58: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/main.c:59: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.h:7: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.h:8: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.h:14: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.h:15: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.h:16: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.h:16: WARNING:FUNCTION_ARGUMENTS: function definition argument 'int *' should also have an identifier name
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.h:16: WARNING:FUNCTION_ARGUMENTS: function definition argument 'int *' should also have an identifier name
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.h:16: WARNING:FUNCTION_ARGUMENTS: function definition argument 'int' should also have an identifier name
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:10: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:11: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:12: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:13: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:14: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:17: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:18: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:19: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:19: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:20: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:20: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:21: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:21: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:22: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:22: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:23: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:24: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:24: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:25: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:25: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:26: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:26: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:27: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:27: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:28: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:31: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:32: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:32: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "!kd->root"
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:33: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:33: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:34: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:35: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:35: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:38: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:39: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:40: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:42: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:43: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:44: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:44: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:44: WARNING:BRACES: braces {} are not necessary for single statement blocks
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:45: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:45: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:46: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:46: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:47: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:49: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:50: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:51: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:52: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:52: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:54: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:57: CHECK:LONG_LINE: line length of 146 exceeds 80 columns
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:57: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:58: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:59: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:59: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:59: WARNING:BRACES: braces {} are not necessary for single statement blocks
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:60: CHECK:LONG_LINE: line length of 114 exceeds 80 columns
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:60: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:60: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:61: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:61: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:63: CHECK:LONG_LINE: line length of 120 exceeds 80 columns
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:63: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:63: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:63: WARNING:BRACES: braces {} are not necessary for single statement blocks
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:64: CHECK:LONG_LINE: line length of 115 exceeds 80 columns
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:64: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:64: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:65: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:65: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:66: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:67: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:67: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:67: WARNING:BRACES: braces {} are not necessary for single statement blocks
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:68: CHECK:LONG_LINE: line length of 115 exceeds 80 columns
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:68: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:68: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:69: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:69: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:71: CHECK:LONG_LINE: line length of 119 exceeds 80 columns
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:71: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:71: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:71: WARNING:BRACES: braces {} are not necessary for single statement blocks
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:72: CHECK:LONG_LINE: line length of 114 exceeds 80 columns
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:72: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:72: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:73: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:73: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:74: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:76: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:77: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:78: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:78: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:79: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:79: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:80: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:80: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:81: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:81: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:82: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:83: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:83: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:84: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:84: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:85: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:85: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:86: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:89: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:90: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:91: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:91: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:93: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:94: CHECK:LONG_LINE: line length of 83 exceeds 80 columns
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:94: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:95: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:96: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:97: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:97: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:98: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:98: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:99: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:99: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:100: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:102: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:105: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:106: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:107: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:107: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:108: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:108: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:110: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:113: CHECK:LONG_LINE: line length of 122 exceeds 80 columns
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:113: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:114: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:115: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:115: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:116: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:116: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:117: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:117: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:119: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:119: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:120: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:122: CHECK:LONG_LINE: line length of 88 exceeds 80 columns
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:122: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:122: WARNING:BRACES: braces {} are not necessary for single statement blocks
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:123: CHECK:LONG_LINE: line length of 86 exceeds 80 columns
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:123: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:123: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:124: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:126: CHECK:LONG_LINE: line length of 91 exceeds 80 columns
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:126: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:126: WARNING:BRACES: braces {} are not necessary for single statement blocks
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:127: CHECK:LONG_LINE: line length of 87 exceeds 80 columns
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:127: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:127: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:128: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:131: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:132: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:133: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:134: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:134: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:136: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:137: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:138: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:139: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:139: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:140: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:140: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:141: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:141: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:142: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:143: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:146: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:147: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:148: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:148: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:150: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:151: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:151: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:153: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:154: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:157: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:158: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:159: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:159: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/k-d.c:161: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:6: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:7: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:8: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:9: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:9: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:11: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:14: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:15: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:16: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:16: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:18: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:21: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:22: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:23: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:24: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:24: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:25: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:25: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:27: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:27: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:28: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:28: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/matrix.c:29: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:4: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:5: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:6: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:7: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:10: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:11: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:14: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:15: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:18: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:19: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:20: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:20: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:21: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:21: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:22: ERROR:TRAILING_WHITESPACE: trailing whitespace
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:22: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:22: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:23: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:26: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:27: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:28: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:28: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:30: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:31: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:32: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:34: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:35: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:36: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:37: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:37: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:38: ERROR:TRAILING_WHITESPACE: trailing whitespace
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:38: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:38: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:39: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:39: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:40: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:40: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:41: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:43: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:44: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:44: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:46: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:47: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:47: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:49: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:50: ERROR:CODE_INDENT: code indent should use tabs where possible
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:50: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./test_env/tema_3_sd-k-d-trees/k-d/utils.c:52: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./utils.c:4: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./utils.c:10: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./utils.c:14: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./utils.c:18: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./utils.c:26: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./utils.c:53: WARNING:MISSING_EOF_NEWLINE: adding a line without newline at end of file

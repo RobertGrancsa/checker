@@ -37,6 +37,7 @@ pub fn run_tests(mut app: App) {
         }
     }
 
+    println!();
     println!("Running checkstyle");
 
     let mut cs = Command::new(format!("{}/cs/cs.sh", app.test_path));
@@ -164,6 +165,7 @@ fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Resu
 
         println!("\t\tTime: {:.5}", start.elapsed().as_secs_f64());
 
+        out_file.write_all(log_file.as_bytes()).unwrap();
         if log_file == std::str::from_utf8(&ref_file).unwrap() {
             println!(
                 "Test {index:02}{}PASSED: {}/{}",
@@ -171,6 +173,8 @@ fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Resu
                 test.test_score,
                 test.test_score
             );
+
+            return Ok(test.test_score);
         } else {
             println!(
                 "Test {index:02}{}FAILED: 0/{}",
@@ -178,9 +182,7 @@ fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Resu
                 test.test_score
             );
         }
-
-        out_file.write_all(log_file.as_bytes()).unwrap();
     }
 
-    Ok(test.test_score)
+    Ok(0)
 }
