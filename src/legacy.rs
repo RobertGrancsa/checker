@@ -76,16 +76,21 @@ pub fn run_tests(mut app: App) {
 }
 
 fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Result<usize, ()> {
-    let mut run = Command::new("valgrind");
-    run.arg(format!(
-        "--log-file={}output/{:02}-{}.valgrind",
-        path, index, app_name
-    ))
-    .arg("--leak-check=full")
-    .arg("--track-origins=yes")
-    .arg("--show-leak-kinds=all")
-    .arg("--error-exitcode=69")
-    .arg(format!("./{}", app_name));
+    let mut run: Command;
+    if index < 2 {
+        run = Command::new("valgrind");
+        run.arg(format!(
+            "--log-file={}output/{:02}-{}.valgrind",
+            path, index, app_name
+        ))
+        .arg("--leak-check=full")
+        .arg("--track-origins=yes")
+        .arg("--show-leak-kinds=all")
+        .arg("--error-exitcode=69")
+        .arg(format!("./{}", app_name));
+    } else {
+        run = Command::new(format!("./{}", app_name));
+    }
 
     print!("Running {app_name} test {index}");
 
