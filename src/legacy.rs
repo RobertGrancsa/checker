@@ -137,6 +137,10 @@ fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Resu
                         test.test_score
                     );
 
+                    if let Err(err) = child.kill() {
+                        println!("ERROR: Can't kill child: {:?}", err);
+                    }
+
                     return Ok(0);
                 }
             }

@@ -1,6 +1,6 @@
 [package]
 name = "checker-tema-3-sd"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2021"
 authors = ["Robert Grancsa <robert.grancsa2002@gmail.com>"]
 license = "MIT"
