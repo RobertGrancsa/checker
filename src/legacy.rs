@@ -1,17 +1,20 @@
-use std::fs::{self, File};
-use std::io::{BufRead, BufReader, Write};
-use std::process::{Command, Stdio};
-use std::time::Instant;
+// use std::io::{BufRead, BufReader, Write};
+use tokio::process::{Command};
+use std::process::Stdio;
+use std::time::{Instant, Duration};
+use tokio::fs::{self, File};
+use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
 
 use checker_tema_3_sd::app::{App, Test};
+use tokio::time::timeout;
 
-pub fn run_tests(mut app: App) {
+pub async fn run_tests(mut app: App) {
     let mut score: usize = 0;
 
     println!("Running makefile");
     let mut make = Command::new("make");
     let make_run = make.arg("build");
-    let res = make_run.output().unwrap();
+    let res = make_run.output().await.unwrap();
 
     if let Some(code) = res.status.code() {
         if code != 0 {
@@ -30,7 +33,7 @@ pub fn run_tests(mut app: App) {
         println!("==== {app_name} ====");
 
         for (index, test) in test_list.iter().enumerate() {
-            match run_test(test, index, app_name, &app.test_path) {
+            match run_test(test, index, app_name, &app.test_path).await {
                 Ok(amount) => score += amount,
                 Err(err) => println!("Error {:?}", err),
             };
@@ -43,15 +46,15 @@ pub fn run_tests(mut app: App) {
     let mut cs = Command::new(format!("{}/cs/cs.sh", app.test_path));
     cs.arg(".");
 
-    let output = cs.output().unwrap().stdout;
+    let output = cs.output().await.unwrap().stdout;
 
     app.checkstyle.clear();
     app.checkstyle
         .push_str(std::str::from_utf8(&output).unwrap());
 
-    let mut out_file = File::create(format!("{}checkstyle.txt", app.test_path)).unwrap();
+    let mut out_file = File::create(format!("{}checkstyle.txt", app.test_path)).await.unwrap();
 
-    out_file.write_all(&output).unwrap();
+    out_file.write_all(&output).await.unwrap();
 
     if app.checkstyle.is_empty() {
         println!("No coding style errors found");
@@ -70,12 +73,12 @@ pub fn run_tests(mut app: App) {
     make.arg("clean");
     let mut child = make.spawn().unwrap();
 
-    child.wait().unwrap();
+    child.wait().await.unwrap();
 
     println!("Final score: {score}/110\n");
 }
 
-fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Result<usize, ()> {
+async fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Result<usize, ()> {
     let mut run: Command;
     if index < 2 {
         run = Command::new("valgrind");
@@ -95,9 +98,9 @@ fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Resu
     print!("Running {app_name} test {index}");
 
     let mut out_file =
-        File::create(format!("{}output/{:02}-{}.out", path, index, app_name)).unwrap();
+        File::create(format!("{}output/{:02}-{}.out", path, index, app_name)).await.unwrap();
 
-    let ref_file = if let Ok(file) = fs::read(format!("{}ref/{:02}-{}.ref", path, index, app_name))
+    let ref_file = if let Ok(file) = fs::read(format!("{}ref/{:02}-{}.ref", path, index, app_name)).await
     {
         file
     } else {
@@ -120,35 +123,40 @@ fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Resu
         if let Some(ref mut stdout) = child.stdout {
             let mut lines = BufReader::new(stdout).lines();
 
+
             loop {
-                let res = lines.next();
-                if let Some(Ok(line)) = res {
-                    let l: String = format!("{}\n", line);
-                    log_file.push_str(&l);
-                } else {
-                    break;
-                }
 
-                if start.elapsed().as_millis() > test.timeout as u128 {
-                    println!("\t\tTime: {:.5}", start.elapsed().as_secs_f64());
-                    println!(
-                        "Test {index:02}{}TIMEOUT: 0/{}",
-                        ".".repeat(26),
-                        test.test_score
-                    );
-
-                    if let Err(err) = child.kill() {
-                        println!("ERROR: Can't kill child: {:?}", err);
+                if let Ok(res) =
+                    timeout(Duration::from_millis(test.timeout), lines.next_line()).await 
+                {
+                    if let Ok(Some(line)) = res {
+                        let l: String = format!("{}\n", line);
+                        log_file.push_str(&l);
+                    } else {
+                        break;
                     }
-
-                    return Ok(0);
+    
+                    if start.elapsed().as_millis() > test.timeout as u128 {
+                        println!("\t\tTime: {:.5}", start.elapsed().as_secs_f64());
+                        println!(
+                            "Test {index:02}{}TIMEOUT: 0/{}",
+                            ".".repeat(26),
+                            test.test_score
+                        );
+    
+                        if let Err(err) = child.kill().await {
+                            println!("ERROR: Can't kill child: {:?}", err);
+                        }
+    
+                        return Ok(0);
+                    }    
                 }
             }
         } else {
             eprintln!("Broken pipe");
         }
 
-        if let Ok(out) = child.wait_with_output() {
+        if let Ok(out) = child.wait_with_output().await {
             if out.status.code().is_none() {
                 println!("\t\tTime: {:.5}", start.elapsed().as_secs_f64());
                 println!(
@@ -174,7 +182,7 @@ fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Resu
 
         println!("\t\tTime: {:.5}", start.elapsed().as_secs_f64());
 
-        out_file.write_all(log_file.as_bytes()).unwrap();
+        out_file.write_all(log_file.as_bytes()).await.unwrap();
         if log_file == std::str::from_utf8(&ref_file).unwrap() {
             println!(
                 "Test {index:02}{}PASSED: {}/{}",

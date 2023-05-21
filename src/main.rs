@@ -23,7 +23,7 @@ async fn main() -> Result<()> {
 
         let app = App::new(sync_io_tx.clone());
 
-        run_tests(app);
+        run_tests(app).await;
 
         return Ok(());
     }
