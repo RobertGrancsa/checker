@@ -1,9 +1,9 @@
 // use std::io::{BufRead, BufReader, Write};
-use tokio::process::{Command};
 use std::process::Stdio;
-use std::time::{Instant, Duration};
+use std::time::{Duration, Instant};
 use tokio::fs::{self, File};
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
+use tokio::process::Command;
 
 use checker_tema_3_sd::app::{App, Test};
 use tokio::time::timeout;
@@ -52,7 +52,9 @@ pub async fn run_tests(mut app: App) {
     app.checkstyle
         .push_str(std::str::from_utf8(&output).unwrap());
 
-    let mut out_file = File::create(format!("{}checkstyle.txt", app.test_path)).await.unwrap();
+    let mut out_file = File::create(format!("{}checkstyle.txt", app.test_path))
+        .await
+        .unwrap();
 
     out_file.write_all(&output).await.unwrap();
 
@@ -78,7 +80,12 @@ pub async fn run_tests(mut app: App) {
     println!("Final score: {score}/110\n");
 }
 
-async fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -> Result<usize, ()> {
+async fn run_test(
+    test: &Test,
+    index: usize,
+    app_name: &String,
+    path: &String,
+) -> Result<usize, ()> {
     let mut run: Command;
     if index < 2 {
         run = Command::new("valgrind");
@@ -97,15 +104,16 @@ async fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -
 
     print!("Running {app_name} test {index}");
 
-    let mut out_file =
-        File::create(format!("{}output/{:02}-{}.out", path, index, app_name)).await.unwrap();
+    let mut out_file = File::create(format!("{}output/{:02}-{}.out", path, index, app_name))
+        .await
+        .unwrap();
 
-    let ref_file = if let Ok(file) = fs::read(format!("{}ref/{:02}-{}.ref", path, index, app_name)).await
-    {
-        file
-    } else {
-        return Err(());
-    };
+    let ref_file =
+        if let Ok(file) = fs::read(format!("{}ref/{:02}-{}.ref", path, index, app_name)).await {
+            file
+        } else {
+            return Err(());
+        };
 
     let in_file = if let Ok(file) =
         std::fs::File::open(format!("{}input/{:02}-{}.in", path, index, app_name))
@@ -123,11 +131,10 @@ async fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -
         if let Some(ref mut stdout) = child.stdout {
             let mut lines = BufReader::new(stdout).lines();
 
-
             loop {
-
+                let time_left = test.timeout as u128 - start.elapsed().as_millis();
                 if let Ok(res) =
-                    timeout(Duration::from_millis(test.timeout), lines.next_line()).await 
+                    timeout(Duration::from_millis(time_left as u64), lines.next_line()).await
                 {
                     if let Ok(Some(line)) = res {
                         let l: String = format!("{}\n", line);
@@ -135,7 +142,7 @@ async fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -
                     } else {
                         break;
                     }
-    
+
                     if start.elapsed().as_millis() > test.timeout as u128 {
                         println!("\t\tTime: {:.5}", start.elapsed().as_secs_f64());
                         println!(
@@ -143,13 +150,26 @@ async fn run_test(test: &Test, index: usize, app_name: &String, path: &String) -
                             ".".repeat(26),
                             test.test_score
                         );
-    
+
                         if let Err(err) = child.kill().await {
                             println!("ERROR: Can't kill child: {:?}", err);
                         }
-    
+
                         return Ok(0);
-                    }    
+                    }
+                } else {
+                    println!("\t\tTime: {:.5}", start.elapsed().as_secs_f64());
+                    println!(
+                        "Test {index:02}{}TIMEOUT: 0/{}",
+                        ".".repeat(26),
+                        test.test_score
+                    );
+
+                    if let Err(err) = child.kill().await {
+                        println!("ERROR: Can't kill child: {:?}", err);
+                    }
+
+                    return Ok(0);
                 }
             }
         } else {

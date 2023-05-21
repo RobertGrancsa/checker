@@ -100,6 +100,9 @@ fn draw_popup_cs<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Paragra
             };
 
             let split: Vec<&'a str> = line.split(':').collect();
+            if split.len() < 5 {
+                return Spans::from(vec![]);
+            }
 
             Spans::from(vec![
                 Span::styled(format!("{}:{}:{}:", split[0], split[1], split[2]), style),

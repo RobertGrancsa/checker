@@ -73,7 +73,7 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 
 [[package]]
 name = "checker-tema-3-sd"
-version = "0.1.6"
+version = "0.1.7"
 dependencies = [
  "crossterm 0.24.0",
  "eyre",
