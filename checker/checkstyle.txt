@@ -215,74 +215,61 @@
 ./main_kd.c:16: ERROR:FUNCTION_WITHOUT_ARGS: Bad function definition - int main() should probably be int main(void)
 ./main_kd.c:16: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
 ./main_kd.c:27: ERROR:SPACING: space required before the open parenthesis '('
-./trie.c:7: ERROR:FUNCTION_WITHOUT_ARGS: Bad function definition - trie_node_t *initTrie() should probably be trie_node_t *initTrie(void)
-./trie.c:7: CHECK:CAMELCASE: Avoid CamelCase: <initTrie>
-./trie.c:14: CHECK:CAMELCASE: Avoid CamelCase: <containsWord>
-./trie.c:16: CHECK:BRACES: Blank lines aren't necessary after an open brace '{'
-./trie.c:17: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./trie.c:24: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./trie.c:24: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "!next"
-./trie.c:32: CHECK:CAMELCASE: Avoid CamelCase: <insertWord>
-./trie.c:34: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./trie.c:45: ERROR:TRAILING_WHITESPACE: trailing whitespace
-./trie.c:49: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./trie.c:49: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "!next"
-./trie.c:58: CHECK:CAMELCASE: Avoid CamelCase: <removeWord>
-./trie.c:60: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./trie.c:65: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./trie.c:80: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./trie.c:83: CHECK:CAMELCASE: Avoid CamelCase: <freeNode>
-./trie.c:97: CHECK:CAMELCASE: Avoid CamelCase: <freeTrie>
-./trie.c:99: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./trie.c:104: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:14: CHECK:LINE_SPACING: Please don't use multiple blank lines
-./mk.c:18: CHECK:CAMELCASE: Avoid CamelCase: <insertWord>
-./mk.c:32: ERROR:TRAILING_WHITESPACE: trailing whitespace
-./mk.c:49: CHECK:CAMELCASE: Avoid CamelCase: <removeWord>
-./mk.c:54: CHECK:CAMELCASE: Avoid CamelCase: <freeTrie>
-./mk.c:70: WARNING:NAKED_SSCANF: unchecked sscanf return value
-./mk.c:73: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:94: WARNING:NAKED_SSCANF: unchecked sscanf return value
-./mk.c:97: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:97: ERROR:SPACING: space required before the open parenthesis '('
-./mk.c:100: CHECK:CAMELCASE: Avoid CamelCase: <printLowest>
-./mk.c:104: CHECK:CAMELCASE: Avoid CamelCase: <getShortest>
-./mk.c:105: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:109: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:109: ERROR:ELSE_AFTER_BRACE: else should follow close brace '}'
-./mk.c:116: CHECK:CAMELCASE: Avoid CamelCase: <getHighFreq>
-./mk.c:117: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:121: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:121: ERROR:ELSE_AFTER_BRACE: else should follow close brace '}'
-./mk.c:126: ERROR:TRAILING_WHITESPACE: trailing whitespace
-./mk.c:131: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:135: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:135: ERROR:ELSE_AFTER_BRACE: else should follow close brace '}'
-./mk.c:141: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:145: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:145: ERROR:ELSE_AFTER_BRACE: else should follow close brace '}'
-./mk.c:156: CHECK:CAMELCASE: Avoid CamelCase: <initTrie>
-./mk.c:158: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:167: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:172: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:178: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:184: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:190: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./mk.c:196: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.h:4: CHECK:CAMELCASE: Avoid CamelCase: <getShortest>
-./functions.h:6: CHECK:CAMELCASE: Avoid CamelCase: <printLowest>
-./functions.h:8: CHECK:CAMELCASE: Avoid CamelCase: <getHighFreq>
-./functions.h:10: CHECK:LONG_LINE: line length of 95 exceeds 80 columns
-./functions.h:10: ERROR:POINTER_LOCATION: "foo * bar" should be "foo *bar"
-./functions.h:12: WARNING:MISSING_EOF_NEWLINE: adding a line without newline at end of file
-./trie.h:20: ERROR:FUNCTION_WITHOUT_ARGS: Bad function definition - trie_node_t *initTrie() should probably be trie_node_t *initTrie(void)
-./trie.h:20: CHECK:CAMELCASE: Avoid CamelCase: <initTrie>
-./trie.h:22: CHECK:CAMELCASE: Avoid CamelCase: <containsWord>
-./trie.h:24: CHECK:LONG_LINE: line length of 81 exceeds 80 columns
-./trie.h:24: CHECK:CAMELCASE: Avoid CamelCase: <insertWord>
-./trie.h:26: CHECK:CAMELCASE: Avoid CamelCase: <removeWord>
-./trie.h:28: CHECK:CAMELCASE: Avoid CamelCase: <freeTrie>
-./trie.h:30: CHECK:CAMELCASE: Avoid CamelCase: <freeNode>
+./trie.c:7: ERROR:FUNCTION_WITHOUT_ARGS: Bad function definition - trie_t *create_trie() should probably be trie_t *create_trie(void)
+./trie.c:7: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./trie.c:8: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:9: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:9: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "!trie"
+./trie.c:11: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:12: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:12: CHECK:MULTIPLE_ASSIGNMENTS: multiple assignments should be avoided
+./trie.c:13: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:15: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:18: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./trie.c:19: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:20: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:21: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:22: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:23: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:25: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:25: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "!trie->children[*key - 'X']"
+./trie.c:26: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:27: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:28: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:30: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:33: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./trie.c:34: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:35: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:36: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:37: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:38: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:40: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:40: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "!trie->children[*key - 'X']"
+./trie.c:41: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:43: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:45: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:46: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:47: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:48: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:49: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:52: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./trie.c:53: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:54: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:56: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:56: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "!trie->children[*key - 'X']"
+./trie.c:57: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:59: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:62: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
+./trie.c:63: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:64: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:64: WARNING:SUSPECT_CODE_INDENT: suspect code indent for conditional statements (4, 6)
+./trie.c:64: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "trie->children[i]"
+./trie.c:65: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.c:67: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.h:10: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.h:11: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.h:12: WARNING:LEADING_SPACE: please, no spaces at the start of a line
+./trie.h:15: ERROR:FUNCTION_WITHOUT_ARGS: Bad function definition - trie_t *create_trie() should probably be trie_t *create_trie(void)
 ./utils-kd.h:20: WARNING:MISSING_EOF_NEWLINE: adding a line without newline at end of file
 ./utils.h:6: WARNING:LEADING_SPACE: please, no spaces at the start of a line
 ./utils.h:7: WARNING:LEADING_SPACE: please, no spaces at the start of a line
@@ -295,39 +282,6 @@
 ./matrix.c:6: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
 ./matrix.c:14: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
 ./matrix.c:21: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
-./functions.c:5: CHECK:CAMELCASE: Avoid CamelCase: <printLowest>
-./functions.c:10: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:12: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:18: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:21: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:33: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:42: CHECK:CAMELCASE: Avoid CamelCase: <getShortest>
-./functions.c:47: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:51: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:54: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:58: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:58: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "!max"
-./functions.c:62: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:62: ERROR:ELSE_AFTER_BRACE: else should follow close brace '}'
-./functions.c:73: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:81: CHECK:CAMELCASE: Avoid CamelCase: <getHighFreq>
-./functions.c:86: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:90: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:93: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:97: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:97: CHECK:COMPARISON_TO_NULL: Comparison to NULL could be written "!max"
-./functions.c:101: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:101: ERROR:ELSE_AFTER_BRACE: else should follow close brace '}'
-./functions.c:112: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:121: CHECK:LONG_LINE: line length of 97 exceeds 80 columns
-./functions.c:121: ERROR:POINTER_LOCATION: "foo * bar" should be "foo *bar"
-./functions.c:123: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:125: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:125: CHECK:CAMELCASE: Avoid CamelCase: <containsWord>
-./functions.c:131: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:131: ERROR:SPACING: space required before the open parenthesis '('
-./functions.c:136: ERROR:OPEN_BRACE: that open brace { should be on the previous line
-./functions.c:146: ERROR:OPEN_BRACE: that open brace { should be on the previous line
 ./test_env/tema_3_sd-k-d-trees/brute/main.c:9: ERROR:OPEN_BRACE: open brace '{' following function definitions go on the next line
 ./test_env/tema_3_sd-k-d-trees/brute/main.c:10: WARNING:LEADING_SPACE: please, no spaces at the start of a line
 ./test_env/tema_3_sd-k-d-trees/brute/main.c:11: WARNING:LEADING_SPACE: please, no spaces at the start of a line

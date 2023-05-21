@@ -17,12 +17,14 @@ pub enum Action {
     DownList,
     ActivateValgrind,
     RunCheckstyle,
+    RunTaskOne,
+    RunTaskTwo,
 }
 
 impl Action {
     /// All available actions
     pub fn iterator() -> Iter<'static, Action> {
-        static ACTIONS: [Action; 10] = [
+        static ACTIONS: [Action; 12] = [
             Action::Quit,
             Action::Run,
             Action::RunFailed,
@@ -33,6 +35,8 @@ impl Action {
             Action::DownList,
             Action::ActivateValgrind,
             Action::RunCheckstyle,
+            Action::RunTaskOne,
+            Action::RunTaskTwo,
         ];
         ACTIONS.iter()
     }
@@ -50,6 +54,8 @@ impl Action {
             Action::DownList => &[Key::Down],
             Action::ActivateValgrind => &[Key::Char('v')],
             Action::RunCheckstyle => &[Key::Char('c')],
+            Action::RunTaskOne => &[Key::Char('1')],
+            Action::RunTaskTwo => &[Key::Char('2')],
         }
     }
 }
@@ -68,6 +74,8 @@ impl Display for Action {
             Action::DownList => "Go down the list",
             Action::ActivateValgrind => "Turn On/Off valgrind",
             Action::RunCheckstyle => "Run checkstyle",
+            Action::RunTaskOne => "Run task-1",
+            Action::RunTaskTwo => "Run task-2",
         };
         write!(f, "{}", str)
     }

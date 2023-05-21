@@ -101,7 +101,7 @@ fn draw_popup_cs<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Paragra
 
             let split: Vec<&'a str> = line.split(':').collect();
             if split.len() < 5 {
-                return Spans::from(vec![]);
+                return Spans::from(vec![Span::raw(line)]);
             }
 
             Spans::from(vec![
@@ -217,7 +217,7 @@ fn draw_test_list<'a>(app: &mut App) -> (List<'a>, Table<'a>, List<'a>, usize) {
                 .title("Tests"),
         );
 
-    let index = app.test_list_state.selected().unwrap();
+    let index = app.test_list_state.selected().unwrap_or(0);
     let (test_index, exec_index) = (
         index % app.test_list[0].len(),
         index / app.test_list[0].len(),

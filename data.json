@@ -33,7 +33,7 @@
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 30000,
+        "timeout": 10000,
         "test_score": 5
       },
       {
@@ -43,7 +43,7 @@
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 30000,
+        "timeout": 10000,
         "test_score": 5
       },
       {
@@ -53,7 +53,7 @@
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 30000,
+        "timeout": 10000,
         "test_score": 5
       },
       {
@@ -63,7 +63,7 @@
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 30000,
+        "timeout": 10000,
         "test_score": 5
       },
       {
@@ -73,7 +73,7 @@
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 30000,
+        "timeout": 10000,
         "test_score": 5
       },
       {
@@ -83,7 +83,7 @@
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 100000,
+        "timeout": 30000,
         "test_score": 5
       },
       {
@@ -93,7 +93,7 @@
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 300000,
+        "timeout": 60000,
         "test_score": 5
       },
       {
@@ -103,7 +103,7 @@
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 500000,
+        "timeout": 60000,
         "test_score": 5
       }
     ],
@@ -135,7 +135,7 @@
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 30000,
+        "timeout": 10000,
         "test_score": 5
       },
       {
@@ -145,7 +145,7 @@
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 30000,
+        "timeout": 10000,
         "test_score": 5
       },
       {
@@ -155,7 +155,7 @@
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 30000,
+        "timeout": 10000,
         "test_score": 5
       },
       {
@@ -165,7 +165,7 @@
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 40000,
+        "timeout": 10000,
         "test_score": 5
       },
       {
@@ -175,7 +175,7 @@
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 40000,
+        "timeout": 10000,
         "test_score": 5
       },
       {
@@ -205,7 +205,7 @@
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 150000,
+        "timeout": 120000,
         "test_score": 5
       }
     ]

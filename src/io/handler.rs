@@ -51,7 +51,7 @@ impl IoAsyncHandler {
         app.initialized(); // we could update the app state
                            // info!("Application initialized");
 
-        self.run_make().await.unwrap();
+        self.run_make().await?;
 
         Ok(())
     }
@@ -69,8 +69,7 @@ impl IoAsyncHandler {
             "{}ref/{:02}-{}.ref",
             app.test_path, app.test_list[exec_index][test_index].id, app.exec_name[exec_index]
         ))
-        .await
-        .unwrap();
+        .await?;
 
         app.diff =
             TextDiff::from_lines(&app.current_ref, &app.test_list[exec_index][test_index].log)
@@ -94,9 +93,7 @@ impl IoAsyncHandler {
 
     async fn save_data(&mut self, data: Data) -> Result<(), Option<Error>> {
         debug!("Saving data");
-        tokio::fs::write(DB_PATH, serde_json::to_string_pretty(&data).unwrap())
-            .await
-            .unwrap();
+        tokio::fs::write(DB_PATH, serde_json::to_string_pretty(&data).unwrap()).await?;
         Ok(())
     }
 
@@ -108,17 +105,15 @@ impl IoAsyncHandler {
         let mut cs = Command::new(format!("{}/cs/cs.sh", app.test_path));
         cs.arg(".");
 
-        let output = cs.output().await.unwrap().stdout;
+        let output = cs.output().await?.stdout;
 
         app.checkstyle.clear();
         app.checkstyle
             .push_str(std::str::from_utf8(&output).unwrap());
 
-        let mut out_file = File::create(format!("{}checkstyle.txt", app.test_path))
-            .await
-            .unwrap();
+        let mut out_file = File::create(format!("{}checkstyle.txt", app.test_path)).await?;
 
-        out_file.write_all(&output).await.unwrap();
+        out_file.write_all(&output).await?;
 
         Ok(())
     }
@@ -127,7 +122,7 @@ impl IoAsyncHandler {
         info!("Running makefile");
         let mut make = Command::new("make");
         let make_run = make.arg("build");
-        let res = make_run.output().await.unwrap();
+        let res = make_run.output().await?;
 
         if let Some(code) = res.status.code() {
             if code != 0 {
@@ -223,8 +218,7 @@ impl IoAsyncHandler {
             "{}output/{:02}-{}.out",
             app.test_path, index, app_name
         ))
-        .await
-        .unwrap();
+        .await?;
 
         let valgrind = app.valgrind_enabled;
 
@@ -277,8 +271,7 @@ impl IoAsyncHandler {
         let in_file = std::fs::File::open(format!(
             "{}input/{:02}-{}.in",
             app.test_path, index, app_name
-        ))
-        .unwrap();
+        ))?;
         drop(app);
 
         let run = binding.stdin(in_file).stdout(Stdio::piped());
@@ -326,7 +319,7 @@ impl IoAsyncHandler {
                                     current_test.time_normal = start.elapsed().as_secs_f64();
                                 }
 
-                                child.kill().await.unwrap();
+                                child.kill().await?;
 
                                 return Ok(());
                             }
@@ -346,7 +339,7 @@ impl IoAsyncHandler {
                                 current_test.time_normal = start.elapsed().as_secs_f64();
                             }
 
-                            child.kill().await.unwrap();
+                            child.kill().await?;
 
                             return Ok(());
                         }
@@ -418,7 +411,7 @@ impl IoAsyncHandler {
                 let runtime = start.elapsed().as_secs_f64();
                 debug!("time={:5}", runtime);
 
-                out_file.write_all(log.as_bytes()).await.unwrap();
+                out_file.write_all(log.as_bytes()).await?;
 
                 let mut app = self.app.lock().await;
                 let current_test = &mut app.test_list[exec][index];

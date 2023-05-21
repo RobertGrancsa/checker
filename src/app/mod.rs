@@ -154,6 +154,24 @@ impl App {
                     self.dispatch(IoEvent::RunAll(self.test_num)).await;
                     AppReturn::Continue
                 }
+                Action::RunTaskOne => {
+                    let mut task_one = Vec::new();
+                    for test in self.test_list[1].iter() {
+                        task_one.push((test.id, 1));
+                    }
+
+                    self.dispatch(IoEvent::RunFailed(task_one)).await;
+                    AppReturn::Continue
+                }
+                Action::RunTaskTwo => {
+                    let mut task_two = Vec::new();
+                    for test in self.test_list[0].iter() {
+                        task_two.push((test.id, 0));
+                    }
+
+                    self.dispatch(IoEvent::RunFailed(task_two)).await;
+                    AppReturn::Continue
+                }
                 Action::RunFailed => {
                     let mut failed = Vec::new();
                     for (index, execs) in self.test_list.iter().enumerate() {
@@ -343,6 +361,8 @@ impl App {
             Action::DownList,
             Action::ActivateValgrind,
             Action::RunCheckstyle,
+            Action::RunTaskOne,
+            Action::RunTaskTwo,
         ]
         .into();
         self.state = AppState::initialized()

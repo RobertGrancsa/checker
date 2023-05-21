@@ -1,4 +1,4 @@
-use std::{env, sync::Arc, thread::available_parallelism};
+use std::{env, sync::Arc, thread::available_parallelism, time::Duration};
 
 use checker_tema_3_sd::app::App;
 use checker_tema_3_sd::io::handler::IoAsyncHandler;
@@ -6,6 +6,7 @@ use checker_tema_3_sd::io::IoEvent;
 use checker_tema_3_sd::start_ui;
 use eyre::Result;
 use log::{info, LevelFilter};
+use tokio::time::timeout;
 
 use crate::legacy::run_tests;
 
@@ -23,7 +24,10 @@ async fn main() -> Result<()> {
 
         let app = App::new(sync_io_tx.clone());
 
-        run_tests(app).await;
+        if let Err(_) = timeout(Duration::from_millis(595000), run_tests(app)).await {
+            println!();
+            println!("Tests ran for too long, stopping execution");
+        }
 
         return Ok(());
     }
