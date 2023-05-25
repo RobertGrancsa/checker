@@ -7,6 +7,7 @@ pub enum AppState {
         duration: Duration,
         counter_tick: u64,
         checkstyle: bool,
+        vmcheck_output: bool,
         diff_size: usize,
     },
 }
@@ -16,11 +17,13 @@ impl AppState {
         let duration = Duration::from_secs(1);
         let counter_tick = 0;
         let checkstyle = false;
+        let vmcheck_output = false;
         let diff_size = 0;
         Self::Initialized {
             duration,
             counter_tick,
             checkstyle,
+            vmcheck_output,
             diff_size,
         }
     }
@@ -49,9 +52,23 @@ impl AppState {
         }
     }
 
+    pub fn update_vmcheck(&mut self) {
+        if let Self::Initialized { vmcheck_output, .. } = self {
+            *vmcheck_output = !*vmcheck_output;
+        }
+    }
+
     pub fn get_checkstyle(&self) -> Option<bool> {
         if let Self::Initialized { checkstyle, .. } = self {
             Some(*checkstyle)
+        } else {
+            None
+        }
+    }
+
+    pub fn get_vmcheck(&self) -> Option<bool> {
+        if let Self::Initialized { vmcheck_output, .. } = self {
+            Some(*vmcheck_output)
         } else {
             None
         }

@@ -4,9 +4,10 @@ use std::{process::Stdio, sync::Arc};
 
 // use eyre::{Result, ErrReport};
 use log::{debug, error, info, warn};
+use serde_json::Value;
 use similar::{ChangeTag, TextDiff};
 use tokio::fs::{self, File};
-use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
+use tokio::io::{AsyncBufReadExt, AsyncReadExt, AsyncWriteExt, BufReader};
 use tokio::process::Command;
 use tokio::time::{timeout, Instant};
 
@@ -36,6 +37,8 @@ impl IoAsyncHandler {
             IoEvent::LoadChecksyle => self.load_cs().await,
             IoEvent::Make => self.run_make().await,
             IoEvent::UpdateRef => self.update_ref().await,
+            IoEvent::SendVMChecker => self.send_vmchecker().await,
+            IoEvent::LoadVMChecker => self.load_vmchecker().await,
         };
 
         self.update_ref().await.unwrap();
@@ -54,6 +57,200 @@ impl IoAsyncHandler {
         self.run_make().await?;
 
         Ok(())
+    }
+
+    async fn load_vmchecker(&self) -> Result<(), Option<Error>> {
+        let client = reqwest::Client::new();
+        let cookie;
+
+        let (username, password) = Self::get_credentials().await?;
+
+        match client
+            .post("https://vmchecker.cs.pub.ro/services/services.py/login")
+            .body(format!("username={}&password={}", username, password))
+            .send()
+            .await
+        {
+            Ok(res) => {
+                cookie = res.headers().get("set-cookie").unwrap().clone();
+
+                if let Ok(body) = res.text().await {
+                    if body.contains("false") {
+                        return Err(Some(Error::new(ErrorKind::Other, body)));
+                    }
+                }
+            }
+            Err(err) => {
+                return Err(Some(Error::new(ErrorKind::Other, err.to_string())));
+            }
+        };
+
+        match client.get("https://vmchecker.cs.pub.ro/services/services.py/getResults?courseId=SD&assignmentId=3-mk-kNN")
+                    .header("cookie", &cookie)
+                    .send().await {
+            Ok(res) => {
+				let v: Value = serde_json::from_str(&res.text().await.unwrap()).unwrap();
+
+				let mut app = self.app.lock().await;
+
+				match v.get(5) {
+					Some(output) => {
+						app.vmchecker_out.clear();
+						app.vmchecker_out.push_str(&output["Execuția testelor (stdout)"].to_string());
+					},
+					None => {
+						app.vmchecker_out.clear();
+						app.vmchecker_out.push_str(&v[2].to_string());
+					},
+				}
+			},
+            Err(err) => {
+                return Err(Some(Error::new(ErrorKind::Other, err.to_string())));
+            },
+        };
+
+        Ok(())
+    }
+
+    async fn send_vmchecker(&self) -> Result<(), Option<Error>> {
+        let client = reqwest::Client::new();
+        let cookie;
+
+        let (username, password) = Self::get_credentials().await?;
+
+        match client
+            .post("https://vmchecker.cs.pub.ro/services/services.py/login")
+            .body(format!("username={}&password={}", username, password))
+            .send()
+            .await
+        {
+            Ok(res) => {
+                cookie = res.headers().get("set-cookie").unwrap().clone();
+
+                if let Ok(body) = res.text().await {
+                    if body.contains("false") {
+                        return Err(Some(Error::new(ErrorKind::Other, body)));
+                    }
+                }
+            }
+            Err(err) => {
+                return Err(Some(Error::new(ErrorKind::Other, err.to_string())));
+            }
+        };
+
+        let mut make = Command::new("make");
+        make.arg("pack");
+
+        let res = make.output().await?;
+
+        if let Some(code) = res.status.code() {
+            if code != 0 {
+                return Err(Some(Error::new(
+                    ErrorKind::Other,
+                    std::str::from_utf8(&res.stderr).unwrap(),
+                )));
+            }
+            info!("\n{}", String::from_utf8(res.stdout).unwrap());
+        }
+
+        let body = Self::build_request().await;
+
+        match client.post("https://vmchecker.cs.pub.ro/services/services.py/uploadAssignment")
+                    .header("cookie", &cookie)
+                    .header("Content-Type", "multipart/form-data; boundary=---------------------------27347846016281380843096153774")
+                    .body(body)
+                    .send().await {
+            Ok(res) => {
+                info!("{:?}", res.text().await);
+
+                info!("Uploaded file to VMChecker, waiting for results");
+            },
+            Err(err) => {
+                return Err(Some(Error::new(ErrorKind::Other, err.to_string())));
+            },
+        };
+
+        Ok(())
+    }
+
+    async fn get_credentials() -> Result<(String, String), Option<Error>> {
+        let mut username = String::new();
+        let mut password = String::new();
+        let mut buf = String::new();
+
+        match File::open(".env").await {
+            Ok(file) => {
+                let mut bufread = BufReader::new(file);
+                bufread.read_line(&mut buf).await.unwrap();
+
+                let cred: Vec<&str> = buf.split('=').collect();
+                username.push_str(cred[1]);
+
+                buf.clear();
+                bufread.read_line(&mut buf).await.unwrap();
+
+                let cred: Vec<&str> = buf.split('=').collect();
+                password.push_str(cred[1]);
+            }
+            Err(_) => {
+                let mut file = File::create(".env").await.unwrap();
+                file.write(String::from("username=\npassword=\n").as_bytes())
+                    .await
+                    .unwrap();
+                return Err(Some(Error::new(
+                    ErrorKind::Other,
+                    "No env file found, creating... Please input your credentials",
+                )));
+            }
+        }
+
+        Ok((
+            String::from(username.strip_suffix('\n').unwrap()),
+            String::from(password.strip_suffix('\n').unwrap()),
+        ))
+    }
+
+    async fn build_request() -> Vec<u8> {
+        let mut body: Vec<u8> = Vec::new();
+
+        let mut paths = fs::read_dir("./").await.unwrap();
+        let mut zip = String::new();
+
+        while let Ok(Some(path)) = paths.next_entry().await {
+            if path.path().display().to_string().contains("Tema3.zip") {
+                zip.push_str(&path.path().display().to_string());
+            }
+        }
+
+        let mut zip_buffer = BufReader::new(File::open(&zip).await.unwrap());
+
+        // Add zip file
+        body.append(&mut "-----------------------------27347846016281380843096153774\r\n".into());
+        body.append(&mut format!("Content-Disposition: form-data; name=\"archiveFile\"; filename=\"{}\"\r\nContent-Type: application/x-zip-compressed\r\n\r\n", zip).into());
+
+        loop {
+            if let Ok(byte) = zip_buffer.read_u8().await {
+                body.push(byte);
+            } else {
+                break;
+            }
+        }
+
+        body.push(b'\r');
+        body.push(b'\n');
+
+        // Add the section
+        body.append(&mut "-----------------------------27347846016281380843096153774\r\n".into());
+        body.append(&mut "Content-Disposition: form-data; name=\"courseId\"\r\n\r\nSD\r\n".into());
+
+        // Add the task
+        body.append(&mut "-----------------------------27347846016281380843096153774\r\n".into());
+        body.append(
+            &mut "Content-Disposition: form-data; name=\"assignmentId\"\r\n\r\n3-mk-kNN\r\n".into(),
+        );
+        body.append(&mut "-----------------------------27347846016281380843096153774--\r\n".into());
+
+        body
     }
 
     async fn update_ref(&self) -> Result<(), Option<Error>> {

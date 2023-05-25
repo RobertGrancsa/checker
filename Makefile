@@ -25,7 +25,7 @@ kNN: $(OBJ)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 pack:
-	zip -FSr 311CA_MarcelPetrescu_Tema3.zip README.md Makefile *.c *.h
+	zip -FSr 311CA_MarcelPetrescu_Tema3.zip README.md Makefile *.c *.h *.cpp
 
 clean:
 	rm -f $(TARGETS) $(OBJ)

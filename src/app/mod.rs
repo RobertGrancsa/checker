@@ -70,6 +70,7 @@ pub struct App {
 
     pub current_ref: String,
     pub checkstyle: String,
+    pub vmchecker_out: String,
     pub diff: Vec<(&'static str, String)>,
 }
 
@@ -104,6 +105,7 @@ impl App {
         .unwrap();
 
         let checkstyle = fs::read_to_string(format!("{}checkstyle.txt", test_path)).unwrap();
+        let vmchecker_out = String::new();
 
         let diff = TextDiff::from_lines(&current_ref, &test_list[0][0].log)
             .iter_all_changes()
@@ -140,6 +142,7 @@ impl App {
             exec_name,
             current_ref,
             checkstyle,
+            vmchecker_out,
             diff,
         }
     }
@@ -307,6 +310,18 @@ impl App {
 
                     AppReturn::Continue
                 }
+                Action::SendVMChecker => {
+                    self.dispatch(IoEvent::SendVMChecker).await;
+                    AppReturn::Continue
+                }
+                Action::OpenVMChecker => {
+                    self.state.update_vmcheck();
+                    if let Some(true) = self.state.get_vmcheck() {
+                        self.dispatch(IoEvent::LoadVMChecker).await;
+                    }
+
+                    AppReturn::Continue
+                }
             }
         } else {
             warn!("No action accociated to {}", key);
@@ -363,6 +378,8 @@ impl App {
             Action::RunCheckstyle,
             Action::RunTaskOne,
             Action::RunTaskTwo,
+            Action::SendVMChecker,
+            Action::OpenVMChecker,
         ]
         .into();
         self.state = AppState::initialized()

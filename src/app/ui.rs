@@ -85,6 +85,13 @@ where
         rect.render_widget(Clear, area);
         rect.render_widget(block, area);
     }
+
+    if let Some(true) = app.state().get_vmcheck() {
+        let (area, block) = draw_popup_vmcheck(app, size, 90, 90);
+
+        rect.render_widget(Clear, area);
+        rect.render_widget(block, area);
+    }
 }
 
 fn draw_popup_cs<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Paragraph<'a>) {
@@ -115,6 +122,60 @@ fn draw_popup_cs<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Paragra
 
     let list = Paragraph::new(items)
         .block(Block::default().borders(Borders::ALL).title("Checkstyle"))
+        .wrap(Wrap { trim: true });
+
+    let popup_layout = Layout::default()
+        .direction(Direction::Vertical)
+        .constraints(
+            [
+                Constraint::Percentage((100 - y) / 2),
+                Constraint::Percentage(y),
+                Constraint::Percentage((100 - y) / 2),
+            ]
+            .as_ref(),
+        )
+        .split(size);
+
+    let area = Layout::default()
+        .direction(Direction::Horizontal)
+        .constraints(
+            [
+                Constraint::Percentage((100 - x) / 2),
+                Constraint::Percentage(x),
+                Constraint::Percentage((100 - x) / 2),
+            ]
+            .as_ref(),
+        )
+        .split(popup_layout[1])[1];
+
+    (area, list)
+}
+
+fn draw_popup_vmcheck<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Paragraph<'a>) {
+    let mut items: Vec<_> = Vec::new();
+
+    let mut ok = 0;
+    for line in app.vmchecker_out.split("\\n") {
+        if line.contains("====") || line.contains("Coada"){
+            ok = 1;
+        }
+
+        if line.contains("Running") || line.contains("ERROR") 
+			|| line.contains("WARNING") || line.contains("CHECK") {
+            continue;
+        }
+
+        if ok == 1 {
+            items.push(Spans::from(vec![Span::raw(line)]));
+        }
+    }
+
+    let list = Paragraph::new(items)
+        .block(
+            Block::default()
+                .borders(Borders::ALL)
+                .title("VMChecker output"),
+        )
         .wrap(Wrap { trim: true });
 
     let popup_layout = Layout::default()

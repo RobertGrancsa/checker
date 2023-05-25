@@ -24,9 +24,11 @@ async fn main() -> Result<()> {
 
         let app = App::new(sync_io_tx.clone());
 
-        if let Err(_) = timeout(Duration::from_millis(595000), run_tests(app)).await {
-            println!();
-            println!("Tests ran for too long, stopping execution");
+        if timeout(Duration::from_millis(595000), run_tests(app))
+            .await
+            .is_err()
+        {
+            println!("\nTests ran for too long, stopping execution");
         }
 
         return Ok(());
@@ -40,6 +42,7 @@ async fn main() -> Result<()> {
     // Configure log
     tui_logger::init_logger(LevelFilter::Info).unwrap();
     tui_logger::set_default_level(log::LevelFilter::Info);
+    // log4rs::init_file("logging_config.yaml", Default::default()).unwrap();
 
     // Handle IO in a specifc thread
 

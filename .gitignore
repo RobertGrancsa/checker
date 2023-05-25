@@ -5,3 +5,4 @@ new_core*
 kNN
 mk
 data_copy.json
+.env

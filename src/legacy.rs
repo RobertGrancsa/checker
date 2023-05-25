@@ -85,7 +85,7 @@ async fn run_test(
     index: usize,
     app_name: &String,
     path: &String,
-) -> Result<usize, ()> {
+) -> Result<usize, std::io::Error> {
     let mut run: Command;
     if index < 2 {
         run = Command::new("valgrind");
@@ -104,24 +104,12 @@ async fn run_test(
 
     print!("Running {app_name} test {index}");
 
-    let mut out_file = File::create(format!("{}output/{:02}-{}.out", path, index, app_name))
-        .await
-        .unwrap();
+    let mut out_file =
+        File::create(format!("{}output/{:02}-{}.out", path, index, app_name)).await?;
 
-    let ref_file =
-        if let Ok(file) = fs::read(format!("{}ref/{:02}-{}.ref", path, index, app_name)).await {
-            file
-        } else {
-            return Err(());
-        };
+    let ref_file = fs::read(format!("{}ref/{:02}-{}.ref", path, index, app_name)).await?;
 
-    let in_file = if let Ok(file) =
-        std::fs::File::open(format!("{}input/{:02}-{}.in", path, index, app_name))
-    {
-        file
-    } else {
-        return Err(());
-    };
+    let in_file = std::fs::File::open(format!("{}input/{:02}-{}.in", path, index, app_name))?;
 
     run.stdin(in_file).stdout(Stdio::piped());
     if let Ok(mut child) = run.spawn() {
@@ -202,7 +190,7 @@ async fn run_test(
 
         println!("\t\tTime: {:.5}", start.elapsed().as_secs_f64());
 
-        out_file.write_all(log_file.as_bytes()).await.unwrap();
+        out_file.write_all(log_file.as_bytes()).await?;
         if log_file == std::str::from_utf8(&ref_file).unwrap() {
             println!(
                 "Test {index:02}{}PASSED: {}/{}",
