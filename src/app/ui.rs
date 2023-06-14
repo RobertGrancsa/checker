@@ -156,12 +156,15 @@ fn draw_popup_vmcheck<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Pa
 
     let mut ok = 0;
     for line in app.vmchecker_out.split("\\n") {
-        if line.contains("====") || line.contains("Coada") || line.contains("Waiting"){
+        if line.contains("====") || line.contains("Coada") || line.contains("Waiting") {
             ok = 1;
         }
 
-        if line.contains("Running") || line.contains("ERROR") 
-			|| line.contains("WARNING") || line.contains("CHECK") {
+        if line.contains("Running")
+            || line.contains("ERROR")
+            || line.contains("WARNING")
+            || line.contains("CHECK")
+        {
             continue;
         }
 

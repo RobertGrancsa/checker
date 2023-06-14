@@ -311,13 +311,13 @@ impl App {
                     AppReturn::Continue
                 }
                 Action::SendVMChecker => {
-					info!("Preparing vmchecker send");
+                    info!("Preparing vmchecker send");
                     self.dispatch(IoEvent::SendVMChecker).await;
                     AppReturn::Continue
                 }
                 Action::OpenVMChecker => {
                     self.state.update_vmcheck();
-					self.vmchecker_out.push_str("Waiting for server response");
+                    self.vmchecker_out.push_str("Waiting for server response");
                     if let Some(true) = self.state.get_vmcheck() {
                         self.dispatch(IoEvent::LoadVMChecker).await;
                     }

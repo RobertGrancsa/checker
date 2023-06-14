@@ -1,5 +1,5 @@
 // use std::io::{BufRead, BufReader, Write};
-use std::process::Stdio;
+use std::process::{exit, Stdio};
 use std::time::{Duration, Instant};
 use tokio::fs::{self, File};
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
@@ -14,7 +14,13 @@ pub async fn run_tests(mut app: App) {
     println!("Running makefile");
     let mut make = Command::new("make");
     let make_run = make.arg("build");
-    let res = make_run.output().await.unwrap();
+    let res = match make_run.output().await {
+        Ok(out) => out,
+        Err(err) => {
+            println!("Error {:?}", err);
+            exit(1);
+        }
+    };
 
     if let Some(code) = res.status.code() {
         if code != 0 {
@@ -23,7 +29,16 @@ pub async fn run_tests(mut app: App) {
             println!("{}", String::from_utf8(res.stderr).unwrap());
             return;
         }
-        println!("{}", String::from_utf8(res.stdout).unwrap());
+        println!(
+            "{}",
+            match String::from_utf8(res.stdout) {
+                Ok(stdout) => stdout,
+                Err(err) => {
+                    println!("Error {:?}", err);
+                    exit(1);
+                }
+            }
+        );
     }
 
     for (i, test_list) in app.test_list.iter().enumerate() {
@@ -46,17 +61,38 @@ pub async fn run_tests(mut app: App) {
     let mut cs = Command::new(format!("{}/cs/cs.sh", app.test_path));
     cs.arg(".");
 
-    let output = cs.output().await.unwrap().stdout;
+    let output = match cs.output().await {
+        Ok(res) => res.stdout,
+        Err(err) => {
+            println!("Error {:?}", err);
+            exit(1);
+        }
+    };
 
     app.checkstyle.clear();
-    app.checkstyle
-        .push_str(std::str::from_utf8(&output).unwrap());
+    app.checkstyle.push_str(match std::str::from_utf8(&output) {
+        Ok(res) => res,
+        Err(err) => {
+            println!("Error {:?}", err);
+            exit(1);
+        }
+    });
 
-    let mut out_file = File::create(format!("{}checkstyle.txt", app.test_path))
-        .await
-        .unwrap();
+    let mut out_file = match File::create(format!("{}checkstyle.txt", app.test_path)).await {
+        Ok(res) => res,
+        Err(err) => {
+            println!("Error {:?}", err);
+            exit(1);
+        }
+    };
 
-    out_file.write_all(&output).await.unwrap();
+    match out_file.write_all(&output).await {
+        Ok(_) => {}
+        Err(err) => {
+            println!("Error {:?}", err);
+            exit(1);
+        }
+    };
 
     if app.checkstyle.is_empty() {
         println!("No coding style errors found");
@@ -73,9 +109,20 @@ pub async fn run_tests(mut app: App) {
     println!("Running make clean");
     let mut make = Command::new("make");
     make.arg("clean");
-    let mut child = make.spawn().unwrap();
+    let mut child = match make.spawn() {
+        Ok(chld) => chld,
+        Err(err) => {
+            println!("Error {:?}", err);
+            exit(1);
+        }
+    };
 
-    child.wait().await.unwrap();
+    match child.wait().await {
+        Ok(_) => {}
+        Err(err) => {
+            println!("Error {:?}", err);
+        }
+    };
 
     println!("Final score: {score}/110\n");
 }
@@ -191,7 +238,15 @@ async fn run_test(
         println!("\t\tTime: {:.5}", start.elapsed().as_secs_f64());
 
         out_file.write_all(log_file.as_bytes()).await?;
-        if log_file == std::str::from_utf8(&ref_file).unwrap() {
+        if log_file
+            == match std::str::from_utf8(&ref_file) {
+                Ok(res) => res,
+                Err(err) => {
+                    println!("Error {:?}", err);
+                    exit(1);
+                }
+            }
+        {
             println!(
                 "Test {index:02}{}PASSED: {}/{}",
                 ".".repeat(27),
