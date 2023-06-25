@@ -6,3 +6,10 @@ kNN
 mk
 data_copy.json
 .env
+*.c
+*.h
+*.cpp
+*.sh
+test_env/
+checker/output/*
+data/
