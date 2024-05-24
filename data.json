@@ -1,219 +1,317 @@
 {
-  "commands": [
-    "Run all tests",
-    "Run all tests without valgrind",
-    "Configure tests"
-  ],
   "tests": [
     [
       {
         "id": 0,
-        "name": "kNN 1",
+        "name": "Distance",
         "status": "0",
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
         "timeout": 30000,
-        "test_score": 5
+        "test_score": 3
       },
       {
         "id": 1,
-        "name": "kNN 2",
+        "name": "Distance Complex",
         "status": "0",
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
         "timeout": 30000,
-        "test_score": 5
+        "test_score": 3
       },
       {
         "id": 2,
-        "name": "kNN 3",
-        "status": "0",
-        "log": "",
-        "time_normal": 0.0,
-        "time_valgrind": 0.0,
-        "timeout": 10000,
-        "test_score": 5
-      },
-      {
-        "id": 3,
-        "name": "kNN 4",
-        "status": "0",
-        "log": "",
-        "time_normal": 0.0,
-        "time_valgrind": 0.0,
-        "timeout": 10000,
-        "test_score": 5
-      },
-      {
-        "id": 4,
-        "name": "kNN 5",
-        "status": "0",
-        "log": "",
-        "time_normal": 0.0,
-        "time_valgrind": 0.0,
-        "timeout": 10000,
-        "test_score": 5
-      },
-      {
-        "id": 5,
-        "name": "kNN 6",
-        "status": "0",
-        "log": "",
-        "time_normal": 0.0,
-        "time_valgrind": 0.0,
-        "timeout": 10000,
-        "test_score": 5
-      },
-      {
-        "id": 6,
-        "name": "kNN 7",
-        "status": "0",
-        "log": "",
-        "time_normal": 0.0,
-        "time_valgrind": 0.0,
-        "timeout": 10000,
-        "test_score": 5
-      },
-      {
-        "id": 7,
-        "name": "kNN 8",
+        "name": "Suggestion",
         "status": "0",
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
         "timeout": 30000,
-        "test_score": 5
+        "test_score": 3
+      },
+      {
+        "id": 3,
+        "name": "Suggestion Complex",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 3
+      },
+      {
+        "id": 4,
+        "name": "Common",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 3
+      },
+      {
+        "id": 5,
+        "name": "Common Complex",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 3
+      },
+      {
+        "id": 6,
+        "name": "Popular",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 3
+      },
+      {
+        "id": 7,
+        "name": "Popular Complex",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 3
       },
       {
         "id": 8,
-        "name": "kNN 9",
+        "name": "Friends Complex 1",
         "status": "0",
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 60000,
-        "test_score": 5
+        "timeout": 30000,
+        "test_score": 3
       },
       {
         "id": 9,
-        "name": "kNN 10",
+        "name": "Friends Complex 2",
         "status": "0",
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 60000,
-        "test_score": 5
+        "timeout": 30000,
+        "test_score": 3
       }
     ],
     [
       {
         "id": 0,
-        "name": "MK 1",
+        "name": "Post/Repost",
         "status": "0",
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
         "timeout": 30000,
-        "test_score": 5
+        "test_score": 3
       },
       {
         "id": 1,
-        "name": "MK 2",
+        "name": "Post/Repost Complex",
         "status": "0",
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
         "timeout": 30000,
-        "test_score": 5
+        "test_score": 3
       },
       {
         "id": 2,
-        "name": "MK 3",
+        "name": "LCA",
         "status": "0",
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 10000,
-        "test_score": 5
+        "timeout": 30000,
+        "test_score": 3
       },
       {
         "id": 3,
-        "name": "MK 4",
+        "name": "LCA Complex",
         "status": "0",
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 10000,
-        "test_score": 5
+        "timeout": 30000,
+        "test_score": 3
       },
       {
         "id": 4,
-        "name": "MK 5",
+        "name": "Like",
         "status": "0",
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 10000,
-        "test_score": 5
+        "timeout": 30000,
+        "test_score": 3
       },
       {
         "id": 5,
-        "name": "MK 6",
+        "name": "Like Complex",
         "status": "0",
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 10000,
-        "test_score": 5
+        "timeout": 30000,
+        "test_score": 3
       },
       {
         "id": 6,
-        "name": "MK 7",
+        "name": "Ratio",
         "status": "0",
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 10000,
-        "test_score": 5
+        "timeout": 30000,
+        "test_score": 3
       },
       {
         "id": 7,
-        "name": "MK 8",
+        "name": "Ratio Complex",
         "status": "0",
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 45000,
-        "test_score": 5
+        "timeout": 30000,
+        "test_score": 3
       },
       {
         "id": 8,
-        "name": "MK 9",
+        "name": "Posts Complex 1",
         "status": "0",
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 60000,
-        "test_score": 5
+        "timeout": 30000,
+        "test_score": 3
       },
       {
         "id": 9,
-        "name": "MK 10",
+        "name": "Posts Complex 2",
         "status": "0",
         "log": "",
         "time_normal": 0.0,
         "time_valgrind": 0.0,
-        "timeout": 120000,
-        "test_score": 5
+        "timeout": 30000,
+        "test_score": 3
+      }
+    ],
+    [
+      {
+        "id": 0,
+        "name": "Feed",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 3
+      },
+      {
+        "id": 1,
+        "name": "Feed Complex",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 3
+      },
+      {
+        "id": 2,
+        "name": "Profile",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 3
+      },
+      {
+        "id": 3,
+        "name": "Profile Complex",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 3
+      },
+      {
+        "id": 4,
+        "name": "Reposts",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 3
+      },
+      {
+        "id": 5,
+        "name": "Reposts Complex",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 3
+      },
+      {
+        "id": 6,
+        "name": "Clique",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 3
+      },
+      {
+        "id": 7,
+        "name": "Clique Complex",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 3
+      },
+      {
+        "id": 8,
+        "name": "Feed Complex 1",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 3
+      },
+      {
+        "id": 9,
+        "name": "Feed Complex 2",
+        "status": "0",
+        "log": "",
+        "time_normal": 0.0,
+        "time_valgrind": 0.0,
+        "timeout": 30000,
+        "test_score": 3
       }
     ]
   ],
   "test_path": "checker/",
   "exec_name": [
-    "kNN",
-    "mk"
+    "friends",
+    "posts",
+    "feed"
   ],
   "valgrind_enabled": false
 }

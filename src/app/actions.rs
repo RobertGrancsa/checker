@@ -19,14 +19,15 @@ pub enum Action {
     RunCheckstyle,
     RunTaskOne,
     RunTaskTwo,
-    SendVMChecker,
-    OpenVMChecker,
+    RunTaskThree,
+    // SendVMChecker,
+    // OpenVMChecker,
 }
 
 impl Action {
     /// All available actions
     pub fn iterator() -> Iter<'static, Action> {
-        static ACTIONS: [Action; 14] = [
+        static ACTIONS: [Action; 13] = [
             Action::Quit,
             Action::Run,
             Action::RunFailed,
@@ -39,8 +40,9 @@ impl Action {
             Action::RunCheckstyle,
             Action::RunTaskOne,
             Action::RunTaskTwo,
-            Action::SendVMChecker,
-            Action::OpenVMChecker,
+            Action::RunTaskThree,
+            // Action::SendVMChecker,
+            // Action::OpenVMChecker,
         ];
         ACTIONS.iter()
     }
@@ -60,8 +62,9 @@ impl Action {
             Action::RunCheckstyle => &[Key::Char('c')],
             Action::RunTaskOne => &[Key::Char('1')],
             Action::RunTaskTwo => &[Key::Char('2')],
-            Action::SendVMChecker => &[Key::Char('p')],
-            Action::OpenVMChecker => &[Key::Char('o')],
+            Action::RunTaskThree => &[Key::Char('3')],
+            // Action::SendVMChecker => &[Key::Char('p')],
+            // Action::OpenVMChecker => &[Key::Char('o')],
         }
     }
 }
@@ -82,8 +85,9 @@ impl Display for Action {
             Action::RunCheckstyle => "Run checkstyle",
             Action::RunTaskOne => "Run task-1",
             Action::RunTaskTwo => "Run task-2",
-            Action::SendVMChecker => "Send homework to vmchecker",
-            Action::OpenVMChecker => "Check vmchecker output",
+            Action::RunTaskThree => "Run task-3",
+            // Action::SendVMChecker => "Send homework to vmchecker",
+            // Action::OpenVMChecker => "Check vmchecker output",
         };
         write!(f, "{}", str)
     }

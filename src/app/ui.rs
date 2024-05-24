@@ -1,19 +1,19 @@
-use tui::backend::Backend;
-use tui::layout::{Alignment, Constraint, Direction, Layout, Rect};
-use tui::style::{Color, Modifier, Style};
-use tui::text::{Span, Spans};
-use tui::widgets::{
+use std::cmp;
+
+use ratatui::layout::{Alignment, Constraint, Direction, Layout, Rect};
+use ratatui::style::{Color, Modifier, Style};
+use ratatui::text::{Line, Span};
+use ratatui::widgets::{
     Block, BorderType, Borders, Cell, Clear, List, ListItem, Paragraph, Row, Table, Wrap,
 };
-use tui::Frame;
-use tui_logger::TuiLoggerWidget;
+use ratatui::Frame;
+use tui_logger::{TuiLoggerLevelOutput, TuiLoggerWidget};
 
 use super::actions::Actions;
+use super::get_list_index;
 use crate::app::App;
 
-pub fn draw<B>(rect: &mut Frame<B>, app: &mut App)
-where
-    B: Backend,
+pub fn draw(rect: &mut Frame, app: &mut App)
 {
     let size = rect.size();
     check_size(&size);
@@ -35,7 +35,7 @@ where
 
     let test_layout = Layout::default()
         .direction(Direction::Horizontal)
-        .constraints([Constraint::Length(24), Constraint::Min(20)].as_ref())
+        .constraints([Constraint::Length(25), Constraint::Min(20)].as_ref())
         .split(body_chunks[0]);
 
     let (test_list, test_info, test_log, first_diff) = draw_test_list(app);
@@ -95,7 +95,7 @@ where
 }
 
 fn draw_popup_cs<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Paragraph<'a>) {
-    let items: Vec<_> = app
+    let mut items: Vec<_> = app
         .checkstyle
         .lines()
         .map(|line| {
@@ -108,10 +108,10 @@ fn draw_popup_cs<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Paragra
 
             let split: Vec<&'a str> = line.split(':').collect();
             if split.len() < 5 {
-                return Spans::from(vec![Span::raw(line)]);
+                return Line::from(vec![Span::raw(line)]);
             }
 
-            Spans::from(vec![
+            Line::from(vec![
                 Span::styled(format!("{}:{}:{}:", split[0], split[1], split[2]), style),
                 Span::styled(split[3], Style::default().fg(Color::Blue)),
                 Span::raw(":"),
@@ -119,6 +119,14 @@ fn draw_popup_cs<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Paragra
             ])
         })
         .collect();
+
+    if items.is_empty() {
+        items.push(Line::from(vec![Span::raw("Running checkstyle")]));
+    }
+
+    if app.errors.iter().sum::<i32>() == 0i32 {
+        items.push(Line::from(vec![Span::raw("No errors found")]));
+    }
 
     let list = Paragraph::new(items)
         .block(Block::default().borders(Borders::ALL).title("Checkstyle"))
@@ -169,7 +177,7 @@ fn draw_popup_vmcheck<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Pa
         }
 
         if ok == 1 {
-            items.push(Spans::from(vec![Span::raw(line)]));
+            items.push(Line::from(vec![Span::raw(line)]));
         }
     }
 
@@ -209,8 +217,8 @@ fn draw_popup_vmcheck<'a>(app: &'a App, size: Rect, x: u16, y: u16) -> (Rect, Pa
 }
 
 fn draw_test_list<'a>(app: &mut App) -> (List<'a>, Table<'a>, List<'a>, usize) {
-    let mut tests: Vec<ListItem> = app.test_list[0]
-        .iter()
+    let tests: Vec<ListItem> = app.test_list
+        .iter().map(| test_list_inner | test_list_inner.iter()
         .map(|test| {
             // Colorcode the level depending on its type
             let style = match test.status.as_str() {
@@ -223,49 +231,22 @@ fn draw_test_list<'a>(app: &mut App) -> (List<'a>, Table<'a>, List<'a>, usize) {
                 "MEMLEAKS" => Style::default().fg(Color::Blue),
                 _ => Style::default().fg(Color::Green),
             };
-            // Add a example datetime and apply proper spacing between them
-            let header = Spans::from(vec![
+
+            let header = Line::from(vec![
                 Span::raw(test.name.to_string()),
-                Span::raw(" ".repeat(10 - test.name.len())),
+                Span::raw(" ".repeat(23 - cmp::min(test.name.len() + test.status.len(), 21))),
                 Span::styled(test.status.to_string(), style),
-            ]);
-
+                ]);
+                
             ListItem::new(header)
-        })
-        .collect();
-
-    let mut tests_2: Vec<ListItem> = app.test_list[1]
-        .iter()
-        .map(|test| {
-            // Colorcode the level depending on its type
-            let style = match test.status.as_str() {
-                "0" => Style::default().fg(Color::Gray),
-                "RUNNING" => Style::default().fg(Color::Green),
-                "ERROR" => Style::default().fg(Color::Red),
-                "CRASHED" => Style::default().fg(Color::Blue),
-                "STARTING" => Style::default().fg(Color::Blue),
-                "TIMEOUT" => Style::default().fg(Color::Blue),
-                "MEMLEAKS" => Style::default().fg(Color::Blue),
-                _ => Style::default().fg(Color::Green),
-            };
-            // Add a example datetime and apply proper spacing between them
-            let header = Spans::from(vec![
-                Span::raw(test.name.to_string()),
-                Span::raw(" ".repeat(10 - test.name.len())),
-                Span::styled(test.status.to_string(), style),
-            ]);
-
-            ListItem::new(header)
-        })
-        .collect();
-
+        }).collect::<Vec<ListItem>>()
+    ).flatten().collect();
+        
     let style = Style::default().fg(if app.valgrind_enabled {
         Color::Red
     } else {
         Color::Gray
     });
-
-    tests.append(&mut tests_2);
 
     let test_list = List::new(tests)
         .highlight_style(
@@ -282,10 +263,7 @@ fn draw_test_list<'a>(app: &mut App) -> (List<'a>, Table<'a>, List<'a>, usize) {
         );
 
     let index = app.test_list_state.selected().unwrap_or(0);
-    let (test_index, exec_index) = (
-        index % app.test_list[0].len(),
-        index / app.test_list[0].len(),
-    );
+    let (test_index, exec_index) = get_list_index(&app.test_list, index);
 
     let selected_test = app.test_list[exec_index]
         .get(test_index)
@@ -300,7 +278,11 @@ fn draw_test_list<'a>(app: &mut App) -> (List<'a>, Table<'a>, List<'a>, usize) {
         } else {
             selected_test.time_normal
         }))),
-    ])])
+    ])], [
+        Constraint::Percentage(30),
+        Constraint::Percentage(30),
+        Constraint::Percentage(40),
+    ])
     .header(Row::new(vec![
         Cell::from(Span::styled(
             "Name",
@@ -319,11 +301,6 @@ fn draw_test_list<'a>(app: &mut App) -> (List<'a>, Table<'a>, List<'a>, usize) {
             Style::default().add_modifier(Modifier::BOLD),
         )),
     ]))
-    .widths(&[
-        Constraint::Percentage(20),
-        Constraint::Percentage(30),
-        Constraint::Percentage(50),
-    ])
     .block(Block::default().borders(Borders::ALL).title("Details"));
 
     let mut index = app.diff.len();
@@ -347,7 +324,7 @@ fn draw_test_list<'a>(app: &mut App) -> (List<'a>, Table<'a>, List<'a>, usize) {
             first_diff = i;
         }
 
-        let item = ListItem::new(Spans::from(vec![
+        let item = ListItem::new(Line::from(vec![
             Span::styled(sign.to_string(), style),
             Span::styled(line.to_string(), style),
         ]));
@@ -358,7 +335,7 @@ fn draw_test_list<'a>(app: &mut App) -> (List<'a>, Table<'a>, List<'a>, usize) {
     app.state.set_diffsize(index);
 
     if log_items.len() < app.diff.len() {
-        log_items.push(ListItem::new(Spans::from(vec![Span::raw(
+        log_items.push(ListItem::new(Line::from(vec![Span::raw(
             "Showing only the first 10000 lines",
         )])));
         app.state.set_diffsize(index + 1);
@@ -385,12 +362,13 @@ fn draw_final_score<'a>(app: &App) -> Paragraph<'a> {
     let score = app.calculate_score();
 
     let style = match score {
-        0 => Style::default().fg(Color::Red),
+        i if i <= 0 => Style::default().fg(Color::Red),
         100 => Style::default().fg(Color::Green),
+        120 => Style::default().fg(Color::Green),
         _ => Style::default(),
     };
 
-    Paragraph::new(vec![Spans::from(Span::styled(
+    Paragraph::new(vec![Line::from(Span::styled(
         format!("{}/100", score),
         style,
     ))])
@@ -435,31 +413,25 @@ fn draw_help(actions: &Actions) -> Table {
         }
     }
 
-    Table::new(rows)
+    Table::new(rows, [Constraint::Length(11), Constraint::Min(20)])
         .block(
             Block::default()
                 .borders(Borders::ALL)
                 .border_type(BorderType::Plain)
                 .title("Help"),
         )
-        .widths(&[Constraint::Length(11), Constraint::Min(20)])
         .column_spacing(1)
 }
 
 fn draw_logs<'a>() -> TuiLoggerWidget<'a> {
     TuiLoggerWidget::default()
+        .block(Block::bordered().title("Logs"))
         .style_error(Style::default().fg(Color::Red))
         .style_debug(Style::default().fg(Color::Green))
         .style_warn(Style::default().fg(Color::Yellow))
-        .style_trace(Style::default().fg(Color::Gray))
-        .style_info(Style::default().fg(Color::Blue))
-        .block(
-            Block::default()
-                .title("Logs")
-                .border_type(BorderType::Plain)
-                .borders(Borders::ALL),
-        )
-        .style(Style::default().fg(Color::White))
+        .style_trace(Style::default().fg(Color::Magenta))
+        .style_info(Style::default().fg(Color::Cyan))
+        .output_level(Some(TuiLoggerLevelOutput::Long))
 }
 
 fn convert_time_to_string(time: f64) -> String {

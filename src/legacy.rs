@@ -5,11 +5,11 @@ use tokio::fs::{self, File};
 use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
 use tokio::process::Command;
 
-use checker_tema_3_sd::app::{App, Test};
+use hw_checker::app::{App, Test};
 use tokio::time::timeout;
 
 pub async fn run_tests(mut app: App) {
-    let mut score: usize = 0;
+    let mut score: isize = 0;
 
     println!("Running makefile");
     let mut make = Command::new("make");
@@ -49,7 +49,7 @@ pub async fn run_tests(mut app: App) {
 
         for (index, test) in test_list.iter().enumerate() {
             match run_test(test, index, app_name, &app.test_path).await {
-                Ok(amount) => score += amount,
+                Ok(amount) => score += amount as isize,
                 Err(err) => println!("Error {:?}", err),
             };
         }
@@ -96,6 +96,8 @@ pub async fn run_tests(mut app: App) {
 
     if app.checkstyle.is_empty() {
         println!("No coding style errors found");
+
+        println!("+10 points: Checkstyle");
         score += 10;
     } else {
         println!("{}", app.checkstyle);
@@ -104,6 +106,24 @@ pub async fn run_tests(mut app: App) {
             app.test_path,
             app.checkstyle.lines().count()
         );
+
+        let mut errors = vec![0, 0, 0];
+
+        app.checkstyle.lines().for_each(|line| {
+            match line {
+                _ if line.contains("CHECK") => errors[0] += 1,
+                _ if line.contains("WARNING") => errors[1] += 1,
+                _ if line.contains("ERROR") => errors[2] += 1,
+                _ => (),
+            };
+        });
+
+        if errors.iter().sum::<isize>() > 0 {
+            println!("Found {} errors, reduce them to 0 to get 10 points", errors.iter().sum::<isize>());
+        } else {
+            println!("+10 points: Checkstyle");
+            score += 10;
+        }
     }
 
     println!("Running make clean");
@@ -124,7 +144,7 @@ pub async fn run_tests(mut app: App) {
         }
     };
 
-    println!("Final score: {score}/110\n");
+    println!("Total: {score}\n");
 }
 
 async fn run_test(
@@ -134,7 +154,7 @@ async fn run_test(
     path: &String,
 ) -> Result<usize, std::io::Error> {
     let mut run: Command;
-    if index < 2 {
+    if index < 13 {
         run = Command::new("valgrind");
         run.arg(format!(
             "--log-file={}output/{:02}-{}.valgrind",
@@ -220,6 +240,9 @@ async fn run_test(
                     test.test_score
                 );
 
+                log_file.push_str("Crashed\n");
+                out_file.write_all(log_file.as_bytes()).await?;
+
                 return Ok(0);
             } else if let Some(69) = out.status.code() {
                 println!("\t\tTime: {:.5}", start.elapsed().as_secs_f64());
@@ -228,6 +251,9 @@ async fn run_test(
                     ".".repeat(25),
                     test.test_score
                 );
+                
+                log_file.push_str("MEMLEAKS: Check .valgrind file for memory leak info\n");
+                out_file.write_all(log_file.as_bytes()).await?;
 
                 return Ok(0);
             }

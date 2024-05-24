@@ -1,9 +1,9 @@
 use std::fs;
 
-use log::{debug, error, info, warn};
+use log::{debug, error, warn};
 use serde::{Deserialize, Serialize};
 use similar::{ChangeTag, TextDiff};
-use tui::widgets::ListState;
+use ratatui::widgets::ListState;
 
 use self::actions::Actions;
 use self::state::AppState;
@@ -16,7 +16,7 @@ pub mod state;
 pub mod ui;
 
 const DB_PATH: &str = "./data.json";
-const CHECKSTYLE_SCORE: usize = 10;
+const CHECKSTYLE_SCORE: isize = 10;
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Test {
@@ -32,7 +32,6 @@ pub struct Test {
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Data {
-    commands: Vec<String>,
     tests: Vec<Vec<Test>>,
     test_path: String,
     exec_name: Vec<String>,
@@ -56,10 +55,8 @@ pub struct App {
     pub unwritten_data: bool,
     state: AppState,
     test_num: usize,
-    pub titles: Vec<&'static str>,
     pub selected_tab: usize,
     pub test_list: Vec<Vec<Test>>,
-    pub commands: Vec<String>,
     pub test_list_state: ListState,
     windows_list_state: ListState,
     pub log_list_state: ListState,
@@ -72,6 +69,7 @@ pub struct App {
     pub checkstyle: String,
     pub vmchecker_out: String,
     pub diff: Vec<(&'static str, String)>,
+    pub errors: Vec<i32>
 }
 
 impl App {
@@ -85,7 +83,6 @@ impl App {
         let test_list = json.tests;
         let test_path = json.test_path;
         let exec_name = json.exec_name;
-        let commands = json.commands;
         let mut test_list_state = ListState::default();
         test_list_state.select(Some(0));
         let mut windows_list_state = ListState::default();
@@ -93,10 +90,10 @@ impl App {
         let mut log_list_state = ListState::default();
         log_list_state.select(None);
         let valgrind_enabled = json.valgrind_enabled;
-        let titles = vec!["Test", "Menu", "Tab2", "Tab3"];
         let selected_tab = 0usize;
         let unwritten_data = false;
-        let test_num = test_list[0].len() + test_list[1].len();
+        let test_num = test_list.iter().map(|list| list.len()).sum();
+        let mut errors = vec![0, 0, 0];
 
         let current_ref = fs::read_to_string(format!(
             "{}ref/{:02}-{}.ref",
@@ -106,6 +103,16 @@ impl App {
 
         let checkstyle = fs::read_to_string(format!("{}checkstyle.txt", test_path)).unwrap();
         let vmchecker_out = String::new();
+
+        checkstyle
+        .lines().for_each(|line| {
+            match line {
+                _ if line.contains("CHECK") => errors[0] += 1,
+                _ if line.contains("WARNING") => errors[1] += 1,
+                _ if line.contains("ERROR") => errors[2] += 1,
+                _ => (),
+            };
+        });
 
         let diff = TextDiff::from_lines(&current_ref, &test_list[0][0].log)
             .iter_all_changes()
@@ -130,10 +137,8 @@ impl App {
             unwritten_data,
             state,
             test_num,
-            titles,
             selected_tab,
             test_list,
-            commands,
             test_list_state,
             windows_list_state,
             log_list_state,
@@ -144,6 +149,7 @@ impl App {
             checkstyle,
             vmchecker_out,
             diff,
+            errors,
         }
     }
 
@@ -159,8 +165,8 @@ impl App {
                 }
                 Action::RunTaskOne => {
                     let mut task_one = Vec::new();
-                    for test in self.test_list[1].iter() {
-                        task_one.push((test.id, 1));
+                    for test in self.test_list[0].iter() {
+                        task_one.push((test.id, 0));
                     }
 
                     self.dispatch(IoEvent::RunFailed(task_one)).await;
@@ -168,11 +174,20 @@ impl App {
                 }
                 Action::RunTaskTwo => {
                     let mut task_two = Vec::new();
-                    for test in self.test_list[0].iter() {
-                        task_two.push((test.id, 0));
+                    for test in self.test_list[1].iter() {
+                        task_two.push((test.id, 1));
                     }
 
                     self.dispatch(IoEvent::RunFailed(task_two)).await;
+                    AppReturn::Continue
+                }
+                Action::RunTaskThree => {
+                    let mut task_three = Vec::new();
+                    for test in self.test_list[2].iter() {
+                        task_three.push((test.id, 2));
+                    }
+
+                    self.dispatch(IoEvent::RunFailed(task_three)).await;
                     AppReturn::Continue
                 }
                 Action::RunFailed => {
@@ -197,10 +212,7 @@ impl App {
                 Action::RunCurrent => {
                     self.dispatch(IoEvent::Make).await;
                     if let Some(index) = self.test_list_state.selected() {
-                        let (test_index, exec_index) = (
-                            index % self.test_list[0].len(),
-                            index / self.test_list[0].len(),
-                        );
+                        let (test_index, exec_index) = get_list_index(&self.test_list, index);
 
                         self.test_list[exec_index][test_index].status.clear();
                         self.test_list[exec_index][test_index]
@@ -214,7 +226,6 @@ impl App {
                     }
                     AppReturn::Continue
                 }
-                // IncrementDelay and DecrementDelay is handled in the UI thread
                 Action::RightList => {
                     if let Some(index) = self.windows_list_state.selected() {
                         if index == 1 {
@@ -309,21 +320,20 @@ impl App {
                     }
 
                     AppReturn::Continue
-                }
-                Action::SendVMChecker => {
-                    info!("Preparing vmchecker send");
-                    self.dispatch(IoEvent::SendVMChecker).await;
-                    AppReturn::Continue
-                }
-                Action::OpenVMChecker => {
-                    self.state.update_vmcheck();
-                    self.vmchecker_out.push_str("Waiting for server response");
-                    if let Some(true) = self.state.get_vmcheck() {
-                        self.dispatch(IoEvent::LoadVMChecker).await;
-                    }
+                } // Action::SendVMChecker => {
+                  //     info!("Preparing vmchecker send");
+                  //     self.dispatch(IoEvent::SendVMChecker).await;
+                  //     AppReturn::Continue
+                  // }
+                  // Action::OpenVMChecker => {
+                  //     self.state.update_vmcheck();
+                  //     self.vmchecker_out.push_str("Waiting for server response");
+                  //     if let Some(true) = self.state.get_vmcheck() {
+                  //         self.dispatch(IoEvent::LoadVMChecker).await;
+                  //     }
 
-                    AppReturn::Continue
-                }
+                  //     AppReturn::Continue
+                  // }
             }
         } else {
             warn!("No action accociated to {}", key);
@@ -337,7 +347,6 @@ impl App {
         self.state.incr_tick();
         if self.unwritten_data && self.state.count_tick().unwrap() % 100 == 0 {
             let data = self.save_data();
-            info!("Saving data");
             self.dispatch(IoEvent::SaveData(data)).await;
             self.unwritten_data = false;
         }
@@ -380,8 +389,9 @@ impl App {
             Action::RunCheckstyle,
             Action::RunTaskOne,
             Action::RunTaskTwo,
-            Action::SendVMChecker,
-            Action::OpenVMChecker,
+            Action::RunTaskThree,
+            // Action::SendVMChecker,
+            // Action::OpenVMChecker,
         ]
         .into();
         self.state = AppState::initialized()
@@ -391,15 +401,15 @@ impl App {
         self.is_loading = false;
     }
 
-    pub fn calculate_score(&self) -> usize {
-        let mut score = 0usize;
+    pub fn calculate_score(&self) -> isize {
+        let mut score = 0isize;
         for execs in self.test_list.iter() {
             for test in execs {
-                score += test.status.parse::<usize>().unwrap_or(0);
+                score += test.status.parse::<isize>().unwrap_or(0);
             }
         }
 
-        if self.checkstyle.lines().count() == 0 {
+        if self.errors.iter().sum::<i32>() == 0 {
             score += CHECKSTYLE_SCORE;
         }
 
@@ -408,11 +418,28 @@ impl App {
 
     pub fn save_data(&mut self) -> Data {
         Data {
-            commands: self.commands.to_vec(),
             tests: self.test_list.to_vec(),
             test_path: self.test_path.clone(),
             exec_name: self.exec_name.clone(),
             valgrind_enabled: self.valgrind_enabled,
         }
     }
+}
+
+pub fn get_list_index(lists: &Vec<Vec<Test>>, index: usize) -> (usize, usize) {
+    let mut cumulative_index = 0;
+    let mut list_index = 0;
+
+    for list in lists {
+        cumulative_index += list.len();
+
+        if cumulative_index > index {
+            let index_in_list = index - (cumulative_index - list.len());
+            return (index_in_list, list_index);
+        }
+
+        list_index += 1;
+    }
+
+    return (0, 0);
 }

@@ -2,17 +2,15 @@ use std::io::{Error, ErrorKind};
 use std::time::Duration;
 use std::{process::Stdio, sync::Arc};
 
-// use eyre::{Result, ErrReport};
 use log::{debug, error, info, warn};
-use serde_json::Value;
 use similar::{ChangeTag, TextDiff};
 use tokio::fs::{self, File};
-use tokio::io::{AsyncBufReadExt, AsyncReadExt, AsyncWriteExt, BufReader};
+use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
 use tokio::process::Command;
 use tokio::time::{timeout, Instant};
 
 use super::IoEvent;
-use crate::app::{App, Data};
+use crate::app::{get_list_index, App, Data};
 
 const DB_PATH: &str = "./data.json";
 
@@ -37,14 +35,14 @@ impl IoAsyncHandler {
             IoEvent::LoadChecksyle => self.load_cs().await,
             IoEvent::Make => self.run_make().await,
             IoEvent::UpdateRef => self.update_ref().await,
-            IoEvent::SendVMChecker => self.send_vmchecker().await,
-            IoEvent::LoadVMChecker => self.load_vmchecker().await,
+            // IoEvent::SendVMChecker => self.send_vmchecker().await,
+            // IoEvent::LoadVMChecker => self.load_vmchecker().await,
         };
 
         self.update_ref().await.unwrap();
 
         if let Err(Some(output)) = result {
-            error!("Oops, something wrong happen: \n{}", output.to_string());
+            error!("Oops, something wrong happened: \n{}", output.to_string());
         }
     }
 
@@ -59,6 +57,10 @@ impl IoAsyncHandler {
         Ok(())
     }
 
+    /*
+     *
+     * Depcrecated, will return to these later
+     *
     async fn load_vmchecker(&self) -> Result<(), Option<Error>> {
         let client = reqwest::Client::new();
         let cookie;
@@ -89,21 +91,21 @@ impl IoAsyncHandler {
                     .header("cookie", &cookie)
                     .send().await {
             Ok(res) => {
-				let v: Value = serde_json::from_str(&res.text().await.unwrap()).unwrap();
+    			let v: Value = serde_json::from_str(&res.text().await.unwrap()).unwrap();
 
-				let mut app = self.app.lock().await;
+    			let mut app = self.app.lock().await;
 
-				match v.get(5) {
-					Some(output) => {
-						app.vmchecker_out.clear();
-						app.vmchecker_out.push_str(&output["Execuția testelor (stdout)"].to_string());
-					},
-					None => {
-						app.vmchecker_out.clear();
-						app.vmchecker_out.push_str(&v[2].to_string());
-					},
-				}
-			},
+    			match v.get(5) {
+    				Some(output) => {
+    					app.vmchecker_out.clear();
+    					app.vmchecker_out.push_str(&output["Execuția testelor (stdout)"].to_string());
+    				},
+    				None => {
+    					app.vmchecker_out.clear();
+    					app.vmchecker_out.push_str(&v[2].to_string());
+    				},
+    			}
+    		},
             Err(err) => {
                 return Err(Some(Error::new(ErrorKind::Other, err.to_string())));
             },
@@ -252,15 +254,13 @@ impl IoAsyncHandler {
 
         body
     }
+    */
 
     async fn update_ref(&self) -> Result<(), Option<Error>> {
         let mut app = self.app.lock().await;
 
         let index = app.test_list_state.selected().unwrap();
-        let (test_index, exec_index) = (
-            index % app.test_list[0].len(),
-            index / app.test_list[0].len(),
-        );
+        let (test_index, exec_index) = get_list_index(&app.test_list, index);
 
         app.current_ref = fs::read_to_string(format!(
             "{}ref/{:02}-{}.ref",
@@ -312,6 +312,20 @@ impl IoAsyncHandler {
 
         out_file.write_all(&output).await?;
 
+        let mut new_error = vec![0, 0, 0];
+
+        app.checkstyle
+        .lines().for_each(|line| {
+            match line {
+                _ if line.contains("CHECK") => new_error[0] += 1,
+                _ if line.contains("WARNING") => new_error[1] += 1,
+                _ if line.contains("ERROR") => new_error[2] += 1,
+                _ => (),
+            };
+        });
+
+        app.errors = new_error;
+
         Ok(())
     }
 
@@ -346,10 +360,7 @@ impl IoAsyncHandler {
                 debug!("Waiting on mutex");
                 let mut app = copy.lock().await;
 
-                let (test_index, exec_index) = (
-                    index % app.test_list[0].len(),
-                    index / app.test_list[0].len(),
-                );
+                let (test_index, exec_index) = get_list_index(&app.test_list, index);
 
                 app.test_list[exec_index][test_index].status.clear();
                 app.test_list[exec_index][test_index]
@@ -462,8 +473,8 @@ impl IoAsyncHandler {
         let timelimit = current_test.timeout;
 
         info!(
-            "Running test number {} with status {}",
-            index, current_test.status
+            "Running {} with test number {} with status {}",
+            app_name, index, current_test.status
         );
         let in_file = std::fs::File::open(format!(
             "{}input/{:02}-{}.in",

@@ -1,6 +1,6 @@
 # Checker
 
-This checker is in it's first iteration. If you found any bugs and have features you
+This checker is in it's second iteration. If you found any bugs and have features you
 would like me to add, or any QoL ideas, contact me and I'll try to implement them
 as soon as I can.
 
@@ -23,11 +23,13 @@ you will need a terminal of at least 52x24 (width x height).
 ```bash
 $ ./check
 
-$ checker-tema-3-sd
+# or
+
+$ hw_checker
 
 # If you only want to use the text only version, add the following flag to the command
 
-$ ./check --legacy
+$ ./hw_checker --legacy
 ```
 
 ## Keybinds
@@ -46,6 +48,6 @@ when the `Tests` window is highlighted in red)
 ## Source code
 
 You can find the source code [here](https://github.com/RobertGrancsa/checker) 
-and the [crates.io](https://crates.io/crates/checker-tema-3-sd) page here.
+and the [crates.io](https://crates.io/crates/hw_checker) page here.
 If you would like to contribute to the project, or open any issues, you are welcomed
 to help.

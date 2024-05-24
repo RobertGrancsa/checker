@@ -1,9 +1,9 @@
 use std::{env, sync::Arc, thread::available_parallelism, time::Duration};
 
-use checker_tema_3_sd::app::App;
-use checker_tema_3_sd::io::handler::IoAsyncHandler;
-use checker_tema_3_sd::io::IoEvent;
-use checker_tema_3_sd::start_ui;
+use hw_checker::app::App;
+use hw_checker::io::handler::IoAsyncHandler;
+use hw_checker::io::IoEvent;
+use hw_checker::start_ui;
 use eyre::Result;
 use log::{info, LevelFilter};
 use tokio::time::timeout;
@@ -14,6 +14,7 @@ mod legacy;
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    env::set_var("RUST_BACKTRACE", "1");
     let (sync_io_tx, sync_io_rx) = tokio::sync::mpsc::channel::<IoEvent>(100);
 
     let args: Vec<String> = env::args().collect();

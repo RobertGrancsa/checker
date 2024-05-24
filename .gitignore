@@ -2,9 +2,6 @@
 new_core*
 *.o
 *.zip
-kNN
-mk
-data_copy.json
 .env
 *.c
 *.h

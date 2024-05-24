@@ -12,6 +12,6 @@ pub enum IoEvent {
     LoadChecksyle,
     Make,
     UpdateRef,
-    SendVMChecker,
-    LoadVMChecker,
+    // SendVMChecker,
+    // LoadVMChecker,
 }
